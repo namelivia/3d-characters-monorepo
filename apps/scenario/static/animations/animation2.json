@@ -1,6 +1,7 @@
 {
     "index": {
-        "0": "spin_left"
+        "0": "move_front",
+        "200": "move_back"
     },
     "length": 400
 }

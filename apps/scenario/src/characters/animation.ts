@@ -30,7 +30,7 @@ export class SpinRight extends Animation {
 	}
 }
 
-export class MoveDown extends Animation {
+export class MoveBack extends Animation {
 	addZ(objects: THREE.Mesh[], z: number) {
 		objects.forEach((object: THREE.Mesh) => {
 			object.position.z -= z
@@ -42,7 +42,7 @@ export class MoveDown extends Animation {
 	}
 }
 
-export class MoveUp extends Animation {
+export class MoveFront extends Animation {
 	addZ(objects: THREE.Mesh[], z: number) {
 		objects.forEach((object: THREE.Mesh) => {
 			object.position.z += z
@@ -78,7 +78,7 @@ export class MoveRight extends Animation {
 	}
 }
 
-export class MoveFront extends Animation {
+export class MoveUp extends Animation {
 	addY(objects: THREE.Mesh[], y: number) {
 		objects.forEach((object: THREE.Mesh) => {
 			object.position.y -= y
@@ -90,7 +90,7 @@ export class MoveFront extends Animation {
 	}
 }
 
-export class MoveBack extends Animation {
+export class MoveDown extends Animation {
 	addY(objects: THREE.Mesh[], y: number) {
 		objects.forEach((object: THREE.Mesh) => {
 			object.position.y += y

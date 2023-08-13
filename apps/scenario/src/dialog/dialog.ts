@@ -2,12 +2,14 @@ export default class Dialog {
 	text = ''
 	visible = false
 	addToDOM() {
+		const threeDView = document.getElementById('3d-view')
+		const threeDViewHeight = threeDView?.clientHeight
 		const uiContainer = document.createElement('div')
 		uiContainer.id = '2d-view'
-		uiContainer.style.width = '800px'
+		uiContainer.style.width = '100%'
 		uiContainer.style.height = '200px'
 		uiContainer.style.position = 'absolute'
-		uiContainer.style.top = '352px'
+		uiContainer.style.top = `${threeDViewHeight}px - 400px`
 		uiContainer.style.userSelect = 'none'
 		uiContainer.style.display = this.visible ? 'block' : 'none'
 
@@ -29,7 +31,6 @@ export default class Dialog {
 		dialogBox.appendChild(dialogText)
 		uiContainer.appendChild(dialogBox)
 
-		const threeDView = document.getElementById('3d-view')
 		if (threeDView) {
 			threeDView.appendChild(uiContainer)
 		}

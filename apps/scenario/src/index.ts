@@ -3,6 +3,16 @@ import { loadScene } from './scene/loader'
 import World from './world/world'
 import Dialog from './dialog/dialog'
 
+const setFullscreen = () => {
+	const windowWidth = window.innerWidth
+	const windowHeight = window.innerHeight
+	const mainDiv = document.getElementById('3d-view')
+	if (mainDiv) {
+		mainDiv.style.width = `${windowWidth}px`
+		mainDiv.style.height = `${windowHeight}px`
+	}
+}
+
 const main = async () => {
 	const world = new World()
 	const dialog = new Dialog()
@@ -25,4 +35,5 @@ const main = async () => {
 	world.animate()
 }
 
+setFullscreen()
 main()

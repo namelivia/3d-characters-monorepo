@@ -36,7 +36,14 @@ class World {
 	}
 
 	setupCamera = (): THREE.PerspectiveCamera => {
-		const camera = new THREE.PerspectiveCamera(75, 800 / 600, 0.1, 1000)
+		const container = document.getElementById('3d-view')
+		let width = 800
+		let height = 800
+		if (container) {
+			width = container.clientWidth
+			height = container.clientHeight
+		}
+		const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000)
 		camera.position.z = 15
 		camera.position.y = 15
 		return camera

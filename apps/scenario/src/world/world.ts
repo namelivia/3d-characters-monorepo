@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { getRandomColor } from '../colors/colors'
 import Character from '../characters/character'
+import Scene from '../scene/scene'
 
 class World {
 	scene?: THREE.Scene
@@ -68,6 +69,12 @@ class World {
 			})
 			this.renderer.render(this.scene, this.camera)
 		}
+	}
+
+	loadScene = (scene: Scene) => {
+		scene.characters.forEach((character) => {
+			this.addCharacter(character)
+		})
 	}
 
 	addCharacter = (character: Character) => {

@@ -1,7 +1,6 @@
 {
     "index": {
-        "0": "spin_left",
-        "100": "spin_right"
+        "0": "spin_left"
     },
-    "length": 200
+    "length": 400
 }

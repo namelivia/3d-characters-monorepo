@@ -78,6 +78,30 @@ export class MoveRight extends Animation {
 	}
 }
 
+export class MoveFront extends Animation {
+	addY(objects: THREE.Mesh[], y: number) {
+		objects.forEach((object: THREE.Mesh) => {
+			object.position.y -= y
+		})
+	}
+
+	animate = (objects: THREE.Mesh[]) => {
+		this.addY(objects, 0.01)
+	}
+}
+
+export class MoveBack extends Animation {
+	addY(objects: THREE.Mesh[], y: number) {
+		objects.forEach((object: THREE.Mesh) => {
+			object.position.y += y
+		})
+	}
+
+	animate = (objects: THREE.Mesh[]) => {
+		this.addY(objects, 0.01)
+	}
+}
+
 type AnimationIndex = {
 	[key: string]: Animation
 }
@@ -89,4 +113,6 @@ export const AnimationList: AnimationIndex = {
 	move_down: new MoveDown(),
 	move_left: new MoveLeft(),
 	move_right: new MoveRight(),
+	move_front: new MoveFront(),
+	move_back: new MoveBack(),
 }

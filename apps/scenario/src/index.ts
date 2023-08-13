@@ -27,20 +27,16 @@ const main = async () => {
 	const gltf = await loadGLTF()
 
 	world.addCharacter(
-		await newCharacter(gltf, 'cube_head', 'animation1', -5, 0, 0)
+		await newCharacter(gltf, 'naked_magician', 'animation1', -5, 0, 0)
+	)
+	world.addCharacter(await newCharacter(gltf, 'dude', 'animation2', 0, 0, 0))
+	world.addCharacter(
+		await newCharacter(gltf, 'naked_hipster', 'animation3', 5, 0, 0)
 	)
 	world.addCharacter(
-		await newCharacter(gltf, 'pyramid_head', 'animation2', 0, 0, 0)
+		await newCharacter(gltf, 'one_punch', 'animation4', 0, 0, 5)
 	)
-	world.addCharacter(
-		await newCharacter(gltf, 'cube_head', 'animation1', 5, 0, 0)
-	)
-	world.addCharacter(
-		await newCharacter(gltf, 'pyramid_head', 'animation1', 0, 0, 5)
-	)
-	world.addCharacter(
-		await newCharacter(gltf, 'pyramid_head', 'animation2', 0, 0, -5)
-	)
+	world.addCharacter(await newCharacter(gltf, 'weirdo', 'animation5', 0, 0, -5))
 
 	world.animate()
 }

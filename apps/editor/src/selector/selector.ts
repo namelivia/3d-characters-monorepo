@@ -1,3 +1,5 @@
+import * as THREE from 'three'
+
 class Selector {
 	createCheckbox = (object: string) => {
 		const checkboxElement = document.createElement('input')
@@ -5,9 +7,8 @@ class Selector {
 		checkboxElement.id = object
 
 		checkboxElement.addEventListener('change', function () {
-			const value = checkboxElement.checked
 			const customEvent = new CustomEvent('myCheckboxChange', {
-				detail: { model: object, visible: value },
+				detail: object,
 			})
 			checkboxElement.dispatchEvent(customEvent)
 		})
@@ -21,13 +22,15 @@ class Selector {
 		return li
 	}
 
-	display(objects: { [name: string]: THREE.Mesh }) {
+	display(model: THREE.Group) {
 		const list = document.getElementById('list')
 		if (list) {
-			for (const object in objects) {
-				const checkbox = this.createCheckbox(object)
-				list.appendChild(checkbox)
-			}
+			model.traverse((child) => {
+				if (child instanceof THREE.SkinnedMesh) {
+					const checkbox = this.createCheckbox(child.name)
+					list.appendChild(checkbox)
+				}
+			})
 		}
 	}
 }

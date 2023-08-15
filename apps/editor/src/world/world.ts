@@ -1,11 +1,13 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { getRandomColor } from '../colors/colors'
+import Character from '../character/character'
 
 class World {
 	scene?: THREE.Scene
 	camera?: THREE.PerspectiveCamera
 	renderer?: THREE.WebGLRenderer
+	mixers: THREE.AnimationMixer[] = []
 
 	initialize = () => {
 		this.scene = new THREE.Scene()
@@ -58,24 +60,23 @@ class World {
 	animate = () => {
 		if (this.camera && this.renderer && this.scene) {
 			requestAnimationFrame(this.animate)
+			this.mixers.forEach((mixer) => mixer.update(0.01))
 			this.renderer.render(this.scene, this.camera)
 		}
 	}
 
-	add = (object: THREE.Mesh) => {
+	add = (character: Character) => {
 		if (this.scene) {
-			this.scene.add(object)
+			this.scene.add(character.getModel())
+			this.mixers.push(character.mixer)
 		}
 	}
 
-	remove = (object: THREE.Mesh) => {
+	remove = (character: Character) => {
 		if (this.scene) {
-			this.scene.remove(object)
+			this.scene.remove(character.getModel())
+			this.mixers = this.mixers.filter((mixer) => mixer !== character.mixer)
 		}
-	}
-
-	debug = () => {
-		console.log(this.scene)
 	}
 }
 

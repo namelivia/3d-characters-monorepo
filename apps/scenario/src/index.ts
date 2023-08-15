@@ -20,12 +20,10 @@ const main = async () => {
 	const overlay = new Overlay()
 	dialog.addToDOM()
 	overlay.addToDOM()
-	setTimeout(() => {
-		overlay.fadeOut()
-	}, 5000)
+	overlay.fadeOut()
 	setTimeout(() => {
 		overlay.fadeIn()
-	}, 10000)
+	}, 1000)
 	setTimeout(() => {
 		dialog.setText('Hello world!')
 		dialog.setVisible(true)
@@ -37,6 +35,12 @@ const main = async () => {
 		dialog.setText('')
 		dialog.setVisible(false)
 	}, 15000)
+	setTimeout(() => {
+		overlay.setVideo('media/intro.mp4')
+	}, 20000)
+	setTimeout(() => {
+		overlay.removeVideo()
+	}, 25000)
 	world.initialize()
 	const gltf = await loadGLTF()
 	const scene = await loadScene(gltf, 'scene1')

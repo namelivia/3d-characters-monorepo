@@ -17,6 +17,28 @@ export default class Overlay {
 		}
 	}
 
+	setVideo(videoPath: string) {
+		const overlay = document.getElementById('2d-overlay')
+		if (overlay) {
+			overlay.style.backgroundColor = 'rgba(0, 0, 0, 1)'
+			overlay.style.pointerEvents = 'auto'
+			overlay.innerHTML = `
+                <video id="2d-video" autoplay loop muted playsinline style="width: 100%; height: 100%;">
+                    <source src="${videoPath}" type="video/mp4">
+                </video>
+            `
+		}
+	}
+
+	removeVideo() {
+		const overlay = document.getElementById('2d-overlay')
+		if (overlay) {
+			overlay.style.backgroundColor = 'rgba(0, 0, 0, 0)'
+			overlay.style.pointerEvents = 'none'
+			overlay.innerHTML = ''
+		}
+	}
+
 	fadeOut() {
 		const overlay = document.getElementById('2d-overlay')
 		if (overlay) {

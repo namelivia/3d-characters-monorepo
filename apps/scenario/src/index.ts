@@ -2,6 +2,7 @@ import { loadGLTF } from './gltf/loader'
 import { loadScene } from './scene/loader'
 import World from './world/world'
 import Dialog from './dialog/dialog'
+import Overlay from './overlay/overlay'
 
 const setFullscreen = () => {
 	const windowWidth = window.innerWidth
@@ -16,7 +17,15 @@ const setFullscreen = () => {
 const main = async () => {
 	const world = new World()
 	const dialog = new Dialog()
+	const overlay = new Overlay()
 	dialog.addToDOM()
+	overlay.addToDOM()
+	setTimeout(() => {
+		overlay.fadeOut()
+	}, 5000)
+	setTimeout(() => {
+		overlay.fadeIn()
+	}, 10000)
 	setTimeout(() => {
 		dialog.setText('Hello world!')
 		dialog.setVisible(true)

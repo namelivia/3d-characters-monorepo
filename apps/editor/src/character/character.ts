@@ -3,16 +3,30 @@ import * as THREE from 'three'
 class Character {
 	model: THREE.Group
 	mixer: THREE.AnimationMixer
+	animations: THREE.AnimationClip[]
+
 	constructor(model: THREE.Group, animations: THREE.AnimationClip[]) {
 		this.model = model
+		this.animations = animations
 		this.mixer = new THREE.AnimationMixer(model)
-		this.playAnimation(animations[0])
+		this.setAnimation('Idle')
 		this.hideAllParts()
 	}
 
 	playAnimation = (animation: THREE.AnimationClip): void => {
 		const action = this.mixer.clipAction(animation)
 		action.play()
+	}
+
+	setAnimation = (animationName: string): void => {
+		const animation = this.animations.find(
+			(animation) => animation.name === animationName
+		)
+		console.log(animationName)
+		console.log(this.animations)
+		if (animation) {
+			this.playAnimation(animation)
+		}
 	}
 
 	getModel = (): THREE.Group => {

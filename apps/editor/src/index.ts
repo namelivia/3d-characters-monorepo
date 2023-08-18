@@ -1,8 +1,6 @@
-import { loadGLTF } from './gltf/loader'
-import World from './world/world'
 import Selector from './selector/selector'
 import Actions from './actions/actions'
-import Character from './character/character'
+import { loadGLTF, Character, World } from 'common'
 
 const saveSelectedObjects = (selectedObjects: string[]) => {
 	const bb = new Blob([JSON.stringify(selectedObjects)], { type: 'text/plain' })
@@ -13,6 +11,23 @@ const saveSelectedObjects = (selectedObjects: string[]) => {
 }
 
 const main = async () => {
+	// Load 3d model
+	const model = await loadGLTF()
+
+	// Initialize the UI
+	const selector = new Selector()
+	selector.display(model.scene)
+	const actions = new Actions()
+	actions.display()
+
+	// Initialize world and character
+	const world = new World()
+	world.initialize()
+	const character = new Character(model.scene, model.animations)
+	world.add(character)
+	world.animate()
+
+	// Initialize UI Event listener
 	document.addEventListener(
 		'myCheckboxChange',
 		function (event) {
@@ -32,17 +47,6 @@ const main = async () => {
 		},
 		true
 	)
-
-	const world = new World()
-	world.initialize()
-	const model = await loadGLTF()
-	const character = new Character(model.scene, model.animations)
-	world.add(character)
-	const selector = new Selector()
-	selector.display(model.scene)
-	const actions = new Actions()
-	actions.display()
-	world.animate()
 }
 
 main()

@@ -53,6 +53,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^6.2.1
         version: 6.2.1(eslint@8.46.0)(typescript@5.1.6)
+      common:
+        specifier: workspace:*
+        version: link:../../packages/common
       eslint:
         specifier: ^8.46.0
         version: 8.46.0
@@ -62,9 +65,6 @@ importers:
       eslint-config-prettier:
         specifier: ^8.9.0
         version: 8.9.0(eslint@8.46.0)
-      gltf:
-        specifier: workspace:*
-        version: link:../../packages/gltf
       lint-staged:
         specifier: ^13.2.3
         version: 13.2.3
@@ -125,9 +125,6 @@ importers:
       eslint-config-prettier:
         specifier: ^8.9.0
         version: 8.9.0(eslint@8.46.0)
-      gltf:
-        specifier: workspace:*
-        version: link:../../packages/gltf
       lint-staged:
         specifier: ^13.2.3
         version: 13.2.3
@@ -159,6 +156,30 @@ importers:
         specifier: ^5.1.6
         version: 5.1.6
 
+  packages/common:
+    devDependencies:
+      '@rollup/plugin-typescript':
+        specifier: ^11.1.2
+        version: 11.1.2(rollup@3.27.0)(tslib@2.6.1)(typescript@5.1.6)
+      '@types/three':
+        specifier: ^0.155.0
+        version: 0.155.0
+      rollup:
+        specifier: ^3.27.0
+        version: 3.27.0
+      three:
+        specifier: ^0.155.0
+        version: 0.155.0
+      tsconfig:
+        specifier: workspace:*
+        version: link:../tsconfig
+      tslib:
+        specifier: ^2.6.1
+        version: 2.6.1
+      typescript:
+        specifier: ^5.1.6
+        version: 5.1.6
+
   packages/eslint-config-custom:
     dependencies:
       eslint-config-next:
@@ -173,12 +194,6 @@ importers:
       eslint-plugin-react:
         specifier: 7.28.0
         version: 7.28.0(eslint@8.46.0)
-
-  packages/gltf:
-    devDependencies:
-      three:
-        specifier: ^0.155.0
-        version: 0.155.0
 
   packages/tsconfig: {}
 

@@ -1,0 +1,19 @@
+{
+  "name": "common",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "rollup -c rollup.config.js",
+    "dev": "rollup -c rollup.config.js --watch"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.2",
+    "@types/three": "^0.155.0",
+    "rollup": "^3.27.0",
+    "three": "^0.155.0",
+    "tsconfig": "workspace:*",
+    "tslib": "^2.6.1",
+    "typescript": "^5.1.6"
+  }
+}

@@ -1,3 +1,3 @@
 export const getRandomColor = () => {
-	return Math.random() * 0xffffff
-}
+  return Math.random() * 0xffffff;
+};

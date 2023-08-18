@@ -28,7 +28,6 @@
     "eslint": "^8.46.0",
     "eslint-config-custom": "workspace:*",
     "eslint-config-prettier": "^8.9.0",
-    "gltf": "workspace:*",
     "lint-staged": "^13.2.3",
     "prettier": "^3.0.0",
     "rollup": "^3.27.0",

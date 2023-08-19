@@ -16,8 +16,7 @@ class World {
 		this.world3D.initialize()
 	}
 
-	animate = () => {
-		requestAnimationFrame(this.animate)
+	step = () => {
 		this.time = this.time + 1
 		this.characters?.forEach((character) => {
 			character?.move(this.time)

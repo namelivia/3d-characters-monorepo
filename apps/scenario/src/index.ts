@@ -54,7 +54,11 @@ const main = async () => {
 	const gltf = await loadGLTF()
 	const scene = await loadScene(gltf, 'scene1')
 	world.loadScene(scene)
-	world.animate()
+
+	requestAnimationFrame(function animate() {
+		world.step()
+		requestAnimationFrame(animate)
+	})
 
 	const allowAudioButton = document.getElementById('music')
 	if (allowAudioButton) {

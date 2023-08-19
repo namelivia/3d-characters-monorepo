@@ -2,12 +2,18 @@ import { ScenarioCharacter } from '../characters/character'
 import Scene from '../scene/scene'
 import { World as World3D } from 'common'
 
-class World extends World3D {
+class World {
 	characters?: [ScenarioCharacter?]
 	time: number = 0
+	world3D: World3D
+
+	constructor() {
+		this.world3D = new World3D()
+	}
+
 	initialize = () => {
-		super.initialize()
 		this.characters = []
+		this.world3D.initialize()
 	}
 
 	animate = () => {
@@ -16,12 +22,12 @@ class World extends World3D {
 		this.characters?.forEach((character) => {
 			character?.move(this.time)
 		})
-		super.animate()
+		this.world3D.animate()
 	}
 
 	addCharacter = (character: ScenarioCharacter) => {
 		this.characters?.push(character)
-		super.add(character)
+		this.world3D.add(character)
 	}
 
 	loadScene = (scene: Scene) => {

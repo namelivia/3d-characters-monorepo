@@ -1,12 +1,12 @@
 import * as THREE from 'three'
 import { Timesheet } from './timesheet'
-import { Animation } from './animation'
+import { Movement } from './movement'
 import { Character } from 'common'
 
 class ScenarioCharacter extends Character {
 	parts: string[] = []
 	objects: THREE.Mesh[] = []
-	animation?: Animation
+	movement?: Movement
 	timesheet?: Timesheet
 
 	constructor(gltf: THREE.Object3D, parts: string[]) {
@@ -40,10 +40,10 @@ class ScenarioCharacter extends Character {
 		this.timesheet = timesheet
 	}
 
-	animate(time: number) {
+	move(time: number) {
 		if (this.timesheet) {
-			const animation = this.timesheet.getAnimation(time)
-			animation.animate(this.objects)
+			const movement = this.timesheet.getMovement(time)
+			movement.move(this.objects)
 		}
 	}
 }

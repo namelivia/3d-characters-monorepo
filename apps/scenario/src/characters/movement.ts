@@ -1,112 +1,112 @@
 import * as THREE from 'three'
-export class Animation {
-	animate = (objects: THREE.Mesh[]) => {
-		console.log('Animation not implemented')
+export class Movement {
+	move = (objects: THREE.Mesh[]) => {
+		console.log('Movement not implemented')
 		console.log(objects)
 	}
 }
 
-export class SpinLeft extends Animation {
+export class SpinLeft extends Movement {
 	addRotation(objects: THREE.Mesh[], y: number) {
 		objects.forEach((object: THREE.Mesh) => {
 			object.rotation.y += y
 		})
 	}
 
-	animate = (objects: THREE.Mesh[]) => {
+	move = (objects: THREE.Mesh[]) => {
 		this.addRotation(objects, 0.01)
 	}
 }
 
-export class SpinRight extends Animation {
+export class SpinRight extends Movement {
 	addRotation(objects: THREE.Mesh[], y: number) {
 		objects.forEach((object: THREE.Mesh) => {
 			object.rotation.y -= y
 		})
 	}
 
-	animate = (objects: THREE.Mesh[]) => {
+	move = (objects: THREE.Mesh[]) => {
 		this.addRotation(objects, 0.01)
 	}
 }
 
-export class MoveBack extends Animation {
+export class MoveBack extends Movement {
 	addZ(objects: THREE.Mesh[], z: number) {
 		objects.forEach((object: THREE.Mesh) => {
 			object.position.z -= z
 		})
 	}
 
-	animate = (objects: THREE.Mesh[]) => {
+	move = (objects: THREE.Mesh[]) => {
 		this.addZ(objects, 0.01)
 	}
 }
 
-export class MoveFront extends Animation {
+export class MoveFront extends Movement {
 	addZ(objects: THREE.Mesh[], z: number) {
 		objects.forEach((object: THREE.Mesh) => {
 			object.position.z += z
 		})
 	}
 
-	animate = (objects: THREE.Mesh[]) => {
+	move = (objects: THREE.Mesh[]) => {
 		this.addZ(objects, 0.01)
 	}
 }
 
-export class MoveLeft extends Animation {
+export class MoveLeft extends Movement {
 	addX(objects: THREE.Mesh[], x: number) {
 		objects.forEach((object: THREE.Mesh) => {
 			object.position.x += x
 		})
 	}
 
-	animate = (objects: THREE.Mesh[]) => {
+	move = (objects: THREE.Mesh[]) => {
 		this.addX(objects, 0.01)
 	}
 }
 
-export class MoveRight extends Animation {
+export class MoveRight extends Movement {
 	addX(objects: THREE.Mesh[], x: number) {
 		objects.forEach((object: THREE.Mesh) => {
 			object.position.x -= x
 		})
 	}
 
-	animate = (objects: THREE.Mesh[]) => {
+	move = (objects: THREE.Mesh[]) => {
 		this.addX(objects, 0.01)
 	}
 }
 
-export class MoveUp extends Animation {
+export class MoveUp extends Movement {
 	addY(objects: THREE.Mesh[], y: number) {
 		objects.forEach((object: THREE.Mesh) => {
 			object.position.y -= y
 		})
 	}
 
-	animate = (objects: THREE.Mesh[]) => {
+	move = (objects: THREE.Mesh[]) => {
 		this.addY(objects, 0.01)
 	}
 }
 
-export class MoveDown extends Animation {
+export class MoveDown extends Movement {
 	addY(objects: THREE.Mesh[], y: number) {
 		objects.forEach((object: THREE.Mesh) => {
 			object.position.y += y
 		})
 	}
 
-	animate = (objects: THREE.Mesh[]) => {
+	move = (objects: THREE.Mesh[]) => {
 		this.addY(objects, 0.01)
 	}
 }
 
-type AnimationIndex = {
-	[key: string]: Animation
+type MovementIndex = {
+	[key: string]: Movement
 }
 
-export const AnimationList: AnimationIndex = {
+export const MovementList: MovementIndex = {
 	spin_left: new SpinLeft(),
 	spin_right: new SpinRight(),
 	move_up: new MoveUp(),

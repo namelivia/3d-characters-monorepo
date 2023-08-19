@@ -3,27 +3,27 @@
         {
             "model": "naked_magician",
             "position": [-5, 0, 0],
-            "animation": "animation1"
+            "movement": "movement1"
         },
         {
             "model": "dude",
             "position": [0, 0, 0],
-            "animation": "animation2"
+            "movement": "movement2"
         },
         {
             "model": "naked_hipster",
             "position": [5, 0, 0],
-            "animation": "animation3"
+            "movement": "movement3"
         },
         {
             "model": "one_punch",
             "position": [0, 0, 5],
-            "animation": "animation4"
+            "movement": "movement4"
         },
         {
             "model": "weirdo",
             "position": [0, 0, -5],
-            "animation": "animation5"
+            "movement": "movement5"
         }
     ]
 }

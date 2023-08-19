@@ -7,7 +7,7 @@ import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js'
 export const newCharacter = async (
 	gltf: GLTF,
 	model: string,
-	animation: string,
+	movement: string,
 	x: number,
 	y: number,
 	z: number
@@ -17,7 +17,7 @@ export const newCharacter = async (
 	const character = new ScenarioCharacter(gltfClone, await loadCharacter(model))
 	character.addPosition(x, y, z)
 	const timesheet = new Timesheet()
-	timesheet.setAnimationMap(await loadTimesheet(animation))
+	timesheet.setMovementMap(await loadTimesheet(movement))
 	character.setTimesheet(timesheet)
 	return character
 }

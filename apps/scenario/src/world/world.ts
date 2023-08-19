@@ -17,12 +17,12 @@ class World {
 	}
 
 	animate = () => {
-		console.log('animate')
+		requestAnimationFrame(this.animate)
 		this.time = this.time + 1
 		this.characters?.forEach((character) => {
 			character?.move(this.time)
 		})
-		this.world3D.animate()
+		this.world3D.step()
 	}
 
 	addCharacter = (character: ScenarioCharacter) => {

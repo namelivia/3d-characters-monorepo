@@ -4,7 +4,7 @@ import { Movement } from './movement'
 import { AnimatedCharacter } from 'common'
 
 class ScenarioCharacter extends AnimatedCharacter {
-	objects: THREE.Mesh[] = []
+	gltf: THREE.Object3D
 	movement?: Movement
 	timesheet?: Timesheet
 
@@ -22,6 +22,7 @@ class ScenarioCharacter extends AnimatedCharacter {
 		parts: string[]
 	) {
 		super(gltf, animations)
+		this.gltf = gltf
 		this.cleanupGLTF(gltf, parts)
 	}
 
@@ -32,7 +33,7 @@ class ScenarioCharacter extends AnimatedCharacter {
 	move(time: number) {
 		if (this.timesheet) {
 			const movement = this.timesheet.getMovement(time)
-			movement.move(this.objects)
+			movement.move(this.gltf)
 		}
 	}
 }

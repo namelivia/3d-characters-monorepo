@@ -57,9 +57,8 @@ class World {
     }
   };
 
-  animate = () => {
+  step = () => {
     if (this.camera && this.renderer && this.scene) {
-      requestAnimationFrame(this.animate);
       this.mixers.forEach((mixer) => mixer.update(0.01));
       this.renderer.render(this.scene, this.camera);
     }

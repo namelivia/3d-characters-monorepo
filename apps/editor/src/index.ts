@@ -10,6 +10,13 @@ const saveSelectedObjects = (selectedObjects: string[]) => {
 	a.click()
 }
 
+const world = new World()
+
+const animate = () => {
+	requestAnimationFrame(animate)
+	world.step()
+}
+
 const main = async () => {
 	// Load 3d model
 	const model = await loadGLTF()
@@ -25,7 +32,7 @@ const main = async () => {
 	world.initialize()
 	const character = new ToggleableCharacter(model.scene, model.animations)
 	world.add(character)
-	world.animate()
+	animate()
 
 	// Initialize UI Event listener
 	document.addEventListener(

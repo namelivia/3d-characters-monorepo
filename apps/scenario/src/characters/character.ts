@@ -30,7 +30,19 @@ class ScenarioCharacter extends AnimatedCharacter {
 		this.timesheet = timesheet
 	}
 
-	move(time: number) {
+	update(time: number) {
+		this.updateMovement(time)
+		this.updateAnimation(time)
+	}
+
+	updateAnimation(time: number) {
+		if (this.timesheet) {
+			const animation = this.timesheet.getAnimation(time)
+			this.setAnimation(animation)
+		}
+	}
+
+	updateMovement(time: number) {
 		if (this.timesheet) {
 			const movement = this.timesheet.getMovement(time)
 			movement.move(this.gltf)

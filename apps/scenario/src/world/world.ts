@@ -19,7 +19,7 @@ class World {
 	step = () => {
 		this.time = this.time + 1
 		this.characters?.forEach((character) => {
-			character?.move(this.time)
+			character?.update(this.time)
 		})
 		this.world3D.step()
 	}

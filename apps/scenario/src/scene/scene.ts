@@ -1,16 +1,16 @@
-import Character from '../characters/character'
+import { ScenarioCharacter } from '../characters/character'
 
 class Scene {
-	characters: Character[]
+	characters: ScenarioCharacter[]
 	constructor() {
 		this.characters = []
 	}
 
-	addCharacter = (character: Character) => {
+	addCharacter = (character: ScenarioCharacter) => {
 		this.characters.push(character)
 	}
 
-	getCharacters = (): Character[] => {
+	getCharacters = (): ScenarioCharacter[] => {
 		return this.characters
 	}
 }

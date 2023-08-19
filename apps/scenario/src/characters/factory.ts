@@ -1,4 +1,4 @@
-import Character from './character'
+import { ScenarioCharacter } from './character'
 import { Timesheet } from './timesheet'
 import { loadCharacter, loadTimesheet } from './loader'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js'
@@ -14,8 +14,7 @@ export const newCharacter = async (
 ) => {
 	// For each character we need to copy the gltf scene
 	const gltfClone = SkeletonUtils.clone(gltf.scene)
-	const character = new Character()
-	character.initialize(gltfClone, await loadCharacter(model))
+	const character = new ScenarioCharacter(gltfClone, await loadCharacter(model))
 	character.addPosition(x, y, z)
 	const timesheet = new Timesheet()
 	timesheet.setAnimationMap(await loadTimesheet(animation))

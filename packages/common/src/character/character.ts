@@ -1,16 +1,28 @@
 import * as THREE from "three";
 
+// Base static character
 class Character {
-  model: THREE.Group;
+  gltf: THREE.Object3D;
+
+  constructor(gltf: THREE.Object3D) {
+    this.gltf = gltf;
+  }
+
+  getModel = (): THREE.Object3D => {
+    return this.gltf;
+  };
+}
+
+// Character with animations
+class AnimatedCharacter extends Character {
   mixer: THREE.AnimationMixer;
   animations: THREE.AnimationClip[];
 
-  constructor(model: THREE.Group, animations: THREE.AnimationClip[]) {
-    this.model = model;
+  constructor(gltf: THREE.Object3D, animations: THREE.AnimationClip[]) {
+    super(gltf);
     this.animations = animations;
-    this.mixer = new THREE.AnimationMixer(model);
+    this.mixer = new THREE.AnimationMixer(gltf);
     this.setAnimation("Idle");
-    this.hideAllParts();
   }
 
   playAnimation = (animation: THREE.AnimationClip): void => {
@@ -26,13 +38,17 @@ class Character {
       this.playAnimation(animation);
     }
   };
+}
 
-  getModel = (): THREE.Group => {
-    return this.model;
-  };
+// Character with animations and toggleable parts
+class ToggleableCharacter extends AnimatedCharacter {
+  constructor(gltf: THREE.Object3D, animations: THREE.AnimationClip[]) {
+    super(gltf, animations);
+    this.hideAllParts();
+  }
 
   hideAllParts = (): void => {
-    this.model.traverse((object) => {
+    this.gltf.traverse((object) => {
       // Did this ever work?
       //if (object instanceof THREE.SkinnedMesh) {
       if (object.type === "SkinnedMesh") {
@@ -45,21 +61,21 @@ class Character {
   };
 
   showPart = (part: string): void => {
-    const partObject = this.model.getObjectByName(part);
+    const partObject = this.gltf.getObjectByName(part);
     if (partObject) {
       partObject.visible = true;
     }
   };
 
   hidePart = (part: string): void => {
-    const partObject = this.model.getObjectByName(part);
+    const partObject = this.gltf.getObjectByName(part);
     if (partObject) {
       partObject.visible = false;
     }
   };
 
   togglePartVisibility = (part: string): void => {
-    const partObject = this.model.getObjectByName(part);
+    const partObject = this.gltf.getObjectByName(part);
     if (partObject) {
       partObject.visible = !partObject.visible;
     }
@@ -67,7 +83,7 @@ class Character {
 
   getVisibleParts = (): string[] => {
     const visibleParts: string[] = [];
-    this.model.traverse((object) => {
+    this.gltf.traverse((object) => {
       if (object instanceof THREE.SkinnedMesh) {
         if (object.visible) {
           visibleParts.push(object.name);
@@ -78,4 +94,4 @@ class Character {
   };
 }
 
-export default Character;
+export { Character, AnimatedCharacter, ToggleableCharacter };

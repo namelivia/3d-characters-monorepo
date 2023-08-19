@@ -1,16 +1,16 @@
 import * as THREE from 'three'
 import { Timesheet } from './timesheet'
 import { Animation } from './animation'
+import { Character } from 'common'
 
-class Character {
-	gltf: THREE.Object3D | undefined
+class ScenarioCharacter extends Character {
 	parts: string[] = []
 	objects: THREE.Mesh[] = []
 	animation?: Animation
 	timesheet?: Timesheet
 
-	initialize(gltf: THREE.Object3D, parts: string[]) {
-		this.gltf = gltf
+	constructor(gltf: THREE.Object3D, parts: string[]) {
+		super(gltf)
 		this.parts = parts
 		this.objects = this.parts.map((part: string) => {
 			return gltf.getObjectByName(part) as THREE.Mesh
@@ -47,4 +47,5 @@ class Character {
 		}
 	}
 }
-export default Character
+
+export { Character, ScenarioCharacter }

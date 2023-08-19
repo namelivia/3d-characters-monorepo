@@ -1,6 +1,6 @@
 import Selector from './selector/selector'
 import Actions from './actions/actions'
-import { loadGLTF, Character, World } from 'common'
+import { loadGLTF, ToggleableCharacter, World } from 'common'
 
 const saveSelectedObjects = (selectedObjects: string[]) => {
 	const bb = new Blob([JSON.stringify(selectedObjects)], { type: 'text/plain' })
@@ -23,7 +23,7 @@ const main = async () => {
 	// Initialize world and character
 	const world = new World()
 	world.initialize()
-	const character = new Character(model.scene, model.animations)
+	const character = new ToggleableCharacter(model.scene, model.animations)
 	world.add(character)
 	world.animate()
 

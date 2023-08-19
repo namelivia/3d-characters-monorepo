@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { getRandomColor } from "../colors/colors";
-import Character from "../character/character";
+import { Character, AnimatedCharacter } from "../character/character";
 
 class World {
   scene?: THREE.Scene;
@@ -68,14 +68,18 @@ class World {
   add = (character: Character) => {
     if (this.scene) {
       this.scene.add(character.getModel());
-      this.mixers.push(character.mixer);
+      if (character instanceof AnimatedCharacter) {
+        this.mixers.push(character.mixer);
+      }
     }
   };
 
   remove = (character: Character) => {
     if (this.scene) {
       this.scene.remove(character.getModel());
-      this.mixers = this.mixers.filter((mixer) => mixer !== character.mixer);
+      if (character instanceof AnimatedCharacter) {
+        this.mixers = this.mixers.filter((mixer) => mixer !== character.mixer);
+      }
     }
   };
 }

@@ -26,7 +26,7 @@ class World {
   };
 
   setupLight = (): void => {
-    const light = new THREE.AmbientLight(0xf5f5f5);
+    const light = new THREE.AmbientLight(0xffffff, 1);
     if (this.scene) {
       this.scene.add(light);
     }

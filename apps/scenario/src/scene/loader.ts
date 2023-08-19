@@ -1,5 +1,6 @@
 import Scene from './scene'
 import { newCharacter } from '../characters/factory'
+import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 type SceneJson = {
 	characters: {
@@ -10,7 +11,7 @@ type SceneJson = {
 }
 
 const processScene = async (
-	gltf: { [name: string]: THREE.Mesh },
+	gltf: GLTF,
 	sceneJson: SceneJson
 ): Promise<Scene> => {
 	const scene = new Scene()
@@ -28,10 +29,7 @@ const processScene = async (
 	return scene
 }
 
-export const loadScene = async (
-	gltf: { [name: string]: THREE.Mesh },
-	key: string
-): Promise<Scene> => {
+export const loadScene = async (gltf: GLTF, key: string): Promise<Scene> => {
 	const response = await fetch(`./scenes/${key}.json`)
 	const json = await response.json()
 	return processScene(gltf, json)

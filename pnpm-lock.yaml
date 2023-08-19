@@ -116,6 +116,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^6.2.1
         version: 6.2.1(eslint@8.46.0)(typescript@5.1.6)
+      common:
+        specifier: workspace:*
+        version: link:../../packages/common
       eslint:
         specifier: ^8.46.0
         version: 8.46.0

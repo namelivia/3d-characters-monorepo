@@ -3,17 +3,17 @@ import { Timesheet } from './timesheet'
 import { Animation } from './animation'
 
 class Character {
-	gltf: { [name: string]: THREE.Mesh } = {}
+	gltf: THREE.Object3D | undefined
 	parts: string[] = []
 	objects: THREE.Mesh[] = []
 	animation?: Animation
 	timesheet?: Timesheet
 
-	initialize(gltf: { [name: string]: THREE.Mesh }, parts: string[]) {
+	initialize(gltf: THREE.Object3D, parts: string[]) {
 		this.gltf = gltf
 		this.parts = parts
 		this.objects = this.parts.map((part: string) => {
-			return this.gltf[part].clone()
+			return gltf.getObjectByName(part) as THREE.Mesh
 		})
 	}
 

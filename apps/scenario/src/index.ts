@@ -1,4 +1,4 @@
-import { loadGLTF } from './gltf/loader'
+import { loadGLTF } from 'common'
 import { loadScene } from './scene/loader'
 import World from './world/world'
 import Dialog from './dialog/dialog'

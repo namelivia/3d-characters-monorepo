@@ -1,17 +1,21 @@
 import Character from './character'
 import { Timesheet } from './timesheet'
 import { loadCharacter, loadTimesheet } from './loader'
+import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js'
 
 export const newCharacter = async (
-	gltf: { [name: string]: THREE.Mesh },
+	gltf: GLTF,
 	model: string,
 	animation: string,
 	x: number,
 	y: number,
 	z: number
 ) => {
+	// For each character we need to copy the gltf scene
+	const gltfClone = SkeletonUtils.clone(gltf.scene)
 	const character = new Character()
-	character.initialize(gltf, await loadCharacter(model))
+	character.initialize(gltfClone, await loadCharacter(model))
 	character.addPosition(x, y, z)
 	const timesheet = new Timesheet()
 	timesheet.setAnimationMap(await loadTimesheet(animation))

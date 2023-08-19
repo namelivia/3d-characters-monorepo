@@ -1,3 +1,6 @@
 # Monorepo
 
-To start go to each app and run `pnpm run start`
+This monorepo contains:
+
+ - [3D Character editor](https://github.com/namelivia/3d-characters-monorepo/tree/master/apps/editor)
+ - [3D World visualizer](https://github.com/namelivia/3d-characters-monorepo/tree/master/apps/scenario)

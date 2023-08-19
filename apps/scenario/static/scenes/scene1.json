@@ -3,27 +3,32 @@
         {
             "model": "naked_magician",
             "position": [-5, 0, 0],
-            "movement": "movement1"
+            "movement": "movement1",
+            "animation": "animation1"
         },
         {
             "model": "dude",
             "position": [0, 0, 0],
-            "movement": "movement2"
+            "movement": "movement2",
+            "animation": "animation2"
         },
         {
             "model": "naked_hipster",
             "position": [5, 0, 0],
-            "movement": "movement3"
+            "movement": "movement3",
+            "animation": "animation3"
         },
         {
             "model": "one_punch",
             "position": [0, 0, 5],
-            "movement": "movement4"
+            "movement": "movement4",
+            "animation": "animation4"
         },
         {
             "model": "weirdo",
             "position": [0, 0, -5],
-            "movement": "movement5"
+            "movement": "movement5",
+            "animation": "animation5"
         }
     ]
 }

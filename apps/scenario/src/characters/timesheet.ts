@@ -45,6 +45,10 @@ export class Timesheet {
 		this.movementIndex = movementIndex
 	}
 
+	setAnimationMap = (animationIndex: AnimationMapTotal) => {
+		this.animationIndex = animationIndex
+	}
+
 	getMovement = (time: number): Movement => {
 		const relative_time = time % this.movementIndex.length
 		const keys = Object.keys(this.movementIndex.index).map((x) => Number(x))

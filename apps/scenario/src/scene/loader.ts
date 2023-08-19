@@ -6,6 +6,7 @@ type SceneJson = {
 	characters: {
 		model: string
 		movement: string
+		animation: string
 		position: [number, number, number]
 	}[]
 }
@@ -20,6 +21,7 @@ const processScene = async (
 			gltf,
 			character.model,
 			character.movement,
+			character.animation,
 			character.position[0],
 			character.position[1],
 			character.position[2]

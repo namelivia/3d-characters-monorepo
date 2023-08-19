@@ -1,39 +1,28 @@
 import * as THREE from 'three'
 import { Timesheet } from './timesheet'
 import { Movement } from './movement'
-import { Character } from 'common'
+import { AnimatedCharacter } from 'common'
 
-class ScenarioCharacter extends Character {
-	parts: string[] = []
+class ScenarioCharacter extends AnimatedCharacter {
 	objects: THREE.Mesh[] = []
 	movement?: Movement
 	timesheet?: Timesheet
 
-	constructor(gltf: THREE.Object3D, parts: string[]) {
-		super(gltf)
-		this.parts = parts
-		this.objects = this.parts.map((part: string) => {
-			return gltf.getObjectByName(part) as THREE.Mesh
+	cleanupGLTF(gltf: THREE.Object3D, parts: string[]) {
+		//Remove all meshes that are not bones or parts of the character
+		const armature = gltf.children[0]
+		armature.children = armature.children.filter((child) => {
+			return child.type === 'Bone' || parts.includes(child.name)
 		})
 	}
 
-	addToScene(scene: THREE.Scene) {
-		this.objects.forEach((object: THREE.Mesh) => {
-			scene.add(object)
-		})
-	}
-
-	addPosition(x: number, y: number, z: number) {
-		this.objects.forEach((object: THREE.Mesh) => {
-			object.position.x += x
-			object.position.y += y
-			object.position.z += z
-		})
-	}
-	addRotation(y: number) {
-		this.objects.forEach((object: THREE.Mesh) => {
-			object.rotation.y += y
-		})
+	constructor(
+		gltf: THREE.Object3D,
+		animations: THREE.AnimationClip[],
+		parts: string[]
+	) {
+		super(gltf, animations)
+		this.cleanupGLTF(gltf, parts)
 	}
 
 	setTimesheet(timesheet: Timesheet) {
@@ -48,4 +37,4 @@ class ScenarioCharacter extends Character {
 	}
 }
 
-export { Character, ScenarioCharacter }
+export { ScenarioCharacter }

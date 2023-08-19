@@ -5,7 +5,7 @@ import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js'
 type SceneJson = {
 	characters: {
 		model: string
-		animation: string
+		movement: string
 		position: [number, number, number]
 	}[]
 }
@@ -19,7 +19,7 @@ const processScene = async (
 		const new_character = await newCharacter(
 			gltf,
 			character.model,
-			character.animation,
+			character.movement,
 			character.position[0],
 			character.position[1],
 			character.position[2]

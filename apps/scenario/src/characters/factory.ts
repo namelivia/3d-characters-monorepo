@@ -13,8 +13,12 @@ export const newCharacter = async (
 	z: number
 ) => {
 	// For each character we need to copy the gltf scene
-	const gltfClone = SkeletonUtils.clone(gltf.scene)
-	const character = new ScenarioCharacter(gltfClone, await loadCharacter(model))
+	const gltfSceneClone = SkeletonUtils.clone(gltf.scene)
+	const character = new ScenarioCharacter(
+		gltfSceneClone,
+		gltf.animations,
+		await loadCharacter(model)
+	)
 	character.addPosition(x, y, z)
 	const timesheet = new Timesheet()
 	timesheet.setMovementMap(await loadTimesheet(movement))

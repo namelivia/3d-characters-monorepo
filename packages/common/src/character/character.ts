@@ -1,11 +1,21 @@
 import * as THREE from "three";
 
-// Base static character
+// Base character class
 class Character {
   gltf: THREE.Object3D;
 
   constructor(gltf: THREE.Object3D) {
     this.gltf = gltf;
+  }
+
+  addPosition(x: number, y: number, z: number) {
+    this.gltf.position.x += x;
+    this.gltf.position.y += y;
+    this.gltf.position.z += z;
+  }
+
+  addRotation(y: number) {
+    this.gltf.rotation.y += y;
   }
 
   getModel = (): THREE.Object3D => {
@@ -40,7 +50,7 @@ class AnimatedCharacter extends Character {
   };
 }
 
-// Character with animations and toggleable parts
+// Character with animations and toggleable parts for the editor
 class ToggleableCharacter extends AnimatedCharacter {
   constructor(gltf: THREE.Object3D, animations: THREE.AnimationClip[]) {
     super(gltf, animations);

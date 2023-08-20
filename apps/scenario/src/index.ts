@@ -19,17 +19,16 @@ const setFullscreen = () => {
 const setScene = async (gltf: GLTF, world: World, sceneName: string) => {
 	const scene = await loadScene(gltf, sceneName)
 	world.loadScene(scene)
-
-	requestAnimationFrame(function animate() {
-		world.step()
-		requestAnimationFrame(animate)
-	})
 }
 
 const main = async () => {
 	const world = new World()
+	requestAnimationFrame(function animate() {
+		world.step()
+		requestAnimationFrame(animate)
+	})
 	const gltf = await loadGLTF()
-	await setScene(gltf, world, 'scene1')
+	await setScene(gltf, world, 'scene2')
 	const dialog = new Dialog()
 	const overlay = new Overlay()
 	const audio = new Audio()
@@ -62,7 +61,7 @@ const main = async () => {
 	setTimeout(async () => {
 		audio.setSong(0)
 		overlay.removeVideo()
-		await setScene(gltf, world, 'scene2')
+		await setScene(gltf, world, 'scene1')
 	}, 25000)
 
 	const allowAudioButton = document.getElementById('music')

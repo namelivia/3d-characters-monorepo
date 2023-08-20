@@ -2,9 +2,9 @@
     "characters": [
         {
             "model": "naked_magician",
-            "position": [-5, 0, 0],
-            "movement": "movement1",
-            "animation": "animation1"
+            "position": [0, 0, 0],
+            "movement": "movement6",
+            "animation": "animation6"
         }
     ]
 }

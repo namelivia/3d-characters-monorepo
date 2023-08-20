@@ -3,13 +3,12 @@ export default class Dialog {
 	visible = false
 	addToDOM() {
 		const threeDView = document.getElementById('3d-view')
-		const threeDViewHeight = threeDView?.clientHeight
 		const uiContainer = document.createElement('div')
 		uiContainer.id = '2d-view'
 		uiContainer.style.width = '100%'
 		uiContainer.style.height = '200px'
 		uiContainer.style.position = 'absolute'
-		uiContainer.style.top = `${threeDViewHeight}px - 400px`
+		uiContainer.style.top = '0'
 		uiContainer.style.userSelect = 'none'
 		uiContainer.style.display = this.visible ? 'block' : 'none'
 

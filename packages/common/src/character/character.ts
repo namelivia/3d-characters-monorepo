@@ -27,6 +27,7 @@ class Character {
 class AnimatedCharacter extends Character {
   mixer: THREE.AnimationMixer;
   animations: THREE.AnimationClip[];
+  currentAnimation?: THREE.AnimationAction;
 
   constructor(gltf: THREE.Object3D, animations: THREE.AnimationClip[]) {
     super(gltf);
@@ -35,17 +36,21 @@ class AnimatedCharacter extends Character {
     this.setAnimation("idle");
   }
 
-  playAnimation = (animation: THREE.AnimationClip): void => {
-    const action = this.mixer.clipAction(animation);
-    action.play();
-  };
-
   setAnimation = (animationName: string): void => {
     const animation = this.animations.find(
       (animation) => animation.name === animationName
     );
     if (animation) {
-      this.playAnimation(animation);
+      const newAnimation = this.mixer.clipAction(animation);
+      if (this.currentAnimation === undefined) {
+        this.currentAnimation = newAnimation;
+      } else {
+        if (this.currentAnimation !== newAnimation) {
+          this.currentAnimation.stop();
+          this.currentAnimation = newAnimation;
+        }
+      }
+      this.currentAnimation.play();
     }
   };
 }

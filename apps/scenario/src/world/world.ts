@@ -13,6 +13,7 @@ class World {
 
 	initialize = () => {
 		this.characters = []
+		this.time = 0
 		this.world3D.initialize()
 	}
 
@@ -30,6 +31,7 @@ class World {
 	}
 
 	loadScene = (scene: Scene) => {
+		this.initialize()
 		scene.characters.forEach((character) => {
 			this.addCharacter(character)
 		})

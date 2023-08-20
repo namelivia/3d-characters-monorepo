@@ -1,4 +1,5 @@
 import { loadGLTF } from 'common'
+import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { loadScene } from './scene/loader'
 import World from './world/world'
 import Dialog from './dialog/dialog'
@@ -15,8 +16,20 @@ const setFullscreen = () => {
 	}
 }
 
+const setScene = async (gltf: GLTF, world: World, sceneName: string) => {
+	const scene = await loadScene(gltf, sceneName)
+	world.loadScene(scene)
+
+	requestAnimationFrame(function animate() {
+		world.step()
+		requestAnimationFrame(animate)
+	})
+}
+
 const main = async () => {
 	const world = new World()
+	const gltf = await loadGLTF()
+	await setScene(gltf, world, 'scene1')
 	const dialog = new Dialog()
 	const overlay = new Overlay()
 	const audio = new Audio()
@@ -46,19 +59,11 @@ const main = async () => {
 		audio.setSong(1)
 		overlay.setVideo('media/intro.mp4')
 	}, 20000)
-	setTimeout(() => {
+	setTimeout(async () => {
 		audio.setSong(0)
 		overlay.removeVideo()
+		await setScene(gltf, world, 'scene2')
 	}, 25000)
-	world.initialize()
-	const gltf = await loadGLTF()
-	const scene = await loadScene(gltf, 'scene1')
-	world.loadScene(scene)
-
-	requestAnimationFrame(function animate() {
-		world.step()
-		requestAnimationFrame(animate)
-	})
 
 	const allowAudioButton = document.getElementById('music')
 	if (allowAudioButton) {

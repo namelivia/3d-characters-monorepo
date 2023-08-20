@@ -9,9 +9,13 @@ class World {
   renderer?: THREE.WebGLRenderer;
   mixers: THREE.AnimationMixer[] = [];
 
+  constructor() {
+    this.renderer = this.setupRenderer();
+  }
+
   public initialize = () => {
     this.scene = new THREE.Scene();
-    this.renderer = this.setupRenderer();
+    this.mixers = [];
     this.camera = this.setupCamera();
     this.setupControls();
     this.setupLight();

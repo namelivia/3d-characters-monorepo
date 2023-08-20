@@ -32,7 +32,7 @@ class AnimatedCharacter extends Character {
     super(gltf);
     this.animations = animations;
     this.mixer = new THREE.AnimationMixer(gltf);
-    this.setAnimation("Idle");
+    this.setAnimation("idle");
   }
 
   playAnimation = (animation: THREE.AnimationClip): void => {

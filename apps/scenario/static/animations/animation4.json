@@ -1,8 +1,8 @@
 {
     "index": {
-        "0": "Idle",
+        "0": "idle",
         "500": "wave",
-        "600": "Idle"
+        "600": "idle"
     },
     "length": 1000
 }

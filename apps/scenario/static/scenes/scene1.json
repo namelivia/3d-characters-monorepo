@@ -23,18 +23,12 @@
             "position": [0, 0, 5],
             "movement": "movement4",
             "animation": "animation4"
-        },
-        {
-            "model": "weirdo",
-            "position": [0, 0, -5],
-            "movement": "movement5",
-            "animation": "animation5"
         }
     ],
     "dialogs": [
         {
             "id": "33843d75-c519-4c3e-8b6e-d55e666cf6aa",
-            "text": "We are a bunch of dudes",
+            "text": "These are my friends. They are all very cool.",
             "start": 200,
             "duration": 500
         }

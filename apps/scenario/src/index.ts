@@ -39,16 +39,16 @@ const main = async () => {
 		audio.startSong(0)
 		audio.setSong(0)
 	}, 1000)
-	setTimeout(() => {
+	/*setTimeout(() => {
 		audio.startSong(1)
 		audio.setSong(1)
 		overlay.setVideo('media/intro.mp4')
-	}, 20000)
+	}, 20000)*/
 	setTimeout(async () => {
 		audio.setSong(0)
 		overlay.removeVideo()
 		await setScene(gltf, world, 'scene1')
-	}, 25000)
+	}, 20000)
 
 	const allowAudioButton = document.getElementById('music')
 	if (allowAudioButton) {

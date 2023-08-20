@@ -3,27 +3,52 @@ import { Timesheet } from './timesheet'
 import { Movement } from './movement'
 import { AnimatedCharacter } from 'common'
 
+type Part = {
+	part: string
+	color: string | null
+}
+
 class ScenarioCharacter extends AnimatedCharacter {
 	gltf: THREE.Object3D
 	movement?: Movement
 	timesheet?: Timesheet
 
-	cleanupGLTF(gltf: THREE.Object3D, parts: string[]) {
+	cleanupGLTF(parts: string[]) {
 		//Remove all meshes that are not bones or parts of the character
-		const armature = gltf.children[0]
+		const armature = this.gltf.children[0]
 		armature.children = armature.children.filter((child) => {
 			return child.type === 'Bone' || parts.includes(child.name)
+		})
+	}
+
+	applyColors(parts: Part[]) {
+		const armature = this.gltf.children[0]
+		armature.children.forEach((child) => {
+			if (child.type === 'SkinnedMesh') {
+				const mesh = child as THREE.Mesh
+				const part = parts.find((part) => part.part === child.name)
+				if (part) {
+					if (part.color) {
+						const material = mesh.material as THREE.MeshStandardMaterial
+						const newMaterial = material.clone()
+						newMaterial.map = null
+						newMaterial.color = new THREE.Color(parseInt(part.color, 16))
+						mesh.material = newMaterial
+					}
+				}
+			}
 		})
 	}
 
 	constructor(
 		gltf: THREE.Object3D,
 		animations: THREE.AnimationClip[],
-		parts: string[]
+		parts: Part[]
 	) {
 		super(gltf, animations)
 		this.gltf = gltf
-		this.cleanupGLTF(gltf, parts)
+		this.applyColors(parts)
+		this.cleanupGLTF(parts.map((part) => part.part))
 	}
 
 	setTimesheet(timesheet: Timesheet) {

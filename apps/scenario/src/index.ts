@@ -2,7 +2,6 @@ import { loadGLTF } from 'common'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { loadScene } from './scene/loader'
 import World from './world/world'
-import Dialog from './dialog/dialog'
 import Overlay from './overlay/overlay'
 import Audio from './audio/audio'
 
@@ -29,12 +28,10 @@ const main = async () => {
 	})
 	const gltf = await loadGLTF()
 	await setScene(gltf, world, 'scene2')
-	const dialog = new Dialog()
 	const overlay = new Overlay()
 	const audio = new Audio()
 	audio.initialize(['media/music.ogg', 'media/music2.ogg'])
 
-	dialog.addToDOM()
 	overlay.addToDOM()
 	overlay.fadeOut()
 	setTimeout(() => {
@@ -42,14 +39,6 @@ const main = async () => {
 		audio.startSong(0)
 		audio.setSong(0)
 	}, 1000)
-	setTimeout(() => {
-		dialog.setText('Hello world!')
-		dialog.setVisible(true)
-	}, 5000)
-	setTimeout(() => {
-		dialog.setText('')
-		dialog.setVisible(false)
-	}, 10000)
 	setTimeout(() => {
 		audio.startSong(1)
 		audio.setSong(1)

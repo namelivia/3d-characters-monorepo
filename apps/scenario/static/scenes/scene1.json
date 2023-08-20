@@ -30,5 +30,13 @@
             "movement": "movement5",
             "animation": "animation5"
         }
+    ],
+    "dialogs": [
+        {
+            "id": "33843d75-c519-4c3e-8b6e-d55e666cf6aa",
+            "text": "We are a bunch of dudes",
+            "start": 200,
+            "duration": 500
+        }
     ]
 }

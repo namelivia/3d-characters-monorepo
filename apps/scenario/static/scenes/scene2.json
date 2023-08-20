@@ -6,5 +6,13 @@
             "movement": "movement6",
             "animation": "animation6"
         }
+    ],
+    "dialogs": [
+        {
+            "id": "4fc12127-76c5-4850-8f29-8c079bc82ba2",
+            "text": "I'm just walking",
+            "start": 500,
+            "duration": 500
+        }
     ]
 }

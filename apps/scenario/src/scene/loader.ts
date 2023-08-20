@@ -1,4 +1,5 @@
 import Scene from './scene'
+import Dialog from '../dialogs/dialog'
 import { newCharacter } from '../characters/factory'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
@@ -8,6 +9,12 @@ type SceneJson = {
 		movement: string
 		animation: string
 		position: [number, number, number]
+	}[]
+	dialogs: {
+		id: string
+		text: string
+		start: number
+		duration: number
 	}[]
 }
 
@@ -27,6 +34,11 @@ const processScene = async (
 			character.position[2]
 		)
 		scene.addCharacter(new_character)
+	}
+	for await (const dialog of sceneJson.dialogs) {
+		scene.addDialog(
+			new Dialog(dialog.id, dialog.text, dialog.start, dialog.duration)
+		)
 	}
 	return scene
 }

@@ -1,6 +1,7 @@
 {
     "index": {
-        "0": "move_front"
+        "0": "move_front",
+        "500": "stay"
     },
-    "length": 100
+    "length": 1000
 }

@@ -47,12 +47,9 @@ const main = async () => {
 		dialog.setVisible(true)
 	}, 5000)
 	setTimeout(() => {
-		dialog.setText("This is just a test. Don't be too harsh on me.")
-	}, 10000)
-	setTimeout(() => {
 		dialog.setText('')
 		dialog.setVisible(false)
-	}, 15000)
+	}, 10000)
 	setTimeout(() => {
 		audio.startSong(1)
 		audio.setSong(1)

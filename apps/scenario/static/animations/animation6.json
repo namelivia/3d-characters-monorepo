@@ -1,6 +1,7 @@
 {
     "index": {
-        "0": "walk"
+        "0": "walk",
+        "500": "wave"
     },
-    "length": 900
+    "length": 1000
 }

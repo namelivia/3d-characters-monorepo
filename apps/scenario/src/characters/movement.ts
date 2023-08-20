@@ -86,6 +86,12 @@ export class MoveDown extends Movement {
 	}
 }
 
+export class Stay extends Movement {
+	move = () => {
+		//Do nothing
+	}
+}
+
 type MovementIndex = {
 	[key: string]: Movement
 }
@@ -99,4 +105,5 @@ export const MovementList: MovementIndex = {
 	move_right: new MoveRight(),
 	move_front: new MoveFront(),
 	move_back: new MoveBack(),
+	stay: new Stay(),
 }

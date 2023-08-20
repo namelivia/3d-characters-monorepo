@@ -68,6 +68,12 @@ class ToggleableCharacter extends AnimatedCharacter {
       //if (object instanceof THREE.SkinnedMesh) {
       if (object.type === "SkinnedMesh") {
         object.visible = false;
+        const mesh = object as THREE.Mesh;
+        const material = mesh.material as THREE.MeshStandardMaterial;
+        if (material.map === null) {
+          // No texture
+          material.color = new THREE.Color(0xff0000);
+        }
       } else {
         console.debug("No need to hide:");
         console.debug(object);

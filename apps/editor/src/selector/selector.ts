@@ -2,6 +2,9 @@ import * as THREE from 'three'
 
 class Selector {
 	createCheckbox = (object: string) => {
+		const container = document.createElement('div') // Create a container for checkbox and color input
+
+		// Create checkbox element
 		const checkboxElement = document.createElement('input')
 		checkboxElement.type = 'checkbox'
 		checkboxElement.id = object
@@ -13,12 +16,30 @@ class Selector {
 			checkboxElement.dispatchEvent(customEvent)
 		})
 
+		// Create label for checkbox
 		const label = document.createElement('label')
 		label.htmlFor = object
 		label.appendChild(document.createTextNode(object))
+
+		// Create color input element
+		const colorInput = document.createElement('input')
+		colorInput.type = 'color'
+
+		colorInput.addEventListener('change', function () {
+			const customEvent = new CustomEvent('colorInputChange', {
+				detail: object,
+			})
+			colorInput.dispatchEvent(customEvent)
+		})
+
+		// Append elements to the container
+		container.appendChild(checkboxElement)
+		container.appendChild(label)
+		container.appendChild(colorInput)
+
 		const li = document.createElement('li')
-		li.appendChild(checkboxElement)
-		li.appendChild(label)
+		li.appendChild(container)
+
 		return li
 	}
 

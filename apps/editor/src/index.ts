@@ -42,6 +42,17 @@ const main = async () => {
 	)
 
 	document.addEventListener(
+		'colorInputChange',
+		function (event) {
+			const detail = (<CustomEvent>event).detail
+			const input = event.target as HTMLInputElement
+			const colorHex = input.value.replace('#', '0x')
+			character.changePartColor(detail, colorHex)
+		},
+		true
+	)
+
+	document.addEventListener(
 		'myButtonClick',
 		function (event) {
 			const detail = (<CustomEvent>event).detail

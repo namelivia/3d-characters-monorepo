@@ -9,7 +9,7 @@ class ToggleableCharacter extends AnimatedCharacter {
 	}
 
 	hideAllParts = (): void => {
-		this.gltf.traverse((object) => {
+		this.gltf.traverse((object: THREE.Object3D) => {
 			// Did this ever work?
 			//if (object instanceof THREE.SkinnedMesh) {
 			if (object.type === 'SkinnedMesh') {
@@ -42,21 +42,9 @@ class ToggleableCharacter extends AnimatedCharacter {
 		}
 	}
 
-	changePartColor = (part: string, color: string): void => {
-		const partObject = this.gltf.getObjectByName(part)
-		if (partObject) {
-			const mesh = partObject as THREE.Mesh
-			const material = mesh.material as THREE.MeshStandardMaterial
-			const newMaterial = material.clone()
-			newMaterial.map = null
-			newMaterial.color = new THREE.Color(parseInt(color, 16))
-			mesh.material = newMaterial
-		}
-	}
-
 	getVisibleParts = (): string[] => {
 		const visibleParts: string[] = []
-		this.gltf.traverse((object) => {
+		this.gltf.traverse((object: THREE.Object3D) => {
 			if (object instanceof THREE.SkinnedMesh) {
 				if (object.visible) {
 					visibleParts.push(object.name)

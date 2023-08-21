@@ -24,13 +24,7 @@ class ScenarioCharacter extends AnimatedCharacter {
 	applyColors(parts: Part[]) {
 		parts.forEach((part) => {
 			if (part.color) {
-				const partObject = this.gltf.getObjectByName(part.part)
-				const mesh = partObject as THREE.Mesh
-				const material = mesh.material as THREE.MeshStandardMaterial
-				const newMaterial = material.clone()
-				newMaterial.map = null
-				newMaterial.color = new THREE.Color(parseInt(part.color, 16))
-				mesh.material = newMaterial
+				this.changePartColor(part.part, part.color)
 			}
 		})
 	}

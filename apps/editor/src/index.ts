@@ -1,6 +1,7 @@
 import Selector from './selector/selector'
 import Actions from './actions/actions'
-import { loadGLTF, ToggleableCharacter, World } from 'common'
+import { loadGLTF, World } from 'common'
+import ToggleableCharacter from './character/character'
 
 const saveSelectedObjects = (selectedObjects: string[]) => {
 	const bb = new Blob([JSON.stringify(selectedObjects)], { type: 'text/plain' })

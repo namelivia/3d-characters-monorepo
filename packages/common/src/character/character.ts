@@ -96,6 +96,18 @@ class ToggleableCharacter extends AnimatedCharacter {
     }
   };
 
+  changePartColor = (part: string, color: string): void => {
+    const partObject = this.gltf.getObjectByName(part);
+    if (partObject) {
+      const mesh = partObject as THREE.Mesh;
+      const material = mesh.material as THREE.MeshStandardMaterial;
+      const newMaterial = material.clone();
+      newMaterial.map = null;
+      newMaterial.color = new THREE.Color(parseInt(color, 16));
+      mesh.material = newMaterial;
+    }
+  };
+
   getVisibleParts = (): string[] => {
     const visibleParts: string[] = [];
     this.gltf.traverse((object) => {

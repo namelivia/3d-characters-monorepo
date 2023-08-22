@@ -38,6 +38,7 @@ type SceneJson = {
 
 const processScene = async (
 	gltf: GLTF,
+	scenario: GLTF,
 	sceneJson: SceneJson
 ): Promise<Scene> => {
 	const scene = new Scene()
@@ -57,12 +58,17 @@ const processScene = async (
 		scene.addDialog(
 			new Dialog(dialog.id, dialog.text, dialog.start, dialog.duration)
 		)
+		scene.setScenario(scenario)
 	}
 	return scene
 }
 
-export const loadScene = async (gltf: GLTF, key: string): Promise<Scene> => {
+export const loadScene = async (
+	gltf: GLTF,
+	scenario: GLTF,
+	key: string
+): Promise<Scene> => {
 	const response = await fetch(`./scenes/${key}.json`)
 	const json = await response.json()
-	return processScene(gltf, json)
+	return processScene(gltf, scenario, json)
 }

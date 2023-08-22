@@ -1,4 +1,5 @@
 import { ScenarioCharacter } from '../characters/character'
+import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import Dialog from '../dialogs/dialog'
 import View2D from '../view_2d/view_2d'
 import Scene from '../scene/scene'
@@ -40,6 +41,10 @@ class World {
 		this.world3D.add(character)
 	}
 
+	addScenario = (scenario: GLTF) => {
+		this.world3D.addScenario(scenario)
+	}
+
 	addDialog = (dialog: Dialog) => {
 		this.dialogs?.push(dialog)
 	}
@@ -49,6 +54,9 @@ class World {
 		scene.characters.forEach((character) => {
 			this.addCharacter(character)
 		})
+		if (scene.scenario) {
+			this.addScenario(scene.scenario)
+		}
 		scene.dialogs.forEach((dialog) => {
 			dialog.setView2D(this.view2D)
 			this.addDialog(dialog)

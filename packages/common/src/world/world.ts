@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { getRandomColor } from "../colors/colors";
 import { Character, AnimatedCharacter } from "../character/character";
+import { GLTF } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 class World {
   scene?: THREE.Scene;
@@ -74,6 +75,20 @@ class World {
       if (character instanceof AnimatedCharacter) {
         this.mixers.push(character.mixer);
       }
+    }
+  };
+
+  addScenario = (scenario: GLTF) => {
+    if (this.scene) {
+      //Apply the camera from the scenario
+      const camera = scenario.cameras[0] as THREE.PerspectiveCamera;
+      this.camera = camera;
+      const scene = scenario.scene;
+      const walkmesh = scene.getObjectByName("Walkmesh");
+      if (walkmesh) {
+        walkmesh.visible = false;
+      }
+      this.scene.add(scene);
     }
   };
 

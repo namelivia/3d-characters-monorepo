@@ -1,0 +1,8 @@
+{
+    "index": {
+        "0": "move_front",
+        "500": "spin_left",
+        "700": "stay"
+    },
+    "length": 1500
+}

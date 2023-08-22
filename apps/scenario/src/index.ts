@@ -33,7 +33,7 @@ const main = async () => {
 	})
 	const gltf = await loadGLTF('models/test.gltf')
 	const scenario = await loadGLTF('models/scene.gltf')
-	await setScene(gltf, scenario, world, 'scene2')
+	await setScene(gltf, scenario, world, 'scene1')
 	const overlay = new Overlay()
 	const audio = new Audio()
 	audio.initialize(['media/music.ogg', 'media/music2.ogg'])
@@ -53,7 +53,7 @@ const main = async () => {
 	setTimeout(async () => {
 		audio.setSong(0)
 		overlay.removeVideo()
-		await setScene(gltf, scenario, world, 'scene1')
+		await setScene(gltf, scenario, world, 'scene2')
 	}, 20000)
 
 	const allowAudioButton = document.getElementById('music')

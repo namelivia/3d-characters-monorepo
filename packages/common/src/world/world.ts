@@ -20,10 +20,9 @@ class World {
     this.camera = this.setupCamera();
     this.setupControls();
     this.setupLight();
-    this.addFloor();
   };
 
-  addFloor = (): void => {
+  addFloorGrid = (): void => {
     const grid = new THREE.GridHelper(6, 6, getRandomColor(), getRandomColor());
     if (this.scene) {
       this.scene.add(grid);

@@ -24,6 +24,7 @@ const main = async () => {
 	// Initialize world and character
 	const world = new World()
 	world.initialize()
+	world.addFloorGrid()
 	const character = new ToggleableCharacter(model.scene, model.animations)
 	world.add(character)
 

@@ -1,4 +1,5 @@
 import Scene from './scene'
+import Transition from './transition'
 import Dialog from '../dialogs/dialog'
 import { newCharacter } from '../characters/factory'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js'
@@ -34,6 +35,10 @@ type SceneJson = {
 		start: number
 		duration: number
 	}[]
+	transitions: {
+		scene: string
+		time: number
+	}[]
 }
 
 const processScene = async (
@@ -53,6 +58,9 @@ const processScene = async (
 			character.position[2]
 		)
 		scene.addCharacter(new_character)
+	}
+	for await (const transition of sceneJson.transitions) {
+		scene.addTransition(new Transition(transition.scene, transition.time))
 	}
 	for await (const dialog of sceneJson.dialogs) {
 		scene.addDialog(

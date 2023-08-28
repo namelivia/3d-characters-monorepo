@@ -26,13 +26,19 @@ const setScene = async (
 }
 
 const main = async () => {
+	const onSceneTransition = async (scene: string) => {
+		await setScene(gltf, scenario, world, scene)
+	}
+
 	const world = new World()
+	world.setOnSceneTransition(onSceneTransition)
 	requestAnimationFrame(function animate() {
 		world.step()
 		requestAnimationFrame(animate)
 	})
 	const gltf = await loadGLTF('models/test.gltf')
 	const scenario = await loadGLTF('models/scene.gltf')
+	// Load initial scene
 	await setScene(gltf, scenario, world, 'scene1')
 	const overlay = new Overlay()
 	const audio = new Audio()
@@ -50,11 +56,6 @@ const main = async () => {
 		audio.setSong(1)
 		overlay.setVideo('media/intro.mp4')
 	}, 20000)*/
-	setTimeout(async () => {
-		audio.setSong(0)
-		overlay.removeVideo()
-		await setScene(gltf, scenario, world, 'scene2')
-	}, 20000)
 
 	const allowAudioButton = document.getElementById('music')
 	if (allowAudioButton) {

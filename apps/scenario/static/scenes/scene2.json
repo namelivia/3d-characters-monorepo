@@ -26,5 +26,11 @@
             "start": 500,
             "duration": 500
         }
+    ],
+    "transitions": [
+        {
+            "scene": "scene1",
+            "time": 1100
+        }
     ]
 }

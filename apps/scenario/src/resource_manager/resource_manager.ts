@@ -27,15 +27,11 @@ class ResourceManager {
 	}
 
 	getModel3d = (key: string): GLTF => {
-		const model = this.models3d.filter((model3d) => {
-			if (model3d.key === key) {
-				return model3d
-			}
-		})
-		if (model.length === 0) {
-			throw Error(`Could not retrieve 3d model with key ${key}`)
+		const model = this.models3d.find((model3d) => model3d.key === key)
+		if (model) {
+			return model.gltf
 		}
-		return model[0].gltf
+		throw Error(`Could not retrieve 3d model with key ${key}`)
 	}
 }
 

@@ -52,12 +52,12 @@ const main = async () => {
 	overlay.fadeOut()
 	setTimeout(() => {
 		overlay.fadeIn()
-		audio.startSong(0)
-		audio.setSong(0)
+		audio.startSong('media/music.ogg')
+		audio.setSong('media/music.ogg')
 	}, 1000)
 	/*setTimeout(() => {
-		audio.startSong(1)
-		audio.setSong(1)
+		audio.startSong('media/music2.ogg')
+		audio.setSong('media/music2.ogg')
 		overlay.setVideo('media/intro.mp4')
 	}, 20000)*/
 

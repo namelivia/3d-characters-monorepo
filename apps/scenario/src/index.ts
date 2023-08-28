@@ -1,9 +1,9 @@
-import { loadGLTF } from 'common'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { loadScene } from './scene/loader'
 import World from './world/world'
 import Overlay from './overlay/overlay'
 import Audio from './audio/audio'
+import ResourceManager from './resource_manager/resource_manager'
 
 const setFullscreen = () => {
 	const windowWidth = window.innerWidth
@@ -31,13 +31,17 @@ const main = async () => {
 	}
 
 	const world = new World()
+	const resources = new ResourceManager()
+	await resources.load({
+		models3d: ['models/test.gltf', 'models/scene.gltf'],
+	})
 	world.setOnSceneTransition(onSceneTransition)
 	requestAnimationFrame(function animate() {
 		world.step()
 		requestAnimationFrame(animate)
 	})
-	const gltf = await loadGLTF('models/test.gltf')
-	const scenario = await loadGLTF('models/scene.gltf')
+	const gltf = resources.getModel3d('models/test.gltf')
+	const scenario = resources.getModel3d('models/scene.gltf')
 	// Load initial scene
 	await setScene(gltf, scenario, world, 'scene1')
 	const overlay = new Overlay()

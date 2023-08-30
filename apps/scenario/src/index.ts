@@ -40,6 +40,9 @@ const main = async () => {
 		world.step()
 		requestAnimationFrame(animate)
 	})
+	//IDEA: Instead of loading here, I defined the resources needed for each scene.
+	// when transitioning the scren, I can load the needed resources if not there
+	// and unload the not needed anymore.
 	const gltf = resources.getModel3d('models/test.gltf')
 	const scenario = resources.getModel3d('models/scene.gltf')
 	// Load initial scene

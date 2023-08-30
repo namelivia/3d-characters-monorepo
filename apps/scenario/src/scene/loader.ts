@@ -23,6 +23,9 @@ export type AnimationMap = {
 }
 
 type SceneJson = {
+	resources: {
+		models3d: string[]
+	}
 	characters: {
 		model: string
 		movement: MovementMap
@@ -46,6 +49,8 @@ const processScene = async (
 	scenario: GLTF,
 	sceneJson: SceneJson
 ): Promise<Scene> => {
+	// IDEA: Here for example is where I could do the resource
+	// management.
 	const scene = new Scene()
 	for await (const character of sceneJson.characters) {
 		const new_character = await newCharacter(

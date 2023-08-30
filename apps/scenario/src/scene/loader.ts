@@ -3,11 +3,29 @@ import Dialog from '../dialogs/dialog'
 import { newCharacter } from '../characters/factory'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
+type MovementKeyframe = {
+	[key: number]: string
+}
+
+type AnimationKeyframe = {
+	[key: number]: string
+}
+
+export type MovementMap = {
+	index: MovementKeyframe
+	length: number
+}
+
+export type AnimationMap = {
+	index: AnimationKeyframe
+	length: number
+}
+
 type SceneJson = {
 	characters: {
 		model: string
-		movement: string
-		animation: string
+		movement: MovementMap
+		animation: AnimationMap
 		position: [number, number, number]
 	}[]
 	dialogs: {

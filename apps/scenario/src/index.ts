@@ -26,7 +26,7 @@ const main = async () => {
 		world.step()
 		requestAnimationFrame(animate)
 	})
-	const gltf = await loadGLTF()
+	const gltf = await loadGLTF('models/test.gltf')
 	await setScene(gltf, world, 'scene2')
 	const overlay = new Overlay()
 	const audio = new Audio()

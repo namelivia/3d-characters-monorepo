@@ -1,18 +1,15 @@
 import { ScenarioCharacter } from './character'
 import { Timesheet } from './timesheet'
-import {
-	loadCharacter,
-	loadMovementTimesheet,
-	loadAnimationTimesheet,
-} from './loader'
+import { loadCharacter } from './loader'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js'
+import { AnimationMap, MovementMap } from '../scene/loader'
 
 export const newCharacter = async (
 	gltf: GLTF,
 	model: string,
-	movement: string,
-	animation: string,
+	movement: MovementMap,
+	animation: AnimationMap,
 	x: number,
 	y: number,
 	z: number
@@ -26,8 +23,8 @@ export const newCharacter = async (
 	)
 	character.addPosition(x, y, z)
 	const timesheet = new Timesheet()
-	timesheet.setMovementMap(await loadMovementTimesheet(movement))
-	timesheet.setAnimationMap(await loadAnimationTimesheet(animation))
+	timesheet.setMovementMap(movement)
+	timesheet.setAnimationMap(animation)
 	character.setTimesheet(timesheet)
 	return character
 }

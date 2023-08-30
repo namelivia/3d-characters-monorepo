@@ -3,26 +3,78 @@
         {
             "model": "naked_magician",
             "position": [-5, 0, 0],
-            "movement": "movement1",
-            "animation": "animation1"
+            "movement": {
+                "index": {
+                    "0": "move_left",
+                    "100": "move_right"
+                },
+                "length": 200
+            },
+            "animation": {
+                "index": {
+                    "0": "idle",
+                    "400": "wave"
+                },
+                "length": 700
+            }
         },
         {
             "model": "dude",
             "position": [0, 0, 0],
-            "movement": "movement2",
-            "animation": "animation2"
+            "movement": {
+                "index": {
+                    "0": "move_front",
+                    "200": "move_back"
+                },
+                "length": 400
+            }
+            ,
+            "animation": {
+                "index": {
+                    "0": "idle",
+                    "300": "wave",
+                    "600": "idle"
+                },
+                "length": 900
+            }
+
         },
         {
             "model": "naked_hipster",
             "position": [5, 0, 0],
-            "movement": "movement3",
-            "animation": "animation3"
+            "movement": {
+                "index": {
+                    "0": "spin_left",
+                    "100": "spin_right"
+                },
+                "length": 200
+            },
+            "animation": {
+                "index": {
+                    "0": "wave",
+                    "400": "idle"
+                },
+                "length": 800
+            }
         },
         {
             "model": "one_punch",
             "position": [0, 0, 5],
-            "movement": "movement4",
-            "animation": "animation4"
+            "movement": {
+                "index": {
+                    "0": "move_left",
+                    "100": "spin_right"
+                },
+                "length": 200
+            },
+            "animation": {
+                "index": {
+                    "0": "idle",
+                    "500": "wave",
+                    "600": "idle"
+                },
+                "length": 1000
+            }
         }
     ],
     "dialogs": [

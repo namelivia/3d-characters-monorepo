@@ -3,8 +3,20 @@
         {
             "model": "naked_magician",
             "position": [0, 0, -5],
-            "movement": "movement6",
-            "animation": "animation6"
+            "movement": {
+                "index": {
+                    "0": "move_left",
+                    "100": "spin_right"
+                },
+                "length": 200
+            },
+            "animation": {
+                "index": {
+                    "0": "move_left",
+                    "100": "spin_right"
+                },
+                "length": 200
+            }
         }
     ],
     "dialogs": [

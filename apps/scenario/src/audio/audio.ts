@@ -43,7 +43,7 @@ export default class Audio {
 	}
 
 	prepareSong = async (key: string, data: ArrayBuffer) => {
-		//TODO: Is this needed in advance? or is it ok doing it everytime?
+		//TODO: Is this needed in advance? or is it ok doing it when playing?
 		const audioBuffer = await this.audioContext.decodeAudioData(data)
 		const sourceNode = this.audioContext.createBufferSource()
 		sourceNode.buffer = audioBuffer

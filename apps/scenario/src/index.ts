@@ -16,16 +16,17 @@ const setFullscreen = () => {
 
 const setScene = async (
 	resources: ResourceManager,
+	audio: Audio,
 	world: World,
 	sceneName: string
 ) => {
-	const scene = await loadScene(resources, sceneName)
+	const scene = await loadScene(resources, audio, sceneName)
 	world.loadScene(scene)
 }
 
 const main = async () => {
 	const onSceneTransition = async (scene: string) => {
-		await setScene(resources, world, scene)
+		await setScene(resources, audio, world, scene)
 	}
 
 	const overlay = new Overlay()
@@ -39,31 +40,14 @@ const main = async () => {
 		requestAnimationFrame(animate)
 	})
 	// Load initial scene
-	await setScene(resources, world, 'scene1')
-	resources.loadSongs(['media/music.ogg', 'media/music2.ogg'])
-	//TODO: Is this needed in advance? or is it ok doing it everytime?
-	audio.initialize([
-		{
-			key: 'media/music.ogg',
-			data: resources.getSong('media/music.ogg'),
-		},
-		{
-			key: 'media/music2.ogg',
-			data: resources.getSong('media/music2.ogg'),
-		},
-	])
+	await setScene(resources, audio, world, 'scene1')
 
 	overlay.addToDOM()
-
 	overlay.fadeOut()
 	setTimeout(() => {
 		overlay.fadeIn()
-		audio.startSong('media/music.ogg')
-		audio.setSong('media/music.ogg')
 	}, 1000)
 	/*setTimeout(() => {
-		audio.startSong('media/music2.ogg')
-		audio.setSong('media/music2.ogg')
 		overlay.setVideo('media/intro.mp4')
 	}, 20000)*/
 

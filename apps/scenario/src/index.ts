@@ -1,4 +1,3 @@
-import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { loadScene } from './scene/loader'
 import World from './world/world'
 import Overlay from './overlay/overlay'
@@ -16,37 +15,28 @@ const setFullscreen = () => {
 }
 
 const setScene = async (
-	gltf: GLTF,
-	scenario: GLTF,
+	resources: ResourceManager,
 	world: World,
 	sceneName: string
 ) => {
-	const scene = await loadScene(gltf, scenario, sceneName)
+	const scene = await loadScene(resources, sceneName)
 	world.loadScene(scene)
 }
 
 const main = async () => {
 	const onSceneTransition = async (scene: string) => {
-		await setScene(gltf, scenario, world, scene)
+		await setScene(resources, world, scene)
 	}
 
 	const world = new World()
 	const resources = new ResourceManager()
-	await resources.load({
-		models3d: ['models/test.gltf', 'models/scene.gltf'],
-	})
 	world.setOnSceneTransition(onSceneTransition)
 	requestAnimationFrame(function animate() {
 		world.step()
 		requestAnimationFrame(animate)
 	})
-	//IDEA: Instead of loading here, I defined the resources needed for each scene.
-	// when transitioning the scren, I can load the needed resources if not there
-	// and unload the not needed anymore.
-	const gltf = resources.getModel3d('models/test.gltf')
-	const scenario = resources.getModel3d('models/scene.gltf')
 	// Load initial scene
-	await setScene(gltf, scenario, world, 'scene1')
+	await setScene(resources, world, 'scene1')
 	const overlay = new Overlay()
 	const audio = new Audio()
 	audio.initialize(['media/music.ogg', 'media/music2.ogg'])

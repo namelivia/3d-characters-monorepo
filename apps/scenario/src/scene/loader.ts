@@ -1,8 +1,8 @@
 import Scene from './scene'
 import Transition from './transition'
 import Dialog from '../dialogs/dialog'
+import ResourceManager from '../resource_manager/resource_manager'
 import { newCharacter } from '../characters/factory'
-import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 type MovementKeyframe = {
 	[key: number]: string
@@ -45,16 +45,16 @@ type SceneJson = {
 }
 
 const processScene = async (
-	gltf: GLTF,
-	scenario: GLTF,
+	resources: ResourceManager,
 	sceneJson: SceneJson
 ): Promise<Scene> => {
-	// IDEA: Here for example is where I could do the resource
-	// management.
+	await resources.load({
+		models3d: sceneJson.resources.models3d,
+	})
 	const scene = new Scene()
 	for await (const character of sceneJson.characters) {
 		const new_character = await newCharacter(
-			gltf,
+			resources.getModel3d('models/test.gltf'), //TODO: Maybe this should go in the json
 			character.model,
 			character.movement,
 			character.animation,
@@ -71,17 +71,16 @@ const processScene = async (
 		scene.addDialog(
 			new Dialog(dialog.id, dialog.text, dialog.start, dialog.duration)
 		)
-		scene.setScenario(scenario)
+		scene.setScenario(resources.getModel3d('models/scene.gltf'))
 	}
 	return scene
 }
 
 export const loadScene = async (
-	gltf: GLTF,
-	scenario: GLTF,
+	resources: ResourceManager,
 	key: string
 ): Promise<Scene> => {
 	const response = await fetch(`./scenes/${key}.json`)
 	const json = await response.json()
-	return processScene(gltf, scenario, json)
+	return processScene(resources, json)
 }

@@ -1,10 +1,10 @@
 {
-    "resouces": [
+    "resources": {
         "models3d": [
             "models/test.gltf",
             "models/scene.gltf"
         ]
-    ],
+    },
     "characters": [
         {
             "model": "naked_magician",

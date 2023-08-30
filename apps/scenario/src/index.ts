@@ -40,7 +40,18 @@ const main = async () => {
 	})
 	// Load initial scene
 	await setScene(resources, world, 'scene1')
-	audio.initialize(['media/music.ogg', 'media/music2.ogg'])
+	resources.loadSongs(['media/music.ogg', 'media/music2.ogg'])
+	//TODO: Is this needed in advance? or is it ok doing it everytime?
+	audio.initialize([
+		{
+			key: 'media/music.ogg',
+			data: resources.getSong('media/music.ogg'),
+		},
+		{
+			key: 'media/music2.ogg',
+			data: resources.getSong('media/music2.ogg'),
+		},
+	])
 
 	overlay.addToDOM()
 

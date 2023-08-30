@@ -11,9 +11,9 @@ export default class Audio {
 		this.audioContext = new AudioContext()
 	}
 
-	initialize = async (songs: string[]) => {
+	initialize = async (songs: { key: string; data: ArrayBuffer }[]) => {
 		songs.forEach(async (song) => {
-			this.songs.push(await this.loadSong(song))
+			this.songs.push(await this.prepareSong(song.key, song.data))
 		})
 	}
 
@@ -42,14 +42,13 @@ export default class Audio {
 		song.audio.connect(this.audioContext.destination)
 	}
 
-	loadSong = async (song: string) => {
-		const response = await fetch(song)
-		const arrayBuffer = await response.arrayBuffer()
-		const audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer)
+	prepareSong = async (key: string, data: ArrayBuffer) => {
+		//TODO: Is this needed in advance? or is it ok doing it everytime?
+		const audioBuffer = await this.audioContext.decodeAudioData(data)
 		const sourceNode = this.audioContext.createBufferSource()
 		sourceNode.buffer = audioBuffer
 		return {
-			key: song,
+			key: key,
 			audio: sourceNode,
 		}
 	}

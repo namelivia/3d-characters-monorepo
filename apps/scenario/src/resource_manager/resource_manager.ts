@@ -10,13 +10,20 @@ type Model3d = {
 	key: string
 }
 
+type Song = {
+	data: ArrayBuffer
+	key: string
+}
+
 //TODO: Implement a way to get rid of things that are not necessary anymore.
 
 class ResourceManager {
 	models3d: Model3d[]
+	songs: Song[]
 
 	constructor() {
 		this.models3d = []
+		this.songs = []
 	}
 
 	load = async (resources: Resources) => {
@@ -28,6 +35,32 @@ class ResourceManager {
 				key: model,
 			})
 		}
+	}
+
+	loadSong = async (song: string) => {
+		// Fetch the song and turn it into array buffer
+		const response = await fetch(song)
+		return await response.arrayBuffer()
+	}
+
+	loadSongs = (songs: string[]) => {
+		//TODO: Only iterate the songs that are not
+		// already loaded.
+		songs.forEach(async (song) => {
+			this.songs.push({
+				key: song,
+				data: await this.loadSong(song),
+			})
+		})
+		console.log(this.songs)
+	}
+
+	getSong = (key: string): ArrayBuffer => {
+		const song = this.songs.find((song) => song.key === key)
+		if (song) {
+			return song.data
+		}
+		throw Error(`Could not retrieve song with key ${key}`)
 	}
 
 	getModel3d = (key: string): GLTF => {

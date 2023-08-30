@@ -10,6 +10,8 @@ type Model3d = {
 	key: string
 }
 
+//TODO: Implement a way to get rid of things that are not necessary anymore.
+
 class ResourceManager {
 	models3d: Model3d[]
 
@@ -18,6 +20,8 @@ class ResourceManager {
 	}
 
 	load = async (resources: Resources) => {
+		//TODO: Only iterate the models that are not
+		// already loaded.
 		for (const model of resources.models3d) {
 			this.models3d.push({
 				gltf: await loadGLTF(model),

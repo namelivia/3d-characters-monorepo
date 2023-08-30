@@ -28,8 +28,11 @@ const main = async () => {
 		await setScene(resources, world, scene)
 	}
 
+	const overlay = new Overlay()
+	const audio = new Audio()
 	const world = new World()
 	const resources = new ResourceManager()
+
 	world.setOnSceneTransition(onSceneTransition)
 	requestAnimationFrame(function animate() {
 		world.step()
@@ -37,11 +40,10 @@ const main = async () => {
 	})
 	// Load initial scene
 	await setScene(resources, world, 'scene1')
-	const overlay = new Overlay()
-	const audio = new Audio()
 	audio.initialize(['media/music.ogg', 'media/music2.ogg'])
 
 	overlay.addToDOM()
+
 	overlay.fadeOut()
 	setTimeout(() => {
 		overlay.fadeIn()

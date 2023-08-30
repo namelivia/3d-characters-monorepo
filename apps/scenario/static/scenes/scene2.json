@@ -3,6 +3,9 @@
         "models3d": [
             "models/test.gltf",
             "models/scene.gltf"
+        ],
+        "audio": [
+            "media/music2.ogg"
         ]
     },
     "characters": [

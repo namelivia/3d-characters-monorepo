@@ -12,6 +12,10 @@ class Dialog {
 		this.text = text
 		this.start = start
 		this.duration = duration
+		console.log(this.id)
+		console.log(this.text)
+		console.log(this.start)
+		console.log(this.duration)
 	}
 
 	update(time: number) {

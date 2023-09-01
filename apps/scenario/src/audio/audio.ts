@@ -11,15 +11,23 @@ export default class Audio {
 		this.audioContext = new AudioContext()
 	}
 
-	initialize = async (songs: { key: string; data: ArrayBuffer }[]) => {
+	addSongs = async (songs: { key: string; data: AudioBuffer }[]) => {
 		for (const song of songs) {
-			this.songs.push(await this.prepareSong(song.key, song.data))
+			this.songs.push(await this.addSong(song.key, song.data))
 		}
 	}
 
 	startSong = (key: string) => {
 		const song = this.findSong(key)
-		song.audio.start()
+		try {
+			song.audio.start()
+		} catch (error) {
+			// This happens when the song is already playing.
+			// Can be ignored.
+			if (error instanceof DOMException && error.name === 'InvalidStateError') {
+				return
+			}
+		}
 	}
 
 	unsetAllSongs = () => {
@@ -42,11 +50,9 @@ export default class Audio {
 		song.audio.connect(this.audioContext.destination)
 	}
 
-	prepareSong = async (key: string, data: ArrayBuffer) => {
-		//TODO: Is this needed in advance? or is it ok doing it when playing?
-		const audioBuffer = await this.audioContext.decodeAudioData(data)
+	addSong = async (key: string, data: AudioBuffer) => {
 		const sourceNode = this.audioContext.createBufferSource()
-		sourceNode.buffer = audioBuffer
+		sourceNode.buffer = data
 		return {
 			key: key,
 			audio: sourceNode,

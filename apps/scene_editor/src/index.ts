@@ -121,8 +121,8 @@ const main = async () => {
 			sceneJson.dialogs.push({
 				id: Math.random().toString(36).substring(7), //random id
 				text: detail.text,
-				start: detail.keyframe,
-				duration: detail.duration,
+				start: Number(detail.keyframe),
+				duration: Number(detail.duration),
 			})
 			jsonPreview.display(JSON.stringify(sceneJson, null, 2))
 		},
@@ -135,7 +135,7 @@ const main = async () => {
 			const detail = (<CustomEvent>event).detail
 			sceneJson.transitions.push({
 				scene: detail.scene,
-				time: detail.time,
+				time: Number(detail.time),
 			})
 			jsonPreview.display(JSON.stringify(sceneJson, null, 2))
 		},

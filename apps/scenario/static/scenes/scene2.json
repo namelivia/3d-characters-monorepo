@@ -41,7 +41,7 @@
     ],
     "transitions": [
         {
-            "scene": "scene1",
+            "scene": "scene3",
             "time": 1100
         }
     ]

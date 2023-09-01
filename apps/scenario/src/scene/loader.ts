@@ -71,8 +71,7 @@ const initializeAudio = async (
 	audio: Audio,
 	music: string
 ) => {
-	//TODO: Is this needed in advance? or is it ok doing it when playing?
-	await audio.initialize(
+	await audio.addSongs(
 		audioResources.map((key) => {
 			return {
 				key: key,

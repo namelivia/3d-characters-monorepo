@@ -1,0 +1,1 @@
+{"resources":{"models3d":["models/scene.gltf"],"audio":["media/music2.ogg"]},"dialogs":[{"id":"zm4uzn","text":"This is the first generated scene","start":500,"duration":500},{"id":"6fdyih","text":"I created this using the editor","start":1000,"duration":500}],"transitions":[{"scene":"scene1","time": 2000}],"characters": [],"scene":"models/scene.gltf","music":"media/music2.ogg"}

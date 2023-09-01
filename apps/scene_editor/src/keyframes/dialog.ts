@@ -31,7 +31,7 @@ class Dialog {
 			const textLabel = document.createElement('label')
 			textLabel.textContent = 'Text'
 
-			// Create an input element for Scene
+			// Create an input element for Text
 			const textInput = document.createElement('input')
 			textInput.setAttribute('id', 'dialog-text')
 			textInput.setAttribute('type', 'text')

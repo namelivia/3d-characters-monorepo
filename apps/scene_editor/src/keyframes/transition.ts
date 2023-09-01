@@ -47,7 +47,7 @@ class Transition {
 				event.preventDefault()
 				const customEvent = new CustomEvent('transitionAdd', {
 					detail: {
-						keyframe: keyframeInput.value,
+						time: keyframeInput.value,
 						scene: sceneInput.value,
 					},
 				})

@@ -11,7 +11,7 @@ type Model3d = {
 }
 
 type Song = {
-	data: ArrayBuffer
+	data: AudioBuffer
 	key: string
 }
 
@@ -53,9 +53,11 @@ class ResourceManager {
 		for (const song of songs) {
 			try {
 				const data = await this.loadSong(song)
+				const context = new AudioContext()
+				const audioBuffer = await context.decodeAudioData(data)
 				this.songs.push({
 					key: song,
-					data,
+					data: audioBuffer,
 				})
 			} catch (error) {
 				console.error(`Error loading song ${song}:`, error)
@@ -63,7 +65,7 @@ class ResourceManager {
 		}
 	}
 
-	getSong = (key: string): ArrayBuffer => {
+	getSong = (key: string): AudioBuffer => {
 		const song = this.songs.find((song) => song.key === key)
 		if (song) {
 			return song.data

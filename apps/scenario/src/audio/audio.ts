@@ -1,39 +1,56 @@
+type Song = {
+	key: string
+	audio: AudioBufferSourceNode
+}
+
 export default class Audio {
 	audioContext: AudioContext
-	songs: AudioBufferSourceNode[] = []
+	songs: Song[] = []
 
 	constructor() {
 		this.audioContext = new AudioContext()
 	}
 
-	initialize = async (songs: string[]) => {
-		songs.forEach(async (song) => {
-			this.songs.push(await this.loadSong(song))
-		})
+	initialize = async (songs: { key: string; data: ArrayBuffer }[]) => {
+		for (const song of songs) {
+			this.songs.push(await this.prepareSong(song.key, song.data))
+		}
 	}
 
-	startSong = (index: number) => {
-		this.songs[index].start()
+	startSong = (key: string) => {
+		const song = this.findSong(key)
+		song.audio.start()
 	}
 
 	unsetAllSongs = () => {
 		this.songs.forEach((song) => {
-			song.disconnect()
+			song.audio.disconnect()
 		})
 	}
 
-	setSong = (index: number) => {
-		this.unsetAllSongs()
-		this.songs[index].connect(this.audioContext.destination)
+	findSong = (key: string) => {
+		const song = this.songs.find((song) => song.key === key)
+		if (song) {
+			return song
+		}
+		throw Error(`Song ${key} not found`)
 	}
 
-	loadSong = async (song: string) => {
-		const response = await fetch(song)
-		const arrayBuffer = await response.arrayBuffer()
-		const audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer)
+	setSong = (key: string) => {
+		this.unsetAllSongs()
+		const song = this.findSong(key)
+		song.audio.connect(this.audioContext.destination)
+	}
+
+	prepareSong = async (key: string, data: ArrayBuffer) => {
+		//TODO: Is this needed in advance? or is it ok doing it when playing?
+		const audioBuffer = await this.audioContext.decodeAudioData(data)
 		const sourceNode = this.audioContext.createBufferSource()
 		sourceNode.buffer = audioBuffer
-		return sourceNode
+		return {
+			key: key,
+			audio: sourceNode,
+		}
 	}
 
 	allow = () => {

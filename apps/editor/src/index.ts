@@ -13,7 +13,7 @@ const saveSelectedObjects = (selectedObjects: string[]) => {
 
 const main = async () => {
 	// Load 3d model
-	const model = await loadGLTF()
+	const model = await loadGLTF('models/test.gltf')
 
 	// Initialize the UI
 	const selector = new Selector()
@@ -24,6 +24,7 @@ const main = async () => {
 	// Initialize world and character
 	const world = new World()
 	world.initialize()
+	world.addFloorGrid()
 	const character = new ToggleableCharacter(model.scene, model.animations)
 	world.add(character)
 

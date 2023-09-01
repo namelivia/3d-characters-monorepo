@@ -1,6 +1,18 @@
 {
+    "resources": {
+        "models3d": [
+            "models/test.gltf",
+            "models/scene.gltf"
+        ],
+        "audio": [
+            "media/music.ogg"
+        ]
+    },
+    "scene": "models/scene.gltf",
+    "music": "media/music.ogg",
     "characters": [
         {
+            "model3d": "models/test.gltf",
             "model": "naked_magician",
             "position": [-5, 0, 0],
             "movement": {
@@ -19,6 +31,7 @@
             }
         },
         {
+            "model3d": "models/test.gltf",
             "model": "dude",
             "position": [0, 0, 0],
             "movement": {
@@ -40,6 +53,7 @@
 
         },
         {
+            "model3d": "models/test.gltf",
             "model": "naked_hipster",
             "position": [5, 0, 0],
             "movement": {
@@ -58,6 +72,7 @@
             }
         },
         {
+            "model3d": "models/test.gltf",
             "model": "one_punch",
             "position": [0, 0, 5],
             "movement": {
@@ -83,6 +98,12 @@
             "text": "These are my friends. They are all very cool.",
             "start": 200,
             "duration": 500
+        }
+    ],
+    "transitions": [
+        {
+            "scene": "scene2",
+            "time": 1100
         }
     ]
 }

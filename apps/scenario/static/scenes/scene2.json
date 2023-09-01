@@ -1,6 +1,18 @@
 {
+    "resources": {
+        "models3d": [
+            "models/test.gltf",
+            "models/scene.gltf"
+        ],
+        "audio": [
+            "media/music2.ogg"
+        ]
+    },
+    "scene": "models/scene.gltf",
+    "music": "media/music2.ogg",
     "characters": [
         {
+            "model3d": "models/test.gltf",
             "model": "naked_magician",
             "position": [0, 0, -5],
             "movement": {
@@ -25,6 +37,12 @@
             "text": "I'm just walking",
             "start": 500,
             "duration": 500
+        }
+    ],
+    "transitions": [
+        {
+            "scene": "scene1",
+            "time": 1100
         }
     ]
 }

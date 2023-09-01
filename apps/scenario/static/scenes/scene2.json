@@ -8,8 +8,11 @@
             "media/music2.ogg"
         ]
     },
+    "scene": "models/scene.gltf",
+    "music": "media/music2.ogg",
     "characters": [
         {
+            "model3d": "models/test.gltf",
             "model": "naked_magician",
             "position": [0, 0, -5],
             "movement": {

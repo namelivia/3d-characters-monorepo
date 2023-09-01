@@ -23,40 +23,56 @@ export type AnimationMap = {
 	length: number
 }
 
+type Resources = {
+	models3d: string[]
+	audio: string[]
+}
+
+type Characters = {
+	model3d: string
+	model: string
+	movement: MovementMap
+	animation: AnimationMap
+	position: [number, number, number]
+}[]
+
+type Dialogs = {
+	id: string
+	text: string
+	start: number
+	duration: number
+}[]
+
 type SceneJson = {
-	resources: {
-		models3d: string[]
-		audio: string[]
-	}
-	characters: {
-		model: string
-		movement: MovementMap
-		animation: AnimationMap
-		position: [number, number, number]
-	}[]
-	dialogs: {
-		id: string
-		text: string
-		start: number
-		duration: number
-	}[]
+	resources: Resources
+	music: string
+	scene: string
+	characters: Characters
+	dialogs: Dialogs
 	transitions: {
 		scene: string
 		time: number
 	}[]
 }
 
-const processScene = async (
-	resources: ResourceManager,
-	audio: Audio,
-	sceneJson: SceneJson
-): Promise<Scene> => {
-	const audioResources = sceneJson.resources.audio
+const loadResources = async (
+	manager: ResourceManager,
+	resources: Resources
+) => {
+	await manager.loadSongs(resources.audio)
+	await manager.load({
+		models3d: resources.models3d,
+	})
+}
 
-	// Load stuff
-	resources.loadSongs(audioResources)
+const initializeAudio = async (
+	resources: ResourceManager,
+	audioResources: string[],
+	audio: Audio,
+	music: string
+) => {
 	//TODO: Is this needed in advance? or is it ok doing it when playing?
-	audio.initialize(
+	await audio.initialize(
 		audioResources.map((key) => {
 			return {
 				key: key,
@@ -64,18 +80,18 @@ const processScene = async (
 			}
 		})
 	)
+	audio.startSong(music)
+	audio.setSong(music)
+}
 
-	await resources.load({
-		models3d: sceneJson.resources.models3d,
-	})
-
-	// And then start
-	audio.startSong('media/music.ogg') //TODO: This should be the song in the scene
-	audio.setSong('media/music.ogg') //TODO: And it should be part of the Scene object
-	const scene = new Scene()
-	for await (const character of sceneJson.characters) {
+const initializeCharacters = async (
+	scene: Scene,
+	resources: ResourceManager,
+	characters: Characters
+) => {
+	for await (const character of characters) {
 		const new_character = await newCharacter(
-			resources.getModel3d('models/test.gltf'), //TODO: Maybe this should go in the json
+			resources.getModel3d(character.model3d),
 			character.model,
 			character.movement,
 			character.animation,
@@ -85,15 +101,35 @@ const processScene = async (
 		)
 		scene.addCharacter(new_character)
 	}
-	for await (const transition of sceneJson.transitions) {
-		scene.addTransition(new Transition(transition.scene, transition.time))
-	}
-	for await (const dialog of sceneJson.dialogs) {
+}
+
+const initializeDialogs = async (scene: Scene, dialogs: Dialogs) => {
+	for await (const dialog of dialogs) {
 		scene.addDialog(
 			new Dialog(dialog.id, dialog.text, dialog.start, dialog.duration)
 		)
 	}
-	scene.setScenario(resources.getModel3d('models/scene.gltf'))
+}
+
+const initializeScene = async (
+	resources: ResourceManager,
+	audio: Audio,
+	sceneJson: SceneJson
+): Promise<Scene> => {
+	const scene = new Scene()
+	await loadResources(resources, sceneJson.resources)
+	await initializeAudio(
+		resources,
+		sceneJson.resources.audio,
+		audio,
+		sceneJson.music
+	)
+	await initializeCharacters(scene, resources, sceneJson.characters)
+	for await (const transition of sceneJson.transitions) {
+		scene.addTransition(new Transition(transition.scene, transition.time))
+	}
+	await initializeDialogs(scene, sceneJson.dialogs)
+	scene.setScenario(resources.getModel3d(sceneJson.scene))
 	return scene
 }
 
@@ -104,5 +140,5 @@ export const loadScene = async (
 ): Promise<Scene> => {
 	const response = await fetch(`./scenes/${key}.json`)
 	const json = await response.json()
-	return processScene(resources, audio, json)
+	return initializeScene(resources, audio, json)
 }

@@ -30,10 +30,14 @@ class ResourceManager {
 		//TODO: Only iterate the models that are not
 		// already loaded.
 		for (const model of resources.models3d) {
-			this.models3d.push({
-				gltf: await loadGLTF(model),
-				key: model,
-			})
+			try {
+				this.models3d.push({
+					gltf: await loadGLTF(model),
+					key: model,
+				})
+			} catch (error) {
+				console.error(`Error loading model ${model}:`, error)
+			}
 		}
 	}
 
@@ -43,16 +47,20 @@ class ResourceManager {
 		return await response.arrayBuffer()
 	}
 
-	loadSongs = (songs: string[]) => {
-		//TODO: Only iterate the songs that are not
+	loadSongs = async (songs: string[]) => {
+		// TODO: Only iterate the songs that are not
 		// already loaded.
-		songs.forEach(async (song) => {
-			this.songs.push({
-				key: song,
-				data: await this.loadSong(song),
-			})
-		})
-		console.log(this.songs)
+		for (const song of songs) {
+			try {
+				const data = await this.loadSong(song)
+				this.songs.push({
+					key: song,
+					data,
+				})
+			} catch (error) {
+				console.error(`Error loading song ${song}:`, error)
+			}
+		}
 	}
 
 	getSong = (key: string): ArrayBuffer => {

@@ -12,9 +12,9 @@ export default class Audio {
 	}
 
 	initialize = async (songs: { key: string; data: ArrayBuffer }[]) => {
-		songs.forEach(async (song) => {
+		for (const song of songs) {
 			this.songs.push(await this.prepareSong(song.key, song.data))
-		})
+		}
 	}
 
 	startSong = (key: string) => {

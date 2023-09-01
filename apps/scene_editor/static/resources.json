@@ -1,0 +1,10 @@
+{
+    "music": [
+        "media/music.ogg",
+        "media/music2.ogg"
+    ],
+    "models": [
+        "models/scene.gltf",
+        "models/test.gltf"
+    ]
+}

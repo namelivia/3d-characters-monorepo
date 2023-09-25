@@ -2,13 +2,13 @@ import Scene from './scene'
 import Transition from './transition'
 import Dialog from '../dialogs/dialog'
 import Audio from '../audio/audio'
-import ResourceManager from '../resource_manager/resource_manager'
 import { newCharacter } from '../characters/factory'
 import {
 	ScenePlayerJSON,
 	DialogsJSON,
 	ResourcesJSON,
 	CharactersJSON,
+	ResourceManager,
 } from 'common'
 
 const loadResources = async (

@@ -2,7 +2,7 @@ import { loadScene } from './scene/loader'
 import World from './world/world'
 import Overlay from './overlay/overlay'
 import Audio from './audio/audio'
-import ResourceManager from './resource_manager/resource_manager'
+import { ResourceManager } from 'common'
 
 const setFullscreen = () => {
 	const windowWidth = window.innerWidth

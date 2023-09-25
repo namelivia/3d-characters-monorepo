@@ -3,7 +3,7 @@ import { Timesheet } from './timesheet'
 import { loadCharacter } from './loader'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js'
-import { AnimationMap, MovementMap } from '../scene/loader'
+import { AnimationMap, MovementMap } from 'common'
 
 export const newCharacter = async (
 	gltf: GLTF,

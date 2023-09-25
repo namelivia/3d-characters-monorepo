@@ -6,37 +6,14 @@ import Actions from './actions/actions'
 import Name from './name/name'
 import Transition from './keyframes/transition'
 import Dialog from './keyframes/dialog'
-import { World } from 'common'
+import { World, SceneEditorJSON } from 'common'
 
-const saveSelectedObjects = (sceneName: string, sceneJson: SceneJSON) => {
+const saveSelectedObjects = (sceneName: string, sceneJson: SceneEditorJSON) => {
 	const bb = new Blob([JSON.stringify(sceneJson)], { type: 'text/plain' })
 	const a = document.createElement('a')
 	a.download = `${sceneName}.json`
 	a.href = window.URL.createObjectURL(bb)
 	a.click()
-}
-
-type TransitionJson = {
-	scene: string
-	time: number
-}
-
-type DialogJson = {
-	id: string
-	text: string
-	start: number
-	duration: number
-}
-
-type SceneJSON = {
-	resources: {
-		models3d: string[]
-		audio: string[]
-	}
-	scene?: string
-	music?: string
-	dialogs: DialogJson[]
-	transitions: TransitionJson[]
 }
 
 const main = async () => {
@@ -47,7 +24,7 @@ const main = async () => {
 		},
 		dialogs: [],
 		transitions: [],
-	} as SceneJSON
+	} as SceneEditorJSON
 	let sceneName = ''
 
 	// Initialize the UI

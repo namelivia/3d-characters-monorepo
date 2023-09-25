@@ -4,60 +4,16 @@ import Dialog from '../dialogs/dialog'
 import Audio from '../audio/audio'
 import ResourceManager from '../resource_manager/resource_manager'
 import { newCharacter } from '../characters/factory'
-
-type MovementKeyframe = {
-	[key: number]: string
-}
-
-type AnimationKeyframe = {
-	[key: number]: string
-}
-
-export type MovementMap = {
-	index: MovementKeyframe
-	length: number
-}
-
-export type AnimationMap = {
-	index: AnimationKeyframe
-	length: number
-}
-
-type Resources = {
-	models3d: string[]
-	audio: string[]
-}
-
-type Characters = {
-	model3d: string
-	model: string
-	movement: MovementMap
-	animation: AnimationMap
-	position: [number, number, number]
-}[]
-
-type Dialogs = {
-	id: string
-	text: string
-	start: number
-	duration: number
-}[]
-
-type SceneJson = {
-	resources: Resources
-	music: string
-	scene: string
-	characters: Characters
-	dialogs: Dialogs
-	transitions: {
-		scene: string
-		time: number
-	}[]
-}
+import {
+	ScenePlayerJSON,
+	DialogsJSON,
+	ResourcesJSON,
+	CharactersJSON,
+} from 'common'
 
 const loadResources = async (
 	manager: ResourceManager,
-	resources: Resources
+	resources: ResourcesJSON
 ) => {
 	await manager.loadSongs(resources.audio)
 	await manager.load({
@@ -86,7 +42,7 @@ const initializeAudio = async (
 const initializeCharacters = async (
 	scene: Scene,
 	resources: ResourceManager,
-	characters: Characters
+	characters: CharactersJSON
 ) => {
 	for await (const character of characters) {
 		const new_character = await newCharacter(
@@ -102,7 +58,7 @@ const initializeCharacters = async (
 	}
 }
 
-const initializeDialogs = async (scene: Scene, dialogs: Dialogs) => {
+const initializeDialogs = async (scene: Scene, dialogs: DialogsJSON) => {
 	for await (const dialog of dialogs) {
 		scene.addDialog(
 			new Dialog(dialog.id, dialog.text, dialog.start, dialog.duration)
@@ -113,7 +69,7 @@ const initializeDialogs = async (scene: Scene, dialogs: Dialogs) => {
 const initializeScene = async (
 	resources: ResourceManager,
 	audio: Audio,
-	sceneJson: SceneJson
+	sceneJson: ScenePlayerJSON
 ): Promise<Scene> => {
 	const scene = new Scene()
 	await loadResources(resources, sceneJson.resources)

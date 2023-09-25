@@ -4,7 +4,7 @@ import { getRandomColor } from "../colors/colors";
 import { Character, AnimatedCharacter } from "../character/character";
 import { GLTF } from "three/examples/jsm/loaders/GLTFLoader.js";
 
-class World {
+class BasicWorld {
   scene?: THREE.Scene;
   camera?: THREE.PerspectiveCamera;
   renderer?: THREE.WebGLRenderer;
@@ -101,4 +101,4 @@ class World {
   };
 }
 
-export default World;
+export default BasicWorld;

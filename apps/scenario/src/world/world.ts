@@ -4,19 +4,19 @@ import Dialog from '../dialogs/dialog'
 import View2D from '../view_2d/view_2d'
 import Scene from '../scene/scene'
 import Transition from '../scene/transition'
-import { World as World3D } from 'common'
+import { BasicWorld } from 'common'
 
 class World {
 	characters?: [ScenarioCharacter?]
 	dialogs?: [Dialog?]
 	transitions?: [Transition?]
 	time: number = 0
-	world3D: World3D
+	world3D: BasicWorld
 	view2D: View2D
 	onSceneTransition: (scene: string) => Promise<void>
 
 	constructor() {
-		this.world3D = new World3D()
+		this.world3D = new BasicWorld()
 		this.view2D = new View2D()
 		this.onSceneTransition = () => Promise.resolve()
 	}

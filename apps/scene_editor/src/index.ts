@@ -7,7 +7,7 @@ import Actions from './actions/actions'
 import Name from './name/name'
 import Transition from './keyframes/transition'
 import Dialog from './keyframes/dialog'
-import { World, SceneEditorJSON, Scene, ResourceManager } from 'common'
+import { BasicWorld, SceneEditorJSON, Scene, ResourceManager } from 'common'
 
 const saveSelectedObjects = (sceneName: string, sceneJson: SceneEditorJSON) => {
 	const bb = new Blob([JSON.stringify(sceneJson)], { type: 'text/plain' })
@@ -27,7 +27,8 @@ const emptyScene = {
 	characters: [],
 } as SceneEditorJSON
 
-const previewScene = async (scene: SceneEditorJSON) => {
+const previewScene = async (scene: SceneEditorJSON, world: BasicWorld) => {
+	// Initialize scene
 	const resources = scene.resources
 	const manager = new ResourceManager()
 	await manager.loadSongs(resources.audio)
@@ -37,8 +38,10 @@ const previewScene = async (scene: SceneEditorJSON) => {
 	const newScene = new Scene()
 	if (scene.scene) {
 		newScene.setScenario(manager.getModel3d(scene.scene))
-		console.log(newScene)
 	}
+
+	//Apply scene to world
+	world.loadScene(scene)
 }
 
 const main = async () => {
@@ -71,7 +74,7 @@ const main = async () => {
 	actions.display()
 
 	// Initialize world
-	const world = new World()
+	const world = new BasicWorld()
 	world.initialize()
 	world.addFloorGrid()
 
@@ -163,7 +166,7 @@ const main = async () => {
 				saveSelectedObjects(sceneName, currentScene)
 			}
 			if (detail.action === 'Preview') {
-				previewScene(currentScene)
+				previewScene(currentScene, world)
 			}
 		},
 		true

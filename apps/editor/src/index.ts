@@ -1,6 +1,6 @@
 import Selector from './selector/selector'
 import Actions from './actions/actions'
-import { loadGLTF, World } from 'common'
+import { loadGLTF, BasicWorld } from 'common'
 import ToggleableCharacter from './character/character'
 
 const saveSelectedObjects = (selectedObjects: string[]) => {
@@ -22,7 +22,7 @@ const main = async () => {
 	actions.display()
 
 	// Initialize world and character
-	const world = new World()
+	const world = new BasicWorld()
 	world.initialize()
 	world.addFloorGrid()
 	const character = new ToggleableCharacter(model.scene, model.animations)

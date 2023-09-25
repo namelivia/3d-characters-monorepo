@@ -45,6 +45,7 @@ export type SceneEditorJSON = {
   resources: ResourcesJSON;
   scene?: string;
   music?: string;
+  characters: CharactersJSON;
   dialogs: DialogsJSON;
   transitions: TransitionsJSON;
 };

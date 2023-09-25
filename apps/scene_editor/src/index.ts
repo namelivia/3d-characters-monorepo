@@ -1,5 +1,6 @@
 import SceneSelector from './selector/scene_selector'
 import MusicSelector from './selector/music_selector'
+import CharacterSelector from './selector/character_selector'
 import JsonPreview from './json_preview/json_preview'
 import ResourceList, { ResourceCatalog } from './resource_list/resource_list'
 import Actions from './actions/actions'
@@ -16,27 +17,32 @@ const saveSelectedObjects = (sceneName: string, sceneJson: SceneEditorJSON) => {
 	a.click()
 }
 
+const emptyScene = {
+	resources: {
+		models3d: [],
+		audio: [],
+	},
+	dialogs: [],
+	transitions: [],
+	characters: [],
+} as SceneEditorJSON
+
 const main = async () => {
-	const currentScene = {
-		resources: {
-			models3d: [],
-			audio: [],
-		},
-		dialogs: [],
-		transitions: [],
-	} as SceneEditorJSON
+	const currentScene = emptyScene
 	let sceneName = ''
+
+	const resourceList = new ResourceList()
+	const resources = (await resourceList.initialize()) as ResourceCatalog
 
 	// Initialize the UI
 	const name = new Name()
 	name.initialize()
 	const sceneSelector = new SceneSelector()
-	const resourceList = new ResourceList()
-	const resources = (await resourceList.initialize()) as ResourceCatalog
-	sceneSelector.display(resources.models)
-
 	const musicSelector = new MusicSelector()
 	musicSelector.display(resources.music)
+	const characterSelector = new CharacterSelector()
+	sceneSelector.display(resources.models)
+	characterSelector.display(resources.characters)
 
 	const transition = new Transition()
 	transition.initialize()
@@ -50,7 +56,7 @@ const main = async () => {
 	const actions = new Actions()
 	actions.display()
 
-	// Initialize world and character
+	// Initialize world
 	const world = new World()
 	world.initialize()
 	world.addFloorGrid()
@@ -100,6 +106,22 @@ const main = async () => {
 				text: detail.text,
 				start: Number(detail.keyframe),
 				duration: Number(detail.duration),
+			})
+			jsonPreview.display(currentScene)
+		},
+		true
+	)
+
+	document.addEventListener(
+		'characterAdd',
+		function (event) {
+			const detail = (<CustomEvent>event).detail
+			currentScene.characters.push({
+				model3d: 'models/test.gltf', //TODO
+				model: detail.character,
+				movement: {}, //TODO
+				animation: {}, //TODO
+				position: [0, 0, 0], //TODO
 			})
 			jsonPreview.display(currentScene)
 		},

@@ -6,5 +6,11 @@
     "models": [
         "models/scene.gltf",
         "models/test.gltf"
+    ],
+    "characters": [
+        "characters/dude.json",
+        "characters/naked_hipster.json",
+        "characters/naked_magician.json",
+        "characters/one_punch.json"
     ]
 }

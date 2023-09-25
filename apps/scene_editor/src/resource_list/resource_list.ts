@@ -1,6 +1,7 @@
 export type ResourceCatalog = {
 	music: string[]
 	models: string[]
+	characters: string[]
 }
 
 class ResourceList {

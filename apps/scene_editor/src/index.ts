@@ -7,7 +7,7 @@ import Actions from './actions/actions'
 import Name from './name/name'
 import Transition from './keyframes/transition'
 import Dialog from './keyframes/dialog'
-import { World, SceneEditorJSON } from 'common'
+import { World, SceneEditorJSON, ResourceManager } from 'common'
 
 const saveSelectedObjects = (sceneName: string, sceneJson: SceneEditorJSON) => {
 	const bb = new Blob([JSON.stringify(sceneJson)], { type: 'text/plain' })
@@ -26,6 +26,16 @@ const emptyScene = {
 	transitions: [],
 	characters: [],
 } as SceneEditorJSON
+
+const previewScene = async (scene: SceneEditorJSON) => {
+	const resources = scene.resources
+	const manager = new ResourceManager()
+	await manager.loadSongs(resources.audio)
+	await manager.load({
+		models3d: resources.models3d,
+	})
+	console.log(manager)
+}
 
 const main = async () => {
 	const currentScene = emptyScene
@@ -149,7 +159,7 @@ const main = async () => {
 				saveSelectedObjects(sceneName, currentScene)
 			}
 			if (detail.action === 'Preview') {
-				console.log(currentScene)
+				previewScene(currentScene)
 			}
 		},
 		true

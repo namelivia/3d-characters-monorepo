@@ -119,8 +119,8 @@ const main = async () => {
 			currentScene.characters.push({
 				model3d: 'models/test.gltf', //TODO
 				model: detail.character,
-				movement: {}, //TODO
-				animation: {}, //TODO
+				movement: { index: {}, length: 0 }, //TODO
+				animation: { index: {}, length: 0 }, //TODO
 				position: [0, 0, 0], //TODO
 			})
 			jsonPreview.display(currentScene)
@@ -142,11 +142,14 @@ const main = async () => {
 	)
 
 	document.addEventListener(
-		'myButtonClick',
+		'buttonClick',
 		function (event) {
 			const detail = (<CustomEvent>event).detail
 			if (detail.action === 'Save') {
 				saveSelectedObjects(sceneName, currentScene)
+			}
+			if (detail.action === 'Preview') {
+				console.log(currentScene)
 			}
 		},
 		true

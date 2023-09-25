@@ -17,7 +17,7 @@ const saveSelectedObjects = (sceneName: string, sceneJson: SceneEditorJSON) => {
 }
 
 const main = async () => {
-	const sceneJson = {
+	const currentScene = {
 		resources: {
 			models3d: [],
 			audio: [],
@@ -45,7 +45,7 @@ const main = async () => {
 	dialog.initialize()
 
 	const jsonPreview = new JsonPreview()
-	jsonPreview.display(JSON.stringify(sceneJson, null, 2))
+	jsonPreview.display(currentScene)
 
 	const actions = new Actions()
 	actions.display()
@@ -64,9 +64,9 @@ const main = async () => {
 		'sceneSelectorChange',
 		function (event) {
 			const scene = (<CustomEvent>event).detail
-			sceneJson['scene'] = scene
-			sceneJson['resources']['models3d'].push(scene)
-			jsonPreview.display(JSON.stringify(sceneJson, null, 2))
+			currentScene['scene'] = scene
+			currentScene['resources']['models3d'].push(scene)
+			jsonPreview.display(currentScene)
 		},
 		true
 	)
@@ -75,9 +75,9 @@ const main = async () => {
 		'musicSelectorChange',
 		function (event) {
 			const music = (<CustomEvent>event).detail
-			sceneJson['music'] = music
-			sceneJson['resources']['audio'].push(music)
-			jsonPreview.display(JSON.stringify(sceneJson, null, 2))
+			currentScene['music'] = music
+			currentScene['resources']['audio'].push(music)
+			jsonPreview.display(currentScene)
 		},
 		true
 	)
@@ -95,13 +95,13 @@ const main = async () => {
 		'dialogAdd',
 		function (event) {
 			const detail = (<CustomEvent>event).detail
-			sceneJson.dialogs.push({
+			currentScene.dialogs.push({
 				id: Math.random().toString(36).substring(7), //random id
 				text: detail.text,
 				start: Number(detail.keyframe),
 				duration: Number(detail.duration),
 			})
-			jsonPreview.display(JSON.stringify(sceneJson, null, 2))
+			jsonPreview.display(currentScene)
 		},
 		true
 	)
@@ -110,11 +110,11 @@ const main = async () => {
 		'transitionAdd',
 		function (event) {
 			const detail = (<CustomEvent>event).detail
-			sceneJson.transitions.push({
+			currentScene.transitions.push({
 				scene: detail.scene,
 				time: Number(detail.time),
 			})
-			jsonPreview.display(JSON.stringify(sceneJson, null, 2))
+			jsonPreview.display(currentScene)
 		},
 		true
 	)
@@ -124,7 +124,7 @@ const main = async () => {
 		function (event) {
 			const detail = (<CustomEvent>event).detail
 			if (detail.action === 'Save') {
-				saveSelectedObjects(sceneName, sceneJson)
+				saveSelectedObjects(sceneName, currentScene)
 			}
 		},
 		true

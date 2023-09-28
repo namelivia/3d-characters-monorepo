@@ -1,8 +1,7 @@
 import { loadScene } from './scene/loader'
-import World from './world/world'
 import Overlay from './overlay/overlay'
 import Audio from './audio/audio'
-import { ResourceManager } from 'common'
+import { ResourceManager, AdvancedWorld } from 'common'
 
 const setFullscreen = () => {
 	const windowWidth = window.innerWidth
@@ -17,7 +16,7 @@ const setFullscreen = () => {
 const setScene = async (
 	resources: ResourceManager,
 	audio: Audio,
-	world: World,
+	world: AdvancedWorld,
 	sceneName: string
 ) => {
 	const scene = await loadScene(resources, audio, sceneName)
@@ -31,7 +30,7 @@ const main = async () => {
 
 	const overlay = new Overlay()
 	const audio = new Audio()
-	const world = new World()
+	const world = new AdvancedWorld()
 	const resources = new ResourceManager()
 
 	world.setOnSceneTransition(onSceneTransition)

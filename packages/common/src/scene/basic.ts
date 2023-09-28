@@ -1,6 +1,6 @@
 import { GLTF } from "three/examples/jsm/loaders/GLTFLoader.js";
 
-class Scene {
+class BasicScene {
   scenario: GLTF | null;
   constructor() {
     this.scenario = null;
@@ -10,4 +10,4 @@ class Scene {
     this.scenario = scenario;
   };
 }
-export default Scene;
+export default BasicScene;

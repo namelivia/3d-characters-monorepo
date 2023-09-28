@@ -1,6 +1,3 @@
-import Scene from './scene'
-import Transition from './transition'
-import Dialog from '../dialogs/dialog'
 import Audio from '../audio/audio'
 import { newCharacter } from '../characters/factory'
 import {
@@ -9,6 +6,9 @@ import {
 	ResourcesJSON,
 	CharactersJSON,
 	ResourceManager,
+	AdvancedScene,
+	Transition,
+	Dialog,
 } from 'common'
 
 const loadResources = async (
@@ -40,7 +40,7 @@ const initializeAudio = async (
 }
 
 const initializeCharacters = async (
-	scene: Scene,
+	scene: AdvancedScene,
 	resources: ResourceManager,
 	characters: CharactersJSON
 ) => {
@@ -58,7 +58,10 @@ const initializeCharacters = async (
 	}
 }
 
-const initializeDialogs = async (scene: Scene, dialogs: DialogsJSON) => {
+const initializeDialogs = async (
+	scene: AdvancedScene,
+	dialogs: DialogsJSON
+) => {
 	for await (const dialog of dialogs) {
 		scene.addDialog(
 			new Dialog(dialog.id, dialog.text, dialog.start, dialog.duration)
@@ -70,8 +73,8 @@ const initializeScene = async (
 	resources: ResourceManager,
 	audio: Audio,
 	sceneJson: ScenePlayerJSON
-): Promise<Scene> => {
-	const scene = new Scene()
+): Promise<AdvancedScene> => {
+	const scene = new AdvancedScene()
 	await loadResources(resources, sceneJson.resources)
 	await initializeAudio(
 		resources,
@@ -92,7 +95,7 @@ export const loadScene = async (
 	resources: ResourceManager,
 	audio: Audio,
 	key: string
-): Promise<Scene> => {
+): Promise<AdvancedScene> => {
 	const response = await fetch(`./scenes/${key}.json`)
 	const json = await response.json()
 	return initializeScene(resources, audio, json)

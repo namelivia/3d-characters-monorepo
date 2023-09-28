@@ -4,6 +4,10 @@ import { getRandomColor } from "../colors/colors";
 import { Character, AnimatedCharacter } from "../character/character";
 import { GLTF } from "three/examples/jsm/loaders/GLTFLoader.js";
 
+/* BasicWorld is the world for the character editor.
+ * It only has the most basic elements: a scene, a camera, and a renderer.
+ */
+
 class BasicWorld {
   scene?: THREE.Scene;
   camera?: THREE.PerspectiveCamera;

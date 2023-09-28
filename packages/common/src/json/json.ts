@@ -1,3 +1,5 @@
+import { ActionMap } from "../character/timesheet/timesheet";
+
 type TransitionsJSON = {
   scene: string;
   time: number;
@@ -15,29 +17,11 @@ export type ResourcesJSON = {
   audio: string[];
 };
 
-type MovementKeyframe = {
-  [key: number]: string;
-};
-
-type AnimationKeyframe = {
-  [key: number]: string;
-};
-
-export type MovementMap = {
-  index: MovementKeyframe;
-  length: number;
-};
-
-export type AnimationMap = {
-  index: AnimationKeyframe;
-  length: number;
-};
-
 export type CharactersJSON = {
   model3d: string;
   model: string;
-  movement: MovementMap;
-  animation: AnimationMap;
+  movement: ActionMap;
+  animation: ActionMap;
   position: [number, number, number];
 }[];
 

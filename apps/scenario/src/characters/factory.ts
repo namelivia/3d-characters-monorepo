@@ -1,13 +1,13 @@
 import { loadCharacter } from './loader'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js'
-import { AnimationMap, MovementMap, ScenarioCharacter, Timesheet } from 'common'
+import { ActionMap, ScenarioCharacter, Timesheet } from 'common'
 
 export const newCharacter = async (
 	gltf: GLTF,
 	model: string,
-	movement: MovementMap,
-	animation: AnimationMap,
+	movement: ActionMap,
+	animation: ActionMap,
 	x: number,
 	y: number,
 	z: number

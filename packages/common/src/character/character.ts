@@ -1,6 +1,7 @@
 import * as THREE from "three";
-import { Timesheet } from "./timesheet";
-import { Movement } from "./movement";
+import { Timesheet } from "./timesheet/timesheet";
+import { Movement } from "./timesheet/movement";
+import { Animation } from "./timesheet/animation";
 
 // Base character class
 class Character {
@@ -40,33 +41,19 @@ class Character {
 // Character with animations
 class AnimatedCharacter extends Character {
   mixer: THREE.AnimationMixer;
-  animations: THREE.AnimationClip[];
+  animations: Animation;
   currentAnimation?: THREE.AnimationAction;
 
   constructor(gltf: THREE.Object3D, animations: THREE.AnimationClip[]) {
     super(gltf);
-    this.animations = animations;
+    this.animations = new Animation(animations);
     this.mixer = new THREE.AnimationMixer(gltf);
-    this.setAnimation("idle");
-  }
-
-  setAnimation = (animationName: string): void => {
-    const animation = this.animations.find(
-      (animation) => animation.name === animationName
+    this.currentAnimation = this.animations.set(
+      "idle",
+      this.mixer,
+      this.currentAnimation
     );
-    if (animation) {
-      const newAnimation = this.mixer.clipAction(animation);
-      if (this.currentAnimation === undefined) {
-        this.currentAnimation = newAnimation;
-      } else {
-        if (this.currentAnimation !== newAnimation) {
-          this.currentAnimation.stop();
-          this.currentAnimation = newAnimation;
-        }
-      }
-      this.currentAnimation.play();
-    }
-  };
+  }
 }
 
 type Part = {
@@ -118,7 +105,11 @@ class ScenarioCharacter extends AnimatedCharacter {
   updateAnimation(time: number) {
     if (this.timesheet) {
       const animation = this.timesheet.getAnimation(time);
-      this.setAnimation(animation);
+      this.currentAnimation = this.animations.set(
+        animation,
+        this.mixer,
+        this.currentAnimation
+      );
     }
   }
 

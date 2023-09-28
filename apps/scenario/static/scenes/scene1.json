@@ -20,14 +20,14 @@
                     "0": "move_left",
                     "100": "move_right"
                 },
-                "length": 200
+                "duration": 200
             },
             "animation": {
                 "index": {
                     "0": "idle",
                     "400": "wave"
                 },
-                "length": 700
+                "duration": 700
             }
         },
         {
@@ -39,7 +39,7 @@
                     "0": "move_front",
                     "200": "move_back"
                 },
-                "length": 400
+                "duration": 400
             }
             ,
             "animation": {
@@ -48,7 +48,7 @@
                     "300": "wave",
                     "600": "idle"
                 },
-                "length": 900
+                "duration": 900
             }
 
         },
@@ -61,14 +61,14 @@
                     "0": "spin_left",
                     "100": "spin_right"
                 },
-                "length": 200
+                "duration": 200
             },
             "animation": {
                 "index": {
                     "0": "wave",
                     "400": "idle"
                 },
-                "length": 800
+                "duration": 800
             }
         },
         {
@@ -80,7 +80,7 @@
                     "0": "move_left",
                     "100": "spin_right"
                 },
-                "length": 200
+                "duration": 200
             },
             "animation": {
                 "index": {
@@ -88,7 +88,7 @@
                     "500": "wave",
                     "600": "idle"
                 },
-                "length": 1000
+                "duration": 1000
             }
         }
     ],

@@ -1,6 +1,6 @@
 export { loadGLTF } from "./gltf/loader";
 export * from "./character/character";
-export { Timesheet } from "./character/timesheet";
+export { Timesheet, ActionMap } from "./character/timesheet/timesheet";
 export { default as BasicWorld } from "./world/basic";
 export { default as AdvancedWorld } from "./world/advanced";
 export * from "./json/json";

@@ -20,14 +20,14 @@
                     "0": "move_left",
                     "100": "spin_right"
                 },
-                "length": 200
+                "duration": 200
             },
             "animation": {
                 "index": {
                     "0": "move_left",
                     "100": "spin_right"
                 },
-                "length": 200
+                "duration": 200
             }
         }
     ],

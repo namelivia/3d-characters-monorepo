@@ -1,4 +1,7 @@
 import * as THREE from "three";
+
+/* These are the movements a character that moves in 3d space can do */
+
 export class Movement {
   move = (gltf: THREE.Object3D) => {
     console.log("Movement not implemented");

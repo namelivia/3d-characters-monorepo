@@ -1,4 +1,4 @@
-import View2D from "../view_2d/view_2d";
+import View2D from "../../view_2d/view_2d";
 
 class Dialog {
   id: string;

@@ -1,9 +1,9 @@
-import { ScenarioCharacter } from "../character/character";
+import { ScenarioCharacter } from "../scene/character/character";
 import { GLTF } from "three/examples/jsm/loaders/GLTFLoader.js";
-import Dialog from "../dialogs/dialog";
 import View2D from "../view_2d/view_2d";
-import AdvancedScene from "../scene/advanced";
-import Transition from "../scene/transition";
+import AdvancedScene from "../scene/advanced/advanced";
+import Transition from "../scene/transitions/transition";
+import Dialog from "../scene/dialogs/dialog";
 import { default as BasicWorld } from "./basic";
 
 /* AdvancedWorld is the world for scenarion and scenario editor.
@@ -77,7 +77,10 @@ class AdvancedWorld {
       this.addCharacter(character);
     });
     if (scene.scenario) {
-      this.addScenario(scene.scenario);
+      const model = scene.scenario.model
+      if (model) {
+        this.addScenario(model);
+      }
     }
     scene.dialogs.forEach((dialog: Dialog) => {
       dialog.setView2D(this.view2D);

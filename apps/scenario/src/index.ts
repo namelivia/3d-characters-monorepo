@@ -1,7 +1,12 @@
-import { loadScene } from './scene/loader'
 import Overlay from './overlay/overlay'
 import Audio from './audio/audio'
-import { ResourceManager, AdvancedWorld } from 'common'
+import {
+    ResourceManager,
+    AdvancedWorld,
+    loadAdvancedScene,
+    loadAdvancedSceneResources,
+    assignAdvancedSceneResources,
+} from 'common'
 
 const setFullscreen = () => {
 	const windowWidth = window.innerWidth
@@ -19,7 +24,9 @@ const setScene = async (
 	world: AdvancedWorld,
 	sceneName: string
 ) => {
-	const scene = await loadScene(resources, audio, sceneName)
+	const scene = await loadAdvancedScene(sceneName) // Load the scene form the json
+    await loadAdvancedSceneResources(resources, scene) // Request the resources associated to the scene
+    await assignAdvancedSceneResources(resources, scene) // Assign them (this could be together)
 	world.loadScene(scene)
 }
 

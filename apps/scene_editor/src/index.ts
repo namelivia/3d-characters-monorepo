@@ -7,9 +7,9 @@ import Actions from './actions/actions'
 import Name from './name/name'
 import Transition from './keyframes/transition'
 import Dialog from './keyframes/dialog'
-import { BasicWorld, SceneEditorJSON, Scene, ResourceManager } from 'common'
+import { BasicWorld, BasicSceneJSON, BasicScene, ResourceManager } from 'common'
 
-const saveSelectedObjects = (sceneName: string, sceneJson: SceneEditorJSON) => {
+const saveSelectedObjects = (sceneName: string, sceneJson: BasicSceneJSON) => {
 	const bb = new Blob([JSON.stringify(sceneJson)], { type: 'text/plain' })
 	const a = document.createElement('a')
 	a.download = `${sceneName}.json`
@@ -25,23 +25,10 @@ const emptyScene = {
 	dialogs: [],
 	transitions: [],
 	characters: [],
-} as SceneEditorJSON
+} as BasicSceneJSON
 
-const previewScene = async (scene: SceneEditorJSON, world: BasicWorld) => {
-	// Initialize scene
-	const resources = scene.resources
-	const manager = new ResourceManager()
-	await manager.loadSongs(resources.audio)
-	await manager.load({
-		models3d: resources.models3d,
-	})
-	const newScene = new Scene()
-	if (scene.scene) {
-		newScene.setScenario(manager.getModel3d(scene.scene))
-	}
-
-	//Apply scene to world
-	world.loadScene(scene)
+const previewScene = async (scene: BasicSceneJSON, world: BasicWorld) => {
+    /*TODO: Here load the advanced scene*/
 }
 
 const main = async () => {
@@ -136,8 +123,8 @@ const main = async () => {
 			currentScene.characters.push({
 				model3d: 'models/test.gltf', //TODO
 				model: detail.character,
-				movement: { index: {}, length: 0 }, //TODO
-				animation: { index: {}, length: 0 }, //TODO
+				movement: { index: {}, duration: 0 }, //TODO
+				animation: { index: {}, duration: 0 }, //TODO
 				position: [0, 0, 0], //TODO
 			})
 			jsonPreview.display(currentScene)

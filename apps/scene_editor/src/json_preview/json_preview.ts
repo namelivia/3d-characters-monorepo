@@ -1,7 +1,7 @@
-import { SceneEditorJSON } from 'common'
+import { BasicSceneJSON } from 'common'
 
 class JsonPreview {
-	display(scene: SceneEditorJSON) {
+	display(scene: BasicSceneJSON) {
 		const json = JSON.stringify(scene, null, 2)
 		const pre = document.getElementById('json')
 		if (pre) {

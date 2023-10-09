@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { getRandomColor } from "../colors/colors";
-import { Character, AnimatedCharacter } from "../character/character";
+import { Character, AnimatedCharacter } from "../scene/character/character";
 import { GLTF } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 /* BasicWorld is the world for the character editor.
@@ -73,9 +73,10 @@ class BasicWorld {
   };
 
   add = (character: Character) => {
-    if (this.scene) {
-      this.scene.add(character.getModel());
-      if (character instanceof AnimatedCharacter) {
+    const model = character.getModel()
+    if (this.scene && model) {
+      this.scene.add(model);
+      if (character instanceof AnimatedCharacter && character.mixer) {
         this.mixers.push(character.mixer);
       }
     }
@@ -96,8 +97,9 @@ class BasicWorld {
   };
 
   remove = (character: Character) => {
-    if (this.scene) {
-      this.scene.remove(character.getModel());
+    const model = character.getModel()
+    if (this.scene && model) {
+      this.scene.remove(model)
       if (character instanceof AnimatedCharacter) {
         this.mixers = this.mixers.filter((mixer) => mixer !== character.mixer);
       }

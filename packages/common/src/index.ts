@@ -1,11 +1,17 @@
 export { loadGLTF } from "./gltf/loader";
-export * from "./character/character";
-export { Timesheet, ActionMap } from "./character/timesheet/timesheet";
+export { Timesheet, ActionMap } from "./scene/character/timesheet/timesheet";
 export { default as BasicWorld } from "./world/basic";
 export { default as AdvancedWorld } from "./world/advanced";
-export * from "./json/json";
 export { default as ResourceManager } from "./resource_manager/resource_manager";
-export { default as BasicScene } from "./scene/basic";
-export { default as AdvancedScene } from "./scene/advanced";
-export { default as Transition } from "./scene/transition";
-export { default as Dialog } from "./dialogs/dialog";
+export { default as BasicScene } from "./scene/basic/basic";
+export { default as AdvancedScene } from "./scene/advanced/advanced";
+export { default as Transition } from "./scene/transitions/transition";
+export { default as Dialog } from "./scene/dialogs/dialog";
+export * from "./scene/character/character";
+export { BasicSceneJSON } from "./scene/basic/loader";
+export { AdvancedSceneJSON } from "./scene/advanced/json";
+export {
+    loadScene as loadAdvancedScene,
+    loadResources as loadAdvancedSceneResources,
+    assignResources as assignAdvancedSceneResources
+} from "./scene/advanced/loader";

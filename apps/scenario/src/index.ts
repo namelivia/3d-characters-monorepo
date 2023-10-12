@@ -1,11 +1,11 @@
 import Overlay from './overlay/overlay'
 import Audio from './audio/audio'
 import {
-    ResourceManager,
-    AdvancedWorld,
-    loadAdvancedScene,
-    loadAdvancedSceneResources,
-    assignAdvancedSceneResources,
+	ResourceManager,
+	AdvancedWorld,
+	loadAdvancedScene,
+	loadAdvancedSceneResources,
+	assignAdvancedSceneResources,
 } from 'common'
 
 const setFullscreen = () => {
@@ -25,8 +25,8 @@ const setScene = async (
 	sceneName: string
 ) => {
 	const scene = await loadAdvancedScene(sceneName) // Load the scene form the json
-    await loadAdvancedSceneResources(resources, scene) // Request the resources associated to the scene
-    await assignAdvancedSceneResources(resources, scene) // Assign them (this could be together)
+	await loadAdvancedSceneResources(resources, scene) // Request the resources associated to the scene
+	await assignAdvancedSceneResources(resources, scene) // Assign them (this could be together)
 	world.loadScene(scene)
 }
 
@@ -46,7 +46,12 @@ const main = async () => {
 		requestAnimationFrame(animate)
 	})
 	// Load initial scene
-	await setScene(resources, audio, world, 'scene1')
+	await setScene(
+		resources,
+		audio,
+		world,
+		'http://localhost:3001/scenes/scene1.json'
+	)
 
 	overlay.addToDOM()
 	overlay.fadeOut()

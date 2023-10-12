@@ -13,7 +13,7 @@ const saveSelectedObjects = (selectedObjects: string[]) => {
 
 const main = async () => {
 	// Load 3d model
-	const model = await loadGLTF('models/test.gltf')
+	const model = await loadGLTF('http://localhost:3001/models/test.gltf')
 
 	// Initialize the UI
 	const selector = new Selector()

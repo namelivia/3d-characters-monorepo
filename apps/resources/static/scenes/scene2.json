@@ -1,19 +1,19 @@
 {
     "resources": {
         "models3d": [
-            "models/test.gltf",
-            "models/scene.gltf"
+            "http://localhost:3001/models/test.gltf",
+            "http://localhost:3001/models/scene.gltf"
         ],
         "audio": [
-            "media/music2.ogg"
+            "http://localhost:3001/media/music2.ogg"
         ]
     },
-    "scene": "models/scene.gltf",
-    "music": "media/music2.ogg",
+    "scene": "http://localhost:3001/models/scene.gltf",
+    "music": "http://localhost:3001/media/music2.ogg",
     "characters": [
         {
-            "model3d": "models/test.gltf",
-            "model": "naked_magician",
+            "model3d": "http://localhost:3001/models/test.gltf",
+            "model": "http://localhost:3001/characters/naked_magician.json",
             "position": [0, 0, -5],
             "movement": {
                 "index": {

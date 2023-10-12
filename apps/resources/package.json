@@ -1,0 +1,13 @@
+{
+  "name": "resources",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "scripts": {
+    "start": "serve -p 3001 --cors static"
+  },
+  "devDependencies": {
+    "serve": "^14.2.0"
+  }
+}

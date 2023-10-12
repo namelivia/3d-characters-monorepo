@@ -11,20 +11,21 @@ export type CharactersJSON = {
 }[];
 
 export const loadCharacters = (json: CharactersJSON): ScenarioCharacter[] => {
-    return json.map((character) => newCharacter(
-            character.model3d,
-            character.model,
-            character.movement,
-            character.animation,
-            character.position[0],
-            character.position[1],
-            character.position[2]
-        )
+  return json.map((character) =>
+    newCharacter(
+      character.model3d,
+      character.model,
+      character.movement,
+      character.animation,
+      character.position[0],
+      character.position[1],
+      character.position[2]
     )
-}
+  );
+};
 
 //Loads the part of a character from a json file
-export const loadParts = async (key: string) => {
-	const response = await fetch(`./characters/${key}.json`)
-	return await response.json()
-}
+export const loadParts = async (url: string) => {
+  const response = await fetch(url);
+  return await response.json();
+};

@@ -1,7 +1,7 @@
 import Selector from './selector/selector'
 import Actions from './actions/actions'
-import { loadGLTF, BasicWorld } from 'common'
-import ToggleableCharacter from './character/character'
+import { BasicWorld, AnimatedCharacter, ResourceManager } from 'common'
+//import ToggleableCharacter from './character/character'
 
 const saveSelectedObjects = (selectedObjects: string[]) => {
 	const bb = new Blob([JSON.stringify(selectedObjects)], { type: 'text/plain' })
@@ -12,12 +12,13 @@ const saveSelectedObjects = (selectedObjects: string[]) => {
 }
 
 const main = async () => {
-	// Load 3d model
-	const model = await loadGLTF('http://localhost:3001/models/test.gltf')
-
+	const model3d = 'http://localhost:3001/models/test.gltf'
+	const resources = new ResourceManager()
+	await resources.load({
+		models3d: [model3d],
+	})
 	// Initialize the UI
 	const selector = new Selector()
-	selector.display(model.scene)
 	const actions = new Actions()
 	actions.display()
 
@@ -25,7 +26,16 @@ const main = async () => {
 	const world = new BasicWorld()
 	world.initialize()
 	world.addFloorGrid()
-	const character = new ToggleableCharacter(model.scene, model.animations)
+
+	//Initialize the character
+	const character = new AnimatedCharacter(model3d, 'missing_configuration')
+	const gltf = resources.getModel3d(character.model3d)
+	character.setGLTF(gltf.scene)
+	selector.display(gltf.scene)
+	character.setAnimations(gltf.animations)
+	/*const parts = await loadParts(character.configuration); // Fetch the parts from it's json file
+    character.setParts(parts);
+    */
 	world.add(character)
 
 	requestAnimationFrame(function animate() {

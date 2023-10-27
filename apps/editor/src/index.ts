@@ -33,9 +33,7 @@ const main = async () => {
 	character.setGLTF(gltf.scene)
 	selector.display(gltf.scene)
 	character.setAnimations(gltf.animations)
-	/*const parts = await loadParts(character.configuration); // Fetch the parts from it's json file
-    character.setParts(parts);
-    */
+	character.hideAllParts()
 	world.add(character)
 
 	requestAnimationFrame(function animate() {

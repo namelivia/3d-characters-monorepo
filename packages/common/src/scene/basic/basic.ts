@@ -6,9 +6,10 @@ class BasicScene {
   };
 }
 
-class LoadedBasicScene {
+class LoadedBasicScene extends BasicScene {
   scenario: GLTF;
   constructor(scenario: GLTF) {
+    super();
     this.scenario = scenario;
   }
 }

@@ -1,13 +1,16 @@
 import { GLTF } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 class BasicScene {
-  scenario: GLTF | null;
-  constructor() {
-    this.scenario = null;
-  }
-
-  setScenario = (scenario: GLTF) => {
-    this.scenario = scenario;
+  setScenario = (scenario: GLTF): LoadedBasicScene => {
+    return new LoadedBasicScene(scenario);
   };
 }
-export default BasicScene;
+
+class LoadedBasicScene {
+  scenario: GLTF;
+  constructor(scenario: GLTF) {
+    this.scenario = scenario;
+  }
+}
+
+export { BasicScene, LoadedBasicScene };

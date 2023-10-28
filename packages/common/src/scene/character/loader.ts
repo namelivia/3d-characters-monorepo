@@ -1,5 +1,5 @@
 import { ActionMapJSON } from "./timesheet/loader";
-import { ScenarioCharacter } from "./character";
+import { Character } from "./character";
 import { newCharacter } from "./factory";
 
 export type CharactersJSON = {
@@ -10,13 +10,13 @@ export type CharactersJSON = {
   position: [number, number, number];
 }[];
 
-export const loadCharacters = (json: CharactersJSON): ScenarioCharacter[] => {
+export const loadCharacters = (json: CharactersJSON): Character[] => {
   return json.map((character) =>
     newCharacter(
       character.model3d,
       character.model,
-      character.movement,
-      character.animation,
+      /*character.movement,
+      character.animation,*/
       character.position[0],
       character.position[1],
       character.position[2]

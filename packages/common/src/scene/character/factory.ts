@@ -2,7 +2,7 @@ import { loadParts } from './loader'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js'
 //import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js'
 import { Timesheet, ActionMap } from './timesheet/timesheet'
-import { ScenarioCharacter } from './character'
+import { ScenarioCharacter, Character } from './character'
 
 export const initializeCharacter = async (character: ScenarioCharacter, gltf: GLTF) => {
     //Set the GLTF
@@ -19,21 +19,21 @@ export const initializeCharacter = async (character: ScenarioCharacter, gltf: GL
 export const newCharacter = (
 	model3d: string,
 	configuration: string,
-	movement: ActionMap,
-	animation: ActionMap,
+	//movement: ActionMap,
+	//animation: ActionMap,
 	x: number,
 	y: number,
 	z: number
-): ScenarioCharacter => {
-	const character = new ScenarioCharacter(model3d, configuration)
+): Character => {
+	const character = new Character(model3d, configuration)
 
     // Set the position
 	character.addPosition(x, y, z)
 
     // Set the timesheet
-	const timesheet = new Timesheet()
+	/*const timesheet = new Timesheet()
 	timesheet.setMovementMap(movement)
 	timesheet.setAnimationMap(animation)
-	character.setTimesheet(timesheet)
+	character.setTimesheet(timesheet)*/
 	return character
 }

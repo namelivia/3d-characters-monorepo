@@ -113,4 +113,4 @@ class LoadedAdvancedScene extends AdvancedScene {
   }
 }
 
-export { AdvancedScene, LoadedAdvancedScene };
+export { AdvancedScene, LoadedAdvancedScene, Music, Scenario };

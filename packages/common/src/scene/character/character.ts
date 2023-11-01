@@ -1,7 +1,11 @@
 import * as THREE from "three";
-import { Timesheet } from "./timesheet/timesheet";
-import { Movement } from "./timesheet/movement";
+import { Timesheet, ActionMap } from "./timesheet/timesheet";
 import { Animation } from "./timesheet/animation";
+
+type Part = {
+  part: string;
+  color: string | null;
+};
 
 // Base character class
 class Character {
@@ -9,12 +13,24 @@ class Character {
   posY: number = 0;
   posZ: number = 0;
   rotY: number = 0;
+  movement: ActionMap = {
+    index: {},
+    duration: 0,
+  };
+  animation: ActionMap = {
+    index: {},
+    duration: 0,
+  };
   model3d: string;
   configuration: string;
+  timesheet: Timesheet;
 
   constructor(model3d: string, configuration: string) {
     this.model3d = model3d;
     this.configuration = configuration;
+    this.timesheet = new Timesheet();
+    this.timesheet.setMovementMap(this.movement);
+    this.timesheet.setAnimationMap(this.animation);
   }
 
   setGLTF(gltf: THREE.Object3D): LoadedCharacter {
@@ -29,6 +45,10 @@ class Character {
 
   addRotation(y: number): void {
     this.rotY += y;
+  }
+
+  setTimesheet(timesheet: Timesheet) {
+    this.timesheet = timesheet;
   }
 
   getModelName = (): string => this.model3d;
@@ -68,6 +88,27 @@ class LoadedCharacter extends Character {
     });
     return visibleParts;
   };
+
+  setParts(parts: Part[]) {
+    this.applyColors(parts);
+    this.cleanupGLTF(parts.map((part) => part.part));
+  }
+
+  cleanupGLTF(parts: string[]) {
+    //Remove all meshes that are not bones or parts of the character
+    const armature = this.gltf.children[0];
+    armature.children = armature.children.filter((child) => {
+      return child.type === "Bone" || parts.includes(child.name);
+    });
+  }
+
+  applyColors(parts: Part[]) {
+    parts.forEach((part) => {
+      if (part.color) {
+        this.changePartColor(part.part, part.color);
+      }
+    });
+  }
 
   togglePartVisibility = (part: string): void => {
     const partObject = this.gltf.getObjectByName(part);
@@ -124,11 +165,11 @@ class LoadedCharacter extends Character {
     const animations = new Animation(gltfAnimations);
     const mixer = new THREE.AnimationMixer(this.gltf);
     return new AnimatedCharacter(
-        this.model3d,
-        this.configuration,
-        this.gltf,
-        animations,
-        mixer
+      this.model3d,
+      this.configuration,
+      this.gltf,
+      animations,
+      mixer
     );
   }
 }
@@ -156,86 +197,28 @@ class AnimatedCharacter extends LoadedCharacter {
     );
   }
 
-  addBehavior(movement: Movement, timesheet: Timesheet): ScenarioCharacter {
-    return new ScenarioCharacter(
-      this.model3d,
-      this.configuration,
-      this.gltf,
-      this.animations,
-      this.mixer,
-      movement,
-      timesheet
-    );
-  }
-}
-
-type Part = {
-  part: string;
-  color: string | null;
-};
-
-class ScenarioCharacter extends AnimatedCharacter {
-  movement: Movement;
-  timesheet: Timesheet;
-
-  constructor(
-    model3d: string,
-    configuration: string,
-    gltf: THREE.Object3D,
-    animations: Animation,
-    mixer: THREE.AnimationMixer,
-    movement: Movement,
-    timesheet: Timesheet
-  ) {
-    super(model3d, configuration, gltf, animations, mixer);
-    this.movement = movement;
-    this.timesheet = timesheet;
-  }
-
-
-  setParts(parts: Part[]) {
-    this.applyColors(parts);
-    this.cleanupGLTF(parts.map((part) => part.part));
-  }
-
-  cleanupGLTF(parts: string[]) {
-    //Remove all meshes that are not bones or parts of the character
-    const armature = this.gltf.children[0];
-    armature.children = armature.children.filter((child) => {
-      return child.type === "Bone" || parts.includes(child.name);
-    });
-  }
-
-  applyColors(parts: Part[]) {
-    parts.forEach((part) => {
-      if (part.color) {
-        this.changePartColor(part.part, part.color);
-      }
-    });
-  }
-
-  setTimesheet(timesheet: Timesheet) {
-    this.timesheet = timesheet;
-  }
-
   update(time: number) {
     this.updateMovement(time);
     this.updateAnimation(time);
   }
 
   updateAnimation(time: number) {
-      const animation = this.timesheet.getAnimation(time);
+    const animation = this.timesheet.getAnimation(time);
+    if (animation) {
       this.currentAnimation = this.animations.set(
         animation,
         this.mixer,
         this.currentAnimation
       );
+    }
   }
 
   updateMovement(time: number) {
     const movement = this.timesheet.getMovement(time);
-    movement.move(this.gltf);
+    if (movement) {
+      movement.move(this.gltf);
+    }
   }
 }
 
-export { Character, LoadedCharacter, AnimatedCharacter, ScenarioCharacter };
+export { Character, LoadedCharacter, AnimatedCharacter };

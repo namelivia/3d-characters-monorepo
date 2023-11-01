@@ -15,8 +15,8 @@ export const loadCharacters = (json: CharactersJSON): Character[] => {
     newCharacter(
       character.model3d,
       character.model,
-      /*character.movement,
-      character.animation,*/
+      character.movement,
+      character.animation,
       character.position[0],
       character.position[1],
       character.position[2]

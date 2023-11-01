@@ -1,7 +1,7 @@
-import { ScenarioCharacter } from "../scene/character/character";
+import { AnimatedCharacter } from "../scene/character/character";
 import { GLTF } from "three/examples/jsm/loaders/GLTFLoader.js";
 import View2D from "../view_2d/view_2d";
-import AdvancedScene from "../scene/advanced/advanced";
+import { LoadedAdvancedScene } from "../scene/advanced/advanced";
 import Transition from "../scene/transitions/transition";
 import Dialog from "../scene/dialogs/dialog";
 import { default as BasicWorld } from "./basic";
@@ -11,7 +11,7 @@ import { default as BasicWorld } from "./basic";
  * characters, transitions, dialogs, and 2D elements.*/
 
 class AdvancedWorld {
-  characters?: [ScenarioCharacter?];
+  characters?: [AnimatedCharacter?];
   dialogs?: [Dialog?];
   transitions?: [Transition?];
   time: number = 0;
@@ -54,7 +54,7 @@ class AdvancedWorld {
     this.world3D.step();
   };
 
-  addCharacter = (character: ScenarioCharacter) => {
+  addCharacter = (character: AnimatedCharacter) => {
     this.characters?.push(character);
     this.world3D.add(character);
   };
@@ -71,17 +71,12 @@ class AdvancedWorld {
     this.transitions?.push(transition);
   };
 
-  loadScene = (scene: AdvancedScene) => {
+  loadScene = (scene: LoadedAdvancedScene) => {
     this.initialize();
-    scene.characters.forEach((character: ScenarioCharacter) => {
+    scene.characters.forEach((character: AnimatedCharacter) => {
       this.addCharacter(character);
     });
-    if (scene.scenario) {
-      const model = scene.scenario.model
-      if (model) {
-        this.addScenario(model);
-      }
-    }
+    this.addScenario(scene.scenario.model);
     scene.dialogs.forEach((dialog: Dialog) => {
       dialog.setView2D(this.view2D);
       this.addDialog(dialog);

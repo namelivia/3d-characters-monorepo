@@ -100,7 +100,7 @@ export const assignResources = async (
     //TODO: This assumes scenario and music will always exist
     if (scene.music) {
       //And should be same for each of the characters
-      const scenarioCharacters = [];
+      const scenarioCharacters = [] as AnimatedCharacter[];
       for (const character of scene.characters) {
         scenarioCharacters.push(
           await loadAnimatedCharacter(character, manager)

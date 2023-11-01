@@ -1,9 +1,19 @@
-import { loadScene } from "./loader";
-import { AdvancedScene, Music, Scenario } from "./advanced";
+import { loadScene, assignResources } from "./loader";
+import {
+  AdvancedScene,
+  LoadedAdvancedScene,
+  LoadedMusic,
+  LoadedScenario,
+  Music,
+  Scenario,
+} from "./advanced";
 import { Character } from "../character/character";
 import { default as Dialog } from "../dialogs/dialog";
 import { default as Transition } from "../transitions/transition";
 import { Timesheet } from "../character/timesheet/timesheet";
+import ResourceManager from "../../resource_manager/resource_manager";
+
+// Mock SkeletonUtils used to clone the models
 jest.mock("three/examples/jsm/utils/SkeletonUtils.js", () => {
   return {
     __esModule: true,
@@ -12,79 +22,100 @@ jest.mock("three/examples/jsm/utils/SkeletonUtils.js", () => {
     },
   };
 });
+
+const getModel3dMock = jest.fn().mockImplementation(() => {
+  return "GLTF3DModelMock";
+});
+const getSongMock = jest.fn().mockImplementation(() => {
+  return "AudioBufferMock";
+});
+
+// Mock the resource manager
+jest.mock("../../resource_manager/resource_manager", () => {
+  return {
+    __esModule: true,
+    default: jest.fn().mockImplementation(() => {
+      return {
+        getModel3d: getModel3dMock,
+        getSong: getSongMock,
+      };
+    }),
+  };
+});
+
+const sceneJson = {
+  resources: {
+    models3d: ["models/test.gltf", "models/scene.gltf"],
+    audio: ["media/music.ogg"],
+  },
+  scene: "models/scene.gltf",
+  music: "media/music.ogg",
+  characters: [
+    {
+      model3d: "models/test.gltf",
+      model: "naked_magician",
+      position: [-5, 0, 0],
+      movement: {
+        index: {
+          "0": "move_left",
+          "100": "move_right",
+        },
+        duration: 200,
+      },
+      animation: {
+        index: {
+          "0": "idle",
+          "400": "wave",
+        },
+        duration: 700,
+      },
+    },
+    {
+      model3d: "models/test.gltf",
+      model: "dude",
+      position: [0, 0, 0],
+      movement: {
+        index: {
+          "0": "move_front",
+          "200": "move_back",
+        },
+        duration: 400,
+      },
+      animation: {
+        index: {
+          "0": "idle",
+          "300": "wave",
+          "600": "idle",
+        },
+        duration: 900,
+      },
+    },
+  ],
+  dialogs: [
+    {
+      id: "33843d75-c519-4c3e-8b6e-d55e666cf6aa",
+      text: "These are my friends. They are all very cool.",
+      start: 200,
+      duration: 500,
+    },
+  ],
+  transitions: [
+    {
+      scene: "scene2",
+      time: 1100,
+    },
+  ],
+};
+
 describe("Advanced scene loader", () => {
   it("Should load a scene from a json structure", async () => {
-    const sceneJson = {
-      resources: {
-        models3d: ["models/test.gltf", "models/scene.gltf"],
-        audio: ["media/music.ogg"],
-      },
-      scene: "models/scene.gltf",
-      music: "media/music.ogg",
-      characters: [
-        {
-          model3d: "models/test.gltf",
-          model: "naked_magician",
-          position: [-5, 0, 0],
-          movement: {
-            index: {
-              "0": "move_left",
-              "100": "move_right",
-            },
-            duration: 200,
-          },
-          animation: {
-            index: {
-              "0": "idle",
-              "400": "wave",
-            },
-            duration: 700,
-          },
-        },
-        {
-          model3d: "models/test.gltf",
-          model: "dude",
-          position: [0, 0, 0],
-          movement: {
-            index: {
-              "0": "move_front",
-              "200": "move_back",
-            },
-            duration: 400,
-          },
-          animation: {
-            index: {
-              "0": "idle",
-              "300": "wave",
-              "600": "idle",
-            },
-            duration: 900,
-          },
-        },
-      ],
-      dialogs: [
-        {
-          id: "33843d75-c519-4c3e-8b6e-d55e666cf6aa",
-          text: "These are my friends. They are all very cool.",
-          start: 200,
-          duration: 500,
-        },
-      ],
-      transitions: [
-        {
-          scene: "scene2",
-          time: 1100,
-        },
-      ],
-    };
-
     //When asking to load a scene, a url is passed and the json contents are fetched
     const fetchMock = jest.spyOn(global, "fetch").mockImplementationOnce(() => {
       return Promise.resolve({
         json: () => Promise.resolve(sceneJson),
       } as Response);
     });
-    const sceneKey = "./scenes/scene_1,json";
+    const sceneKey = "./scenes/scene_1.json";
     const scene = await loadScene(sceneKey);
     expect(fetchMock).toHaveBeenCalledWith(sceneKey);
 
@@ -160,12 +191,36 @@ describe("Advanced scene loader", () => {
     expect(timesheet.animationMap.index[400]).toBe("wave");
   });
 
-  /*it('should load the resources of a scene', async () => {
-        TODO: Write this test
-        const resourceManager = new ResourceManager()
-        const scene = new AdvancedScene()
-        scene.resources.audio = ["media/music.ogg"]
-        scene.resources.models3d = ["models/test.gltf", "models/scene.gltf"]
-        loadResources(resourceManager, scene)
-    })*/
+  it("should load the resources of a scene", async () => {
+    // The scene can be providen with a resource manager and it will load its resources
+    const resourceManager = new ResourceManager();
+
+    //Reusing the previous scene, we can load its resources
+    jest.spyOn(global, "fetch").mockImplementationOnce(() => {
+      return Promise.resolve({
+        json: () => Promise.resolve(sceneJson),
+      } as Response);
+    });
+    const sceneKey = "./scenes/scene_1.json";
+    const scene = await loadScene(sceneKey);
+
+    const loadedScene = await assignResources(resourceManager, scene);
+    //The resource manager is asked to provide the resources
+    expect(getSongMock).toHaveBeenCalledWith("media/music.ogg");
+    expect(getModel3dMock).toHaveBeenCalledWith("models/scene.gltf");
+    if (!loadedScene) {
+      throw new Error("Scene not loaded");
+    }
+
+    //The scene is an instance of a lodaed scene
+    expect(loadedScene).toBeInstanceOf(LoadedAdvancedScene);
+
+    //Has loaded the music audio buffer
+    expect(loadedScene.music).toBeInstanceOf(LoadedMusic);
+    expect(loadedScene.music.audio).toEqual("AudioBufferMock");
+
+    //Has loaded the scenarion 3d model
+    expect(loadedScene.scenario).toBeInstanceOf(LoadedScenario);
+    expect(loadedScene.scenario.model).toEqual("GLTF3DModelMock");
+  });
 });

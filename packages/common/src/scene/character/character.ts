@@ -34,7 +34,16 @@ class Character {
   }
 
   setGLTF(gltf: THREE.Object3D): LoadedCharacter {
-    return new LoadedCharacter(this.model3d, this.configuration, gltf);
+    const loadedCharacter = new LoadedCharacter(
+      this.model3d,
+      this.configuration,
+      gltf
+    );
+    // Copy all the properties, because this is a new instance
+    loadedCharacter.setTimesheet(this.timesheet);
+    loadedCharacter.addPosition(this.posX, this.posY, this.posZ);
+    loadedCharacter.addRotation(this.rotY);
+    return loadedCharacter;
   }
 
   addPosition(x: number, y: number, z: number): void {
@@ -164,13 +173,18 @@ class LoadedCharacter extends Character {
   setAnimations(gltfAnimations: THREE.AnimationClip[]): AnimatedCharacter {
     const animations = new Animation(gltfAnimations);
     const mixer = new THREE.AnimationMixer(this.gltf);
-    return new AnimatedCharacter(
+    const animatedCharacter = new AnimatedCharacter(
       this.model3d,
       this.configuration,
       this.gltf,
       animations,
       mixer
     );
+    // Copy all the properties, because this is a new instance
+    animatedCharacter.setTimesheet(this.timesheet);
+    animatedCharacter.addPosition(this.posX, this.posY, this.posZ);
+    animatedCharacter.addRotation(this.rotY);
+    return animatedCharacter;
   }
 }
 

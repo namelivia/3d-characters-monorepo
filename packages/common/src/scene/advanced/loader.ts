@@ -2,9 +2,10 @@
 import { loadTransitions } from "../transitions/loader";
 import { loadDialogs } from "../dialogs/loader";
 import { loadCharacters, loadParts } from "../character/loader";
+import { Character, AnimatedCharacter } from "../character/character";
 import { importResources } from "../resources/loader";
 import { AdvancedSceneJSON } from "./json";
-import { default as AdvancedScene } from "./advanced";
+import { AdvancedScene, LoadedAdvancedScene } from "./advanced";
 import { default as ResourceManager } from "../../resource_manager/resource_manager";
 import * as SkeletonUtils from "three/examples/jsm/utils/SkeletonUtils.js";
 /*import {
@@ -75,27 +76,44 @@ export const loadResources = async (
   });
 };
 
+const loadAnimatedCharacter = async (
+  character: Character,
+  manager: ResourceManager
+): Promise<AnimatedCharacter> => {
+  const gltf = manager.getModel3d(character.model3d);
+  const gltfSceneClone = SkeletonUtils.clone(gltf.scene);
+  const loadedCharacter = character.setGLTF(gltfSceneClone);
+  const animatedCharacter = loadedCharacter.setAnimations(gltf.animations);
+  // How do I transform animated character into a scenario character?
+  const parts = await loadParts(character.configuration); // Fetch the parts from it's json file
+  animatedCharacter.setParts(parts);
+  return animatedCharacter;
+};
+
 export const assignResources = async (
   manager: ResourceManager,
   scene: AdvancedScene
-) => {
+): Promise<LoadedAdvancedScene | undefined> => {
   // Resources have been loaded and are available in the resource manager
-  // Now objects in the scene need to be assigned with the resources
-  // Let's start with the scenario for example, we need to assign the model property
+  // Now objects in the scene need to be assigned with the resources.
   if (scene.scenario) {
-    scene.scenario.model = manager.getModel3d(scene.scenario.key);
-  }
-  //It is the same for the music
-  if (scene.music) {
-    scene.music.audio = manager.getSong(scene.music.key);
-  }
-  //And should be same for each of the characters
-  for (const character of scene.characters) {
-    const gltf = manager.getModel3d(character.model3d);
-    const gltfSceneClone = SkeletonUtils.clone(gltf.scene);
-    character.setGLTF(gltfSceneClone);
-    character.setAnimations(gltf.animations);
-    const parts = await loadParts(character.configuration); // Fetch the parts from it's json file
-    character.setParts(parts);
+    //TODO: This assumes scenario and music will always exist
+    if (scene.music) {
+      //And should be same for each of the characters
+      const scenarioCharacters = [] as AnimatedCharacter[];
+      for (const character of scene.characters) {
+        scenarioCharacters.push(
+          await loadAnimatedCharacter(character, manager)
+        );
+      }
+
+      const loadedScene = new LoadedAdvancedScene(
+        scene.scenario.setModel(manager.getModel3d(scene.scenario.key)),
+        scene.music.setAudio(manager.getSong(scene.music.key)),
+        scenarioCharacters
+      );
+
+      return loadedScene;
+    }
   }
 };

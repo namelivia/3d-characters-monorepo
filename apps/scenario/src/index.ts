@@ -26,8 +26,10 @@ const setScene = async (
 ) => {
 	const scene = await loadAdvancedScene(sceneName) // Load the scene form the json
 	await loadAdvancedSceneResources(resources, scene) // Request the resources associated to the scene
-	await assignAdvancedSceneResources(resources, scene) // Assign them (this could be together)
-	world.loadScene(scene)
+	const loadedScene = await assignAdvancedSceneResources(resources, scene) // Assign them (this could be together)
+	if (loadedScene) {
+		world.loadScene(loadedScene)
+	}
 }
 
 const main = async () => {

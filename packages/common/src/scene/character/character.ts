@@ -1,111 +1,92 @@
 import * as THREE from "three";
-import { Timesheet } from "./timesheet/timesheet";
-import { Movement } from "./timesheet/movement";
+import { Timesheet, ActionMap } from "./timesheet/timesheet";
 import { Animation } from "./timesheet/animation";
+
+type Part = {
+  part: string;
+  color: string | null;
+};
 
 // Base character class
 class Character {
-  gltf?: THREE.Object3D;
   posX: number = 0;
   posY: number = 0;
   posZ: number = 0;
   rotY: number = 0;
+  movement: ActionMap = {
+    index: {},
+    duration: 0,
+  };
+  animation: ActionMap = {
+    index: {},
+    duration: 0,
+  };
   model3d: string;
   configuration: string;
+  timesheet: Timesheet;
 
   constructor(model3d: string, configuration: string) {
     this.model3d = model3d;
     this.configuration = configuration;
+    this.timesheet = new Timesheet();
+    this.timesheet.setMovementMap(this.movement);
+    this.timesheet.setAnimationMap(this.animation);
   }
 
-  setGLTF(gltf: THREE.Object3D) {
+  setGLTF(gltf: THREE.Object3D): LoadedCharacter {
+    const loadedCharacter = new LoadedCharacter(
+      this.model3d,
+      this.configuration,
+      gltf
+    );
+    // Copy all the properties, because this is a new instance
+    loadedCharacter.setTimesheet(this.timesheet);
+    loadedCharacter.addPosition(this.posX, this.posY, this.posZ);
+    loadedCharacter.addRotation(this.rotY);
+    return loadedCharacter;
+  }
+
+  addPosition(x: number, y: number, z: number): void {
+    this.posX = x;
+    this.posY = y;
+    this.posZ = z;
+  }
+
+  addRotation(y: number): void {
+    this.rotY += y;
+  }
+
+  setTimesheet(timesheet: Timesheet) {
+    this.timesheet = timesheet;
+  }
+
+  getModelName = (): string => this.model3d;
+}
+
+// Character with GLTF loaded
+class LoadedCharacter extends Character {
+  gltf: THREE.Object3D;
+  constructor(model3d: string, configuration: string, gltf: THREE.Object3D) {
+    super(model3d, configuration);
     this.gltf = gltf;
     this.updateGLTF();
   }
 
-  updateGLTF() {
-    if (this.gltf) {
-      this.gltf.position.x = this.posX;
-      this.gltf.position.y = this.posY;
-      this.gltf.position.z = this.posZ;
-      this.gltf.rotation.y = this.rotY;
-    }
-  }
-
-  addPosition(x: number, y: number, z: number) {
-    this.posX = x;
-    this.posY = y;
-    this.posZ = z;
+  addPosition(x: number, y: number, z: number): void {
+    super.addPosition(x, y, z);
     this.updateGLTF();
   }
 
-  addRotation(y: number) {
-    this.rotY += y;
+  addRotation(y: number): void {
+    super.addRotation(y);
     this.updateGLTF();
   }
 
-  changePartColor = (part: string, color: string): void => {
-    if (this.gltf) {
-      // Color parts can only be changed after setting the GLTF
-      const partObject = this.gltf.getObjectByName(part);
-      if (partObject) {
-        const mesh = partObject as THREE.Mesh;
-        const material = mesh.material as THREE.MeshStandardMaterial;
-        const newMaterial = material.clone();
-        newMaterial.map = null;
-        newMaterial.color = new THREE.Color(parseInt(color, 16));
-        mesh.material = newMaterial;
-      }
-    }
-  };
-
-  hideAllParts = (): void => {
-    if (!this.gltf) {
-      return;
-    }
-    this.gltf.traverse((object: THREE.Object3D) => {
-      // Did this ever work?
-      //if (object instanceof THREE.SkinnedMesh) {
-      if (object.type === "SkinnedMesh") {
-        object.visible = false;
-      }
-    });
-  };
-
-  showPart = (part: string): void => {
-    if (!this.gltf) {
-      return;
-    }
-    const partObject = this.gltf.getObjectByName(part);
-    if (partObject) {
-      partObject.visible = true;
-    }
-  };
-
-  hidePart = (part: string): void => {
-    if (!this.gltf) {
-      return;
-    }
-    const partObject = this.gltf.getObjectByName(part);
-    if (partObject) {
-      partObject.visible = false;
-    }
-  };
-
-  togglePartVisibility = (part: string): void => {
-    if (!this.gltf) {
-      return;
-    }
-    const partObject = this.gltf.getObjectByName(part);
-    if (partObject) {
-      partObject.visible = !partObject.visible;
-    }
+  getModel = (): THREE.Object3D => {
+    return this.gltf;
   };
 
   getVisibleParts = (): string[] => {
-    if (!this.gltf) {
-      return [];
-    }
     const visibleParts: string[] = [];
     this.gltf.traverse((object: THREE.Object3D) => {
       if (object instanceof THREE.SkinnedMesh) {
@@ -117,56 +98,17 @@ class Character {
     return visibleParts;
   };
 
-  getModelName = (): string => this.model3d;
-
-  getModel = (): THREE.Object3D | undefined => {
-    return this.gltf;
-  };
-}
-
-// Character with animations
-class AnimatedCharacter extends Character {
-  mixer?: THREE.AnimationMixer;
-  animations?: Animation;
-  currentAnimation?: THREE.AnimationAction;
-
-  setAnimations(animations: THREE.AnimationClip[]) {
-    if (this.gltf) {
-      // Animations can only be set after setting the GLTF
-      this.animations = new Animation(animations);
-      this.mixer = new THREE.AnimationMixer(this.gltf);
-      this.currentAnimation = this.animations.set(
-        "idle",
-        this.mixer,
-        this.currentAnimation
-      );
-    }
-  }
-}
-
-type Part = {
-  part: string;
-  color: string | null;
-};
-
-class ScenarioCharacter extends AnimatedCharacter {
-  movement?: Movement;
-  timesheet?: Timesheet;
-
   setParts(parts: Part[]) {
     this.applyColors(parts);
     this.cleanupGLTF(parts.map((part) => part.part));
   }
 
   cleanupGLTF(parts: string[]) {
-    if (this.gltf) {
-      //Only to do when the gltf has been loaded
-      //Remove all meshes that are not bones or parts of the character
-      const armature = this.gltf.children[0];
-      armature.children = armature.children.filter((child) => {
-        return child.type === "Bone" || parts.includes(child.name);
-      });
-    }
+    //Remove all meshes that are not bones or parts of the character
+    const armature = this.gltf.children[0];
+    armature.children = armature.children.filter((child) => {
+      return child.type === "Bone" || parts.includes(child.name);
+    });
   }
 
   applyColors(parts: Part[]) {
@@ -177,8 +119,96 @@ class ScenarioCharacter extends AnimatedCharacter {
     });
   }
 
-  setTimesheet(timesheet: Timesheet) {
-    this.timesheet = timesheet;
+  togglePartVisibility = (part: string): void => {
+    const partObject = this.gltf.getObjectByName(part);
+    if (partObject) {
+      partObject.visible = !partObject.visible;
+    }
+  };
+
+  updateGLTF(): void {
+    this.gltf.position.x = this.posX;
+    this.gltf.position.y = this.posY;
+    this.gltf.position.z = this.posZ;
+    this.gltf.rotation.y = this.rotY;
+  }
+
+  hidePart = (part: string): void => {
+    const partObject = this.gltf.getObjectByName(part);
+    if (partObject) {
+      partObject.visible = false;
+    }
+  };
+
+  hideAllParts = (): void => {
+    this.gltf.traverse((object: THREE.Object3D) => {
+      // Did this ever work?
+      //if (object instanceof THREE.SkinnedMesh) {
+      if (object.type === "SkinnedMesh") {
+        object.visible = false;
+      }
+    });
+  };
+
+  showPart = (part: string): void => {
+    const partObject = this.gltf.getObjectByName(part);
+    if (partObject) {
+      partObject.visible = true;
+    }
+  };
+
+  changePartColor = (part: string, color: string): void => {
+    // Color parts can only be changed after setting the GLTF
+    const partObject = this.gltf.getObjectByName(part);
+    if (partObject) {
+      const mesh = partObject as THREE.Mesh;
+      const material = mesh.material as THREE.MeshStandardMaterial;
+      const newMaterial = material.clone();
+      newMaterial.map = null;
+      newMaterial.color = new THREE.Color(parseInt(color, 16));
+      mesh.material = newMaterial;
+    }
+  };
+
+  setAnimations(gltfAnimations: THREE.AnimationClip[]): AnimatedCharacter {
+    const animations = new Animation(gltfAnimations);
+    const mixer = new THREE.AnimationMixer(this.gltf);
+    const animatedCharacter = new AnimatedCharacter(
+      this.model3d,
+      this.configuration,
+      this.gltf,
+      animations,
+      mixer
+    );
+    // Copy all the properties, because this is a new instance
+    animatedCharacter.setTimesheet(this.timesheet);
+    animatedCharacter.addPosition(this.posX, this.posY, this.posZ);
+    animatedCharacter.addRotation(this.rotY);
+    return animatedCharacter;
+  }
+}
+
+// Character with animations
+class AnimatedCharacter extends LoadedCharacter {
+  mixer: THREE.AnimationMixer;
+  animations: Animation;
+  currentAnimation: THREE.AnimationAction | undefined;
+
+  constructor(
+    model3d: string,
+    configuration: string,
+    gltf: THREE.Object3D,
+    animations: Animation,
+    mixer: THREE.AnimationMixer
+  ) {
+    super(model3d, configuration, gltf);
+    this.animations = animations;
+    this.mixer = mixer;
+    this.currentAnimation = animations.set(
+      "idle", //Start with idle animation as a default
+      mixer,
+      undefined
+    );
   }
 
   update(time: number) {
@@ -187,9 +217,8 @@ class ScenarioCharacter extends AnimatedCharacter {
   }
 
   updateAnimation(time: number) {
-    //Only to do when animations have been loaded
-    if (this.timesheet && this.animations && this.mixer) {
-      const animation = this.timesheet.getAnimation(time);
+    const animation = this.timesheet.getAnimation(time);
+    if (animation) {
       this.currentAnimation = this.animations.set(
         animation,
         this.mixer,
@@ -199,13 +228,11 @@ class ScenarioCharacter extends AnimatedCharacter {
   }
 
   updateMovement(time: number) {
-    //Only to do when gltf has been loaded
-    //This can probably be CHANGED
-    if (this.timesheet && this.gltf) {
-      const movement = this.timesheet.getMovement(time);
+    const movement = this.timesheet.getMovement(time);
+    if (movement) {
       movement.move(this.gltf);
     }
   }
 }
 
-export { Character, AnimatedCharacter, ScenarioCharacter };
+export { Character, LoadedCharacter, AnimatedCharacter };

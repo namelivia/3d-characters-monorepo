@@ -1,7 +1,6 @@
 import Selector from './selector/selector'
 import Actions from './actions/actions'
-import { BasicWorld, AnimatedCharacter, ResourceManager } from 'common'
-//import ToggleableCharacter from './character/character'
+import { BasicWorld, Character, ResourceManager } from 'common'
 
 const saveSelectedObjects = (selectedObjects: string[]) => {
 	const bb = new Blob([JSON.stringify(selectedObjects)], { type: 'text/plain' })
@@ -28,13 +27,13 @@ const main = async () => {
 	world.addFloorGrid()
 
 	//Initialize the character
-	const character = new AnimatedCharacter(model3d, 'missing_configuration')
+	const character = new Character(model3d, 'missing_configuration')
 	const gltf = resources.getModel3d(character.model3d)
-	character.setGLTF(gltf.scene)
+	const loadedCharacter = character.setGLTF(gltf.scene)
 	selector.display(gltf.scene)
-	character.setAnimations(gltf.animations)
-	character.hideAllParts()
-	world.add(character)
+	const animatedCharacter = loadedCharacter.setAnimations(gltf.animations)
+	animatedCharacter.hideAllParts()
+	world.add(animatedCharacter)
 
 	requestAnimationFrame(function animate() {
 		world.step()
@@ -46,7 +45,7 @@ const main = async () => {
 		'myCheckboxChange',
 		function (event) {
 			const detail = (<CustomEvent>event).detail
-			character.togglePartVisibility(detail)
+			animatedCharacter.togglePartVisibility(detail)
 		},
 		true
 	)
@@ -57,7 +56,7 @@ const main = async () => {
 			const detail = (<CustomEvent>event).detail
 			const input = event.target as HTMLInputElement
 			const colorHex = input.value.replace('#', '0x')
-			character.changePartColor(detail, colorHex)
+			animatedCharacter.changePartColor(detail, colorHex)
 		},
 		true
 	)
@@ -67,7 +66,7 @@ const main = async () => {
 		function (event) {
 			const detail = (<CustomEvent>event).detail
 			if (detail.action === 'Save') {
-				saveSelectedObjects(character.getVisibleParts())
+				saveSelectedObjects(animatedCharacter.getVisibleParts())
 			}
 		},
 		true

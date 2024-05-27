@@ -22,7 +22,7 @@
     "@rollup/plugin-commonjs": "^25.0.3",
     "@rollup/plugin-node-resolve": "^15.1.0",
     "@rollup/plugin-typescript": "^11.1.2",
-    "@types/three": "^0.155.0",
+    "@types/three": "^0.164.0",
     "@typescript-eslint/eslint-plugin": "^6.2.1",
     "@typescript-eslint/parser": "^6.2.1",
     "common": "workspace:*",
@@ -35,7 +35,7 @@
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-sourcemaps": "^0.6.3",
     "serve": "^14.2.0",
-    "three": "^0.155.0",
+    "three": "^0.164.0",
     "tsconfig": "workspace:*",
     "tslib": "^2.6.1",
     "typescript": "^5.1.6"

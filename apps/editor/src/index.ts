@@ -3,7 +3,14 @@ import Actions from './actions/actions'
 import { BasicWorld, Character, ResourceManager } from 'common'
 
 const saveSelectedObjects = (selectedObjects: string[]) => {
-	const bb = new Blob([JSON.stringify(selectedObjects)], { type: 'text/plain' })
+	const data = [] as { part: string; color: string }[]
+	selectedObjects.forEach((selectedObject) => {
+		data.push({
+			part: selectedObject,
+			color: 'null',
+		})
+	})
+	const bb = new Blob([JSON.stringify(data)], { type: 'text/plain' })
 	const a = document.createElement('a')
 	a.download = 'character.json'
 	a.href = window.URL.createObjectURL(bb)

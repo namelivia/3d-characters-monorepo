@@ -97,9 +97,13 @@ class LoadedCharacter extends Character {
         if (castedObject.visible) {
           // TODO> Handle objects with no custom colors
           const material = castedObject.material as THREE.MeshStandardMaterial;
+          let color = null;
+          if (material.name.startsWith("colored_")) {
+            color = material.color.getHexString();
+          }
           visibleParts.push({
             part: castedObject.name,
-            color: material.color.getHexString(),
+            color: color,
           });
         }
       }
@@ -173,7 +177,11 @@ class LoadedCharacter extends Character {
       const mesh = partObject as THREE.Mesh;
       const material = mesh.material as THREE.MeshStandardMaterial;
       const newMaterial = material.clone();
+      // Remove map, if not the color looks wrong.
       newMaterial.map = null;
+      // colored_ prefix used to know when a part has a custom
+      // color.
+      newMaterial.name = `colored_${newMaterial.name}`;
       newMaterial.color = new THREE.Color(parseInt(color, 16));
       mesh.material = newMaterial;
     }

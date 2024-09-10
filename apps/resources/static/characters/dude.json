@@ -1,12 +1,12 @@
 [
-    { "part": "torso", "color": "0xf2d1c2"},
+    { "part": "torso", "color": "f2d1c2"},
     { "part": "eyes", "color": null },
-    { "part": "head", "color": "0xf2d1c2"},
-    { "part": "legs", "color": "0xf2d1c2"},
-    { "part": "hair", "color": "0XB84123"},
-    { "part": "beard", "color": "0XB84123" },
-    { "part": "tshirt", "color": "0X7F2F9E" },
-    { "part": "shorts", "color": "0X435749"},
-    { "part": "hands", "color": "0xf2d1c2"},
-    { "part": "shoes", "color": "0xFFB700"}
+    { "part": "head", "color": "f2d1c2"},
+    { "part": "legs", "color": "f2d1c2"},
+    { "part": "hair", "color": "B84123"},
+    { "part": "beard", "color": "B84123" },
+    { "part": "tshirt", "color": "7F2F9E" },
+    { "part": "shorts", "color": "435749"},
+    { "part": "hands", "color": "f2d1c2"},
+    { "part": "shoes", "color": "FFB700"}
 ]

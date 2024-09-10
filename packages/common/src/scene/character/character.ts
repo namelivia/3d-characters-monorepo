@@ -93,8 +93,14 @@ class LoadedCharacter extends Character {
       // and a string.
       //if (object instanceof THREE.SkinnedMesh) {
       if (object.type === "SkinnedMesh") {
-        if (object.visible) {
-          visibleParts.push({ part: object.name, color: null });
+        const castedObject = object as THREE.SkinnedMesh; // Also had to do this
+        if (castedObject.visible) {
+          // TODO> Handle objects with no custom colors
+          const material = castedObject.material as THREE.MeshStandardMaterial;
+          visibleParts.push({
+            part: castedObject.name,
+            color: material.color.getHexString(),
+          });
         }
       }
     });

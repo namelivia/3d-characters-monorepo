@@ -86,15 +86,15 @@ class LoadedCharacter extends Character {
     return this.gltf;
   };
 
-  getVisibleParts = (): string[] => {
-    const visibleParts: string[] = [];
+  getVisibleParts = (): { part: string; color: string | null }[] => {
+    const visibleParts: { part: string; color: string | null }[] = [];
     this.gltf.traverse((object: THREE.Object3D) => {
       // For some reason this does not work and I have to use object.type
       // and a string.
       //if (object instanceof THREE.SkinnedMesh) {
       if (object.type === "SkinnedMesh") {
         if (object.visible) {
-          visibleParts.push(object.name);
+          visibleParts.push({ part: object.name, color: null });
         }
       }
     });

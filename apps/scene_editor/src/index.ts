@@ -9,7 +9,7 @@ import Transition from './keyframes/transition'
 import Dialog from './keyframes/dialog'
 import {
     AdvancedWorld,
-	loadAdvancedScene,
+	loadRemoteAdvancedScene,
 	loadAdvancedSceneResources,
 	assignAdvancedSceneResources,
     BasicSceneJSON,
@@ -22,7 +22,7 @@ const setScene = async (
 	world: AdvancedWorld,
 	sceneName: string
 ) => {
-	const scene = await loadAdvancedScene(sceneName) // Load the scene form the json
+	const scene = await loadRemoteAdvancedScene(sceneName) // Load the scene form the json
 	await loadAdvancedSceneResources(resources, scene) // Request the resources associated to the scene
 	const loadedScene = await assignAdvancedSceneResources(resources, scene) // Assign them (this could be together)
 	if (loadedScene) {

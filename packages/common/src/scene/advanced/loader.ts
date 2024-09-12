@@ -33,7 +33,7 @@ import * as SkeletonUtils from "three/examples/jsm/utils/SkeletonUtils.js";
 	audio.setSong(music)
 }*/
 
-const loadScene2 = async (
+export const loadSceneJSON = async (
   sceneJson: AdvancedSceneJSON
 ): Promise<AdvancedScene> => {
   const scene = new AdvancedScene();
@@ -59,10 +59,10 @@ const loadScene2 = async (
   return scene;
 };
 
-export const loadScene = async (url: string): Promise<AdvancedScene> => {
+export const loadRemoteScene = async (url: string): Promise<AdvancedScene> => {
   const response = await fetch(url);
   const json = await response.json();
-  return loadScene2(json);
+  return loadSceneJSON(json);
 };
 
 export const loadResources = async (

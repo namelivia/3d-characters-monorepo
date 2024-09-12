@@ -1,4 +1,4 @@
-import { loadScene, assignResources } from "./loader";
+import { loadRemoteScene as loadScene, assignResources } from "./loader";
 import {
   AdvancedScene,
   LoadedAdvancedScene,

@@ -11,7 +11,8 @@ export * from "./scene/character/character";
 export { BasicSceneJSON } from "./scene/basic/loader";
 export { AdvancedSceneJSON } from "./scene/advanced/json";
 export {
-  loadScene as loadAdvancedScene,
+  loadRemoteScene as loadRemoteAdvancedScene,
+  loadSceneJSON as loadAdvancedSceneJSON,
   loadResources as loadAdvancedSceneResources,
   assignResources as assignAdvancedSceneResources,
 } from "./scene/advanced/loader";

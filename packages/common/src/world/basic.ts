@@ -16,8 +16,8 @@ class BasicWorld {
   renderer?: THREE.WebGLRenderer;
   mixers: THREE.AnimationMixer[] = [];
 
-  constructor() {
-    this.renderer = this.setupRenderer();
+  constructor(domNodeId: string) {
+    this.renderer = this.setupRenderer(domNodeId);
   }
 
   public initialize = () => {
@@ -49,9 +49,9 @@ class BasicWorld {
     return camera;
   };
 
-  setupRenderer = (): THREE.WebGLRenderer => {
+  setupRenderer = (domNodeId: string): THREE.WebGLRenderer => {
     const renderer = new THREE.WebGLRenderer();
-    const container = document.getElementById("3d-view");
+    const container = document.getElementById(domNodeId);
     if (container) {
       const width = container.clientWidth;
       const height = container.clientHeight;

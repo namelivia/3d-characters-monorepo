@@ -39,7 +39,7 @@ const main = async () => {
 
 	const overlay = new Overlay()
 	const audio = new Audio()
-	const world = new AdvancedWorld()
+	const world = new AdvancedWorld("3d-view")
 	const resources = new ResourceManager()
 
 	world.setOnSceneTransition(onSceneTransition)

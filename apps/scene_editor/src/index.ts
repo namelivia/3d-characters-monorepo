@@ -61,7 +61,7 @@ const main = async () => {
 	actions.display()
 
 	// Initialize world
-	const world = new BasicWorld()
+	const world = new BasicWorld("3d-view")
 	world.initialize()
 	world.addFloorGrid()
 

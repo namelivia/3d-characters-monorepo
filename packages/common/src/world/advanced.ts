@@ -19,8 +19,8 @@ class AdvancedWorld {
   view2D: View2D;
   onSceneTransition: (scene: string) => Promise<void>;
 
-  constructor() {
-    this.world3D = new BasicWorld();
+  constructor(domNodeId: string) {
+    this.world3D = new BasicWorld(domNodeId);
     this.view2D = new View2D();
     this.onSceneTransition = () => Promise.resolve();
   }

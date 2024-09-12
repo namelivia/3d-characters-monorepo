@@ -48,8 +48,15 @@ const emptyScene = {
 	characters: [],
 } as BasicSceneJSON
 
-const previewScene = async (scene: BasicSceneJSON, world: AdvancedWorld) => {
-    /*TODO: Here load the advanced scene*/
+const previewScene = async (scene: BasicSceneJSON, world: AdvancedWorld, resources: ResourceManager) => {
+	// Play a sample scene
+	await setScene(
+		resources,
+		world,
+		'http://localhost:3001/scenes/scene1.json'
+	)
+
+
 }
 
 const main = async () => {
@@ -89,14 +96,6 @@ const main = async () => {
 		world.step()
 		requestAnimationFrame(animate)
 	})
-
-	// Play a sample scene
-	await setScene(
-		resources,
-		world,
-		'http://localhost:3001/scenes/scene1.json'
-	)
-
 
 	document.addEventListener(
 		'sceneSelectorChange',
@@ -175,13 +174,13 @@ const main = async () => {
 
 	document.addEventListener(
 		'buttonClick',
-		function (event) {
+		async function (event) {
 			const detail = (<CustomEvent>event).detail
 			if (detail.action === 'Save') {
 				saveSelectedObjects(sceneName, currentScene)
 			}
 			if (detail.action === 'Preview') {
-				previewScene(currentScene, world)
+				await previewScene(currentScene, world, resources)
 			}
 		},
 		true

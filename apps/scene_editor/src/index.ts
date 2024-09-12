@@ -7,7 +7,28 @@ import Actions from './actions/actions'
 import Name from './name/name'
 import Transition from './keyframes/transition'
 import Dialog from './keyframes/dialog'
-import { BasicWorld, BasicSceneJSON, BasicScene, ResourceManager } from 'common'
+import {
+    AdvancedWorld,
+	loadAdvancedScene,
+	loadAdvancedSceneResources,
+	assignAdvancedSceneResources,
+    BasicSceneJSON,
+    BasicScene,
+    ResourceManager
+} from 'common'
+
+const setScene = async (
+	resources: ResourceManager,
+	world: AdvancedWorld,
+	sceneName: string
+) => {
+	const scene = await loadAdvancedScene(sceneName) // Load the scene form the json
+	await loadAdvancedSceneResources(resources, scene) // Request the resources associated to the scene
+	const loadedScene = await assignAdvancedSceneResources(resources, scene) // Assign them (this could be together)
+	if (loadedScene) {
+		world.loadScene(loadedScene)
+	}
+}
 
 const saveSelectedObjects = (sceneName: string, sceneJson: BasicSceneJSON) => {
 	const bb = new Blob([JSON.stringify(sceneJson)], { type: 'text/plain' })
@@ -27,7 +48,7 @@ const emptyScene = {
 	characters: [],
 } as BasicSceneJSON
 
-const previewScene = async (scene: BasicSceneJSON, world: BasicWorld) => {
+const previewScene = async (scene: BasicSceneJSON, world: AdvancedWorld) => {
     /*TODO: Here load the advanced scene*/
 }
 
@@ -36,17 +57,17 @@ const main = async () => {
 	let sceneName = ''
 
 	const resourceList = new ResourceList()
-	const resources = (await resourceList.initialize()) as ResourceCatalog
+	const allResources = (await resourceList.initialize()) as ResourceCatalog
 
 	// Initialize the UI
 	const name = new Name()
 	name.initialize()
 	const sceneSelector = new SceneSelector()
 	const musicSelector = new MusicSelector()
-	musicSelector.display(resources.music)
+	musicSelector.display(allResources.music)
 	const characterSelector = new CharacterSelector()
-	sceneSelector.display(resources.models)
-	characterSelector.display(resources.characters)
+	sceneSelector.display(allResources.models)
+	characterSelector.display(allResources.characters)
 
 	const transition = new Transition()
 	transition.initialize()
@@ -61,14 +82,21 @@ const main = async () => {
 	actions.display()
 
 	// Initialize world
-	const world = new BasicWorld("3d-view")
-	world.initialize()
-	world.addFloorGrid()
+	const resources = new ResourceManager()
+	const world = new AdvancedWorld("3d-view")
 
 	requestAnimationFrame(function animate() {
 		world.step()
 		requestAnimationFrame(animate)
 	})
+
+	// Play a sample scene
+	await setScene(
+		resources,
+		world,
+		'http://localhost:3001/scenes/scene1.json'
+	)
+
 
 	document.addEventListener(
 		'sceneSelectorChange',

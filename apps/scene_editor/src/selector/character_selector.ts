@@ -23,24 +23,31 @@ class CharacterSelector {
 				selector.add(option)
 			})
 
-            //PosX
-            const posX = document.createElement('input')
-            posX.setAttribute('type', 'number')
-            posX.setAttribute('id', 'posX')
-            posX.setAttribute('name', 'posX')
-            posX.setAttribute('placeholder', 'X')
-            posX.setAttribute('min', '0')
-            posX.setAttribute('step', '1')
+			//PosX
+			const posX = document.createElement('input')
+			posX.setAttribute('type', 'number')
+			posX.setAttribute('id', 'posX')
+			posX.setAttribute('name', 'posX')
+			posX.setAttribute('placeholder', 'X')
+			posX.setAttribute('min', '0')
+			posX.setAttribute('step', '1')
 
-            //PosZ
-            const posZ = document.createElement('input')
-            posZ.setAttribute('type', 'number')
-            posZ.setAttribute('id', 'posZ')
-            posZ.setAttribute('name', 'posZ')
-            posZ.setAttribute('placeholder', 'Z')
-            posZ.setAttribute('min', '0')
-            posZ.setAttribute('step', '1')
+			//PosZ
+			const posZ = document.createElement('input')
+			posZ.setAttribute('type', 'number')
+			posZ.setAttribute('id', 'posZ')
+			posZ.setAttribute('name', 'posZ')
+			posZ.setAttribute('placeholder', 'Z')
+			posZ.setAttribute('min', '0')
+			posZ.setAttribute('step', '1')
 
+			const rotation = document.createElement('input')
+			rotation.setAttribute('type', 'number')
+			rotation.setAttribute('id', 'rotation')
+			rotation.setAttribute('name', 'rotation')
+			rotation.setAttribute('placeholder', 'Rot')
+			rotation.setAttribute('min', '0')
+			rotation.setAttribute('step', '1')
 
 			// Create a button element
 			const addButton = document.createElement('button')
@@ -52,6 +59,7 @@ class CharacterSelector {
 			form.appendChild(selector)
 			form.appendChild(posX)
 			form.appendChild(posZ)
+			form.appendChild(rotation)
 			form.appendChild(addButton)
 			controls.appendChild(form)
 
@@ -62,12 +70,14 @@ class CharacterSelector {
 						character: selector.value,
 						x: parseInt(posX.value),
 						z: parseInt(posZ.value),
+						rotation: parseInt(rotation.value),
 					},
 				})
 				addButton.dispatchEvent(customEvent)
 				selector.value = ''
-                posX.value = ''
-                posZ.value = ''
+				posX.value = ''
+				posZ.value = ''
+				rotation.value = ''
 			})
 		}
 	}

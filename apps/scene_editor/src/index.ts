@@ -5,16 +5,15 @@ import JsonPreview from './json_preview/json_preview'
 import ResourceList, { ResourceCatalog } from './resource_list/resource_list'
 import Actions from './actions/actions'
 import Name from './name/name'
-import Transition from './keyframes/transition'
-import Dialog from './keyframes/dialog'
+//import Transition from './keyframes/transition'
+//import Dialog from './keyframes/dialog'
 import {
-    AdvancedWorld,
+	AdvancedWorld,
 	loadAdvancedSceneJSON,
 	loadAdvancedSceneResources,
 	assignAdvancedSceneResources,
-    AdvancedSceneJSON,
-    BasicScene,
-    ResourceManager
+	AdvancedSceneJSON,
+	ResourceManager,
 } from 'common'
 
 const setScene = async (
@@ -30,7 +29,10 @@ const setScene = async (
 	}
 }
 
-const saveSelectedObjects = (sceneName: string, sceneJson: AdvancedSceneJSON) => {
+const saveSelectedObjects = (
+	sceneName: string,
+	sceneJson: AdvancedSceneJSON
+) => {
 	const bb = new Blob([JSON.stringify(sceneJson)], { type: 'text/plain' })
 	const a = document.createElement('a')
 	a.download = `${sceneName}.json`
@@ -48,15 +50,13 @@ const emptyScene = {
 	characters: [],
 } as AdvancedSceneJSON
 
-const previewScene = async (scene: AdvancedSceneJSON, world: AdvancedWorld, resources: ResourceManager) => {
+const previewScene = async (
+	scene: AdvancedSceneJSON,
+	world: AdvancedWorld,
+	resources: ResourceManager
+) => {
 	// Play a sample scene
-	await setScene(
-		resources,
-		world,
-		scene
-	)
-
-
+	await setScene(resources, world, scene)
 }
 
 const main = async () => {
@@ -76,7 +76,7 @@ const main = async () => {
 	sceneSelector.display(allResources.models)
 	characterSelector.display(allResources.characters)
 
-    /*
+	/*
 	const transition = new Transition()
 	transition.initialize()
 
@@ -92,7 +92,7 @@ const main = async () => {
 
 	// Initialize world
 	const resources = new ResourceManager()
-	const world = new AdvancedWorld("3d-view")
+	const world = new AdvancedWorld('3d-view')
 
 	requestAnimationFrame(function animate() {
 		world.step()
@@ -155,6 +155,7 @@ const main = async () => {
 				movement: { index: {}, duration: 0 }, //TODO
 				animation: { index: {}, duration: 0 }, //TODO
 				position: [detail.x, 0, detail.z],
+				rotation: detail.rotation,
 			})
 			jsonPreview.display(currentScene)
 		},

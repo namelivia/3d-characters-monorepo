@@ -15,6 +15,7 @@
             "model3d": "http://localhost:3001/models/test.gltf",
             "model": "http://localhost:3001/characters/naked_magician.json",
             "position": [0, 0, -5],
+            "rotation": 0,
             "movement": {
                 "index": {
                     "0": "move_left",

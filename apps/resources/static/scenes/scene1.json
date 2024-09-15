@@ -15,6 +15,7 @@
             "model3d": "http://localhost:3001/models/test.gltf",
             "model": "http://localhost:3001/characters/naked_magician.json",
             "position": [-5, 0, 0],
+            "rotation": 0,
             "movement": {
                 "index": {
                     "0": "move_left",
@@ -34,6 +35,7 @@
             "model3d": "http://localhost:3001/models/test.gltf",
             "model": "http://localhost:3001/characters/dude.json",
             "position": [0, 0, 0],
+            "rotation": 0,
             "movement": {
                 "index": {
                     "0": "move_front",
@@ -56,6 +58,7 @@
             "model3d": "http://localhost:3001/models/test.gltf",
             "model": "http://localhost:3001/characters/naked_hipster.json",
             "position": [5, 0, 0],
+            "rotation": 0,
             "movement": {
                 "index": {
                     "0": "spin_left",
@@ -75,6 +78,7 @@
             "model3d": "http://localhost:3001/models/test.gltf",
             "model": "http://localhost:3001/characters/one_punch.json",
             "position": [0, 0, 5],
+            "rotation": 0,
             "movement": {
                 "index": {
                     "0": "move_left",

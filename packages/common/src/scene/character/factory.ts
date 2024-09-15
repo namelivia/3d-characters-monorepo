@@ -22,12 +22,16 @@ export const newCharacter = (
   animation: ActionMap,
   x: number,
   y: number,
-  z: number
+  z: number,
+  rotation: number
 ): Character => {
   const character = new Character(model3d, configuration);
 
   // Set the position
   character.addPosition(x, y, z);
+
+  // Set the rotation
+  character.addRotation(rotation);
 
   // Set the timesheet
   const timesheet = new Timesheet();

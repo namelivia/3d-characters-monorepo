@@ -8,6 +8,7 @@ export type CharactersJSON = {
   movement: ActionMapJSON;
   animation: ActionMapJSON;
   position: [number, number, number];
+  rotation: number;
 }[];
 
 export const loadCharacters = (json: CharactersJSON): Character[] => {
@@ -19,7 +20,8 @@ export const loadCharacters = (json: CharactersJSON): Character[] => {
       character.animation,
       character.position[0],
       character.position[1],
-      character.position[2]
+      character.position[2],
+      character.rotation
     )
   );
 };

@@ -54,7 +54,9 @@ export const loadSceneJSON = async (
   scene.setTransitions(loadTransitions(sceneJson.transitions));
   scene.setDialogs(loadDialogs(sceneJson.dialogs));
   scene.setResources(importResources(sceneJson.resources));
-  scene.setMusic(sceneJson.music);
+  if (sceneJson.music) {
+    scene.setMusic(sceneJson.music);
+  }
   scene.setScenario(sceneJson.scene);
   return scene;
 };

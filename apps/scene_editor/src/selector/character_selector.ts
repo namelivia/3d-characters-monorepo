@@ -23,6 +23,25 @@ class CharacterSelector {
 				selector.add(option)
 			})
 
+            //PosX
+            const posX = document.createElement('input')
+            posX.setAttribute('type', 'number')
+            posX.setAttribute('id', 'posX')
+            posX.setAttribute('name', 'posX')
+            posX.setAttribute('placeholder', 'X')
+            posX.setAttribute('min', '0')
+            posX.setAttribute('step', '1')
+
+            //PosZ
+            const posZ = document.createElement('input')
+            posZ.setAttribute('type', 'number')
+            posZ.setAttribute('id', 'posZ')
+            posZ.setAttribute('name', 'posZ')
+            posZ.setAttribute('placeholder', 'Z')
+            posZ.setAttribute('min', '0')
+            posZ.setAttribute('step', '1')
+
+
 			// Create a button element
 			const addButton = document.createElement('button')
 			addButton.setAttribute('id', 'character-add')
@@ -31,6 +50,8 @@ class CharacterSelector {
 			// Append all elements to the form
 			form.appendChild(h4)
 			form.appendChild(selector)
+			form.appendChild(posX)
+			form.appendChild(posZ)
 			form.appendChild(addButton)
 			controls.appendChild(form)
 
@@ -39,10 +60,14 @@ class CharacterSelector {
 				const customEvent = new CustomEvent('characterAdd', {
 					detail: {
 						character: selector.value,
+						x: parseInt(posX.value),
+						z: parseInt(posZ.value),
 					},
 				})
 				addButton.dispatchEvent(customEvent)
 				selector.value = ''
+                posX.value = ''
+                posZ.value = ''
 			})
 		}
 	}

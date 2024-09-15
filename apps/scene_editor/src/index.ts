@@ -9,10 +9,10 @@ import Transition from './keyframes/transition'
 import Dialog from './keyframes/dialog'
 import {
     AdvancedWorld,
-	loadRemoteAdvancedScene,
+	loadAdvancedSceneJSON,
 	loadAdvancedSceneResources,
 	assignAdvancedSceneResources,
-    BasicSceneJSON,
+    AdvancedSceneJSON,
     BasicScene,
     ResourceManager
 } from 'common'
@@ -20,9 +20,9 @@ import {
 const setScene = async (
 	resources: ResourceManager,
 	world: AdvancedWorld,
-	sceneName: string
+	sceneJson: AdvancedSceneJSON
 ) => {
-	const scene = await loadRemoteAdvancedScene(sceneName) // Load the scene form the json
+	const scene = await loadAdvancedSceneJSON(sceneJson) // Load the scene form the json
 	await loadAdvancedSceneResources(resources, scene) // Request the resources associated to the scene
 	const loadedScene = await assignAdvancedSceneResources(resources, scene) // Assign them (this could be together)
 	if (loadedScene) {
@@ -30,7 +30,7 @@ const setScene = async (
 	}
 }
 
-const saveSelectedObjects = (sceneName: string, sceneJson: BasicSceneJSON) => {
+const saveSelectedObjects = (sceneName: string, sceneJson: AdvancedSceneJSON) => {
 	const bb = new Blob([JSON.stringify(sceneJson)], { type: 'text/plain' })
 	const a = document.createElement('a')
 	a.download = `${sceneName}.json`
@@ -46,14 +46,14 @@ const emptyScene = {
 	dialogs: [],
 	transitions: [],
 	characters: [],
-} as BasicSceneJSON
+} as AdvancedSceneJSON
 
-const previewScene = async (scene: BasicSceneJSON, world: AdvancedWorld, resources: ResourceManager) => {
+const previewScene = async (scene: AdvancedSceneJSON, world: AdvancedWorld, resources: ResourceManager) => {
 	// Play a sample scene
 	await setScene(
 		resources,
 		world,
-		'http://localhost:3001/scenes/scene1.json'
+		scene
 	)
 
 
@@ -76,11 +76,13 @@ const main = async () => {
 	sceneSelector.display(allResources.models)
 	characterSelector.display(allResources.characters)
 
+    /*
 	const transition = new Transition()
 	transition.initialize()
 
 	const dialog = new Dialog()
 	dialog.initialize()
+    */
 
 	const jsonPreview = new JsonPreview()
 	jsonPreview.display(currentScene)
@@ -152,7 +154,7 @@ const main = async () => {
 				model: detail.character,
 				movement: { index: {}, duration: 0 }, //TODO
 				animation: { index: {}, duration: 0 }, //TODO
-				position: [0, 0, 0], //TODO
+				position: [detail.x, 0, detail.z],
 			})
 			jsonPreview.display(currentScene)
 		},

@@ -5,7 +5,7 @@ import { ResourcesJSON } from "../../resource_manager/loader";
 
 export type AdvancedSceneJSON = {
   resources: ResourcesJSON;
-  music: string;
+  music?: string;
   scene: string;
   characters: CharactersJSON;
   dialogs: DialogsJSON;

@@ -14,9 +14,12 @@ class CharacterList {
 			container.setAttribute('id', 'character-list')
 			characters.forEach((character) => {
 				const div = document.createElement('div')
+				const selected = document.createElement('input')
+				selected.setAttribute('type', 'radio')
+				selected.setAttribute('name', 'selected')
+				selected.setAttribute('value', character.model)
 				const model = document.createElement('span')
 				model.textContent = character.model
-				div.appendChild(model)
 				const removeButton = document.createElement('button')
 				removeButton.textContent = 'Remove'
 				removeButton.addEventListener('click', (event) => {
@@ -28,6 +31,8 @@ class CharacterList {
 					})
 					removeButton.dispatchEvent(customEvent)
 				})
+				div.appendChild(selected)
+				div.appendChild(model)
 				div.appendChild(removeButton)
 				container.appendChild(div)
 			})

@@ -8,6 +8,7 @@ export * from "./scene/advanced/advanced";
 export { default as Transition } from "./scene/transitions/transition";
 export { default as Dialog } from "./scene/dialogs/dialog";
 export * from "./scene/character/character";
+export { CharactersJSON } from "./scene/character/loader";
 export { BasicSceneJSON } from "./scene/basic/loader";
 export { AdvancedSceneJSON } from "./scene/advanced/json";
 export {

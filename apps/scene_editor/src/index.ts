@@ -1,6 +1,7 @@
 import SceneSelector from './selector/scene_selector'
 import MusicSelector from './selector/music_selector'
 import CharacterSelector from './selector/character_selector'
+import CharacterList from './selector/character_list'
 import JsonPreview from './json_preview/json_preview'
 import ResourceList, { ResourceCatalog } from './resource_list/resource_list'
 import Actions from './actions/actions'
@@ -75,6 +76,7 @@ const main = async () => {
 	const characterSelector = new CharacterSelector()
 	sceneSelector.display(allResources.models)
 	characterSelector.display(allResources.characters)
+	const characterList = new CharacterList()
 
 	/*
 	const transition = new Transition()
@@ -158,6 +160,19 @@ const main = async () => {
 				rotation: detail.rotation,
 			})
 			jsonPreview.display(currentScene)
+			characterList.display(currentScene.characters)
+		},
+		true
+	)
+
+	document.addEventListener(
+		'characterRemove',
+		function (event) {
+			const detail = (<CustomEvent>event).detail
+			const characterIndex = detail.index
+			currentScene.characters.splice(characterIndex, 1)
+			jsonPreview.display(currentScene)
+			characterList.display(currentScene.characters)
 		},
 		true
 	)

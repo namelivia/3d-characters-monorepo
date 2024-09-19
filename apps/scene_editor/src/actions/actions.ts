@@ -16,8 +16,6 @@ class Actions {
 		if (actionsDiv) {
 			const saveButton = this.createButton('Save')
 			actionsDiv.appendChild(saveButton)
-			const previewButton = this.createButton('Preview')
-			actionsDiv.appendChild(previewButton)
 		}
 	}
 }

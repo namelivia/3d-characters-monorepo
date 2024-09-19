@@ -105,11 +105,12 @@ const main = async () => {
 
 	document.addEventListener(
 		'sceneSelectorChange',
-		function (event) {
+		async function (event) {
 			const scene = (<CustomEvent>event).detail
 			currentScene['scene'] = scene
 			currentScene['resources']['models3d'].push(scene)
 			jsonPreview.display(currentScene)
+			await previewScene(currentScene, world, resources)
 		},
 		true
 	)
@@ -151,7 +152,7 @@ const main = async () => {
 
 	document.addEventListener(
 		'characterAdd',
-		function (event) {
+		async function (event) {
 			const detail = (<CustomEvent>event).detail
 			currentScene.characters.push({
 				model3d: 'models/test.gltf', //TODO
@@ -161,20 +162,22 @@ const main = async () => {
 				position: [detail.x, 0, detail.z],
 				rotation: detail.rotation,
 			})
-			jsonPreview.display(currentScene)
 			characterList.display(currentScene.characters)
+			jsonPreview.display(currentScene)
+			await previewScene(currentScene, world, resources)
 		},
 		true
 	)
 
 	document.addEventListener(
 		'characterRemove',
-		function (event) {
+		async function (event) {
 			const detail = (<CustomEvent>event).detail
 			const characterIndex = detail.index
 			currentScene.characters.splice(characterIndex, 1)
-			jsonPreview.display(currentScene)
 			characterList.display(currentScene.characters)
+			jsonPreview.display(currentScene)
+			await previewScene(currentScene, world, resources)
 		},
 		true
 	)
@@ -183,15 +186,15 @@ const main = async () => {
 		'characterSelected',
 		function (event) {
 			const detail = (<CustomEvent>event).detail
-            const character = currentScene.characters[detail.index]
-            selectedCharacter.display(character)
-            const lightGreen = '00FF00'
-            if (world && world.characters) {
-                const worldCharacter = world.characters[detail.index]
-                if (worldCharacter) {
-                    worldCharacter.applyColorOverlay(lightGreen)
-                }
-            }
+			const character = currentScene.characters[detail.index]
+			selectedCharacter.display(character)
+			const lightGreen = '00FF00'
+			if (world && world.characters) {
+				const worldCharacter = world.characters[detail.index]
+				if (worldCharacter) {
+					worldCharacter.applyColorOverlay(lightGreen)
+				}
+			}
 		},
 		true
 	)
@@ -215,9 +218,6 @@ const main = async () => {
 			const detail = (<CustomEvent>event).detail
 			if (detail.action === 'Save') {
 				saveSelectedObjects(sceneName, currentScene)
-			}
-			if (detail.action === 'Preview') {
-				await previewScene(currentScene, world, resources)
 			}
 		},
 		true

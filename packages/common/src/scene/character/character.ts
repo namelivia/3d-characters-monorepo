@@ -66,6 +66,7 @@ class Character {
 // Character with GLTF loaded
 class LoadedCharacter extends Character {
   gltf: THREE.Object3D;
+  parts: Part[];
   constructor(model3d: string, configuration: string, gltf: THREE.Object3D) {
     super(model3d, configuration);
     this.gltf = gltf;
@@ -112,11 +113,12 @@ class LoadedCharacter extends Character {
   };
 
   setParts(parts: Part[]) {
-    this.applyColors(parts);
-    this.cleanupGLTF(parts.map((part) => part.part));
+    this.parts = parts;
+    this.applyOriginalColors();
+    this._cleanupGLTF(this.parts.map((part) => part.part));
   }
 
-  cleanupGLTF(parts: string[]) {
+  _cleanupGLTF(parts: string[]) {
     //Remove all meshes that are not bones or parts of the character
     const armature = this.gltf.children[0];
     armature.children = armature.children.filter((child) => {
@@ -124,20 +126,37 @@ class LoadedCharacter extends Character {
     });
   }
 
-  applyColors(parts: Part[]) {
-    parts.forEach((part) => {
+  // Coloring
+  applyColorOverlay(color: string) {
+    this.getVisibleParts().forEach((part) => {
+      this._changePartColor(part.part, color);
+    });
+  }
+
+  applyOriginalColors() {
+    this.parts.forEach((part) => {
       if (part.color) {
-        this.changePartColor(part.part, part.color);
+        this._changePartColor(part.part, part.color);
       }
     });
   }
 
-  applyColorOverlay(color: string) {
-      this.getVisibleParts().forEach((part) => {
-        this.changePartColor(part.part, color);
-      })
-  }
-
+  _changePartColor = (part: string, color: string): void => {
+    // Color parts can only be changed after setting the GLTF
+    const partObject = this.gltf.getObjectByName(part);
+    if (partObject) {
+      const mesh = partObject as THREE.Mesh;
+      const material = mesh.material as THREE.MeshStandardMaterial;
+      const newMaterial = material.clone();
+      // Remove map, if not the color looks wrong.
+      newMaterial.map = null;
+      // colored_ prefix used to know when a part has a custom
+      // color.
+      newMaterial.name = `colored_${newMaterial.name}`;
+      newMaterial.color = new THREE.Color(parseInt(color, 16));
+      mesh.material = newMaterial;
+    }
+  };
 
   togglePartVisibility = (part: string): void => {
     const partObject = this.gltf.getObjectByName(part);
@@ -174,23 +193,6 @@ class LoadedCharacter extends Character {
     const partObject = this.gltf.getObjectByName(part);
     if (partObject) {
       partObject.visible = true;
-    }
-  };
-
-  changePartColor = (part: string, color: string): void => {
-    // Color parts can only be changed after setting the GLTF
-    const partObject = this.gltf.getObjectByName(part);
-    if (partObject) {
-      const mesh = partObject as THREE.Mesh;
-      const material = mesh.material as THREE.MeshStandardMaterial;
-      const newMaterial = material.clone();
-      // Remove map, if not the color looks wrong.
-      newMaterial.map = null;
-      // colored_ prefix used to know when a part has a custom
-      // color.
-      newMaterial.name = `colored_${newMaterial.name}`;
-      newMaterial.color = new THREE.Color(parseInt(color, 16));
-      mesh.material = newMaterial;
     }
   };
 

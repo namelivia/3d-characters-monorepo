@@ -190,10 +190,15 @@ const main = async () => {
 			selectedCharacter.display(character)
 			const lightGreen = '00FF00'
 			if (world && world.characters) {
-				const worldCharacter = world.characters[detail.index]
-				if (worldCharacter) {
-					worldCharacter.applyColorOverlay(lightGreen)
-				}
+				world.characters.forEach((c, index) => {
+					if (c) {
+						if (index === parseInt(detail.index)) {
+							c.applyColorOverlay(lightGreen)
+						} else {
+							c.applyOriginalColors()
+						}
+					}
+				})
 			}
 		},
 		true

@@ -170,6 +170,18 @@ const main = async () => {
 	)
 
 	document.addEventListener(
+		'characterUpdate',
+		async function (event) {
+			const detail = (<CustomEvent>event).detail
+			currentScene.characters[detail.index].position = [detail.x, 0, detail.z]
+			currentScene.characters[detail.index].rotation = detail.rotation
+			jsonPreview.display(currentScene)
+			await previewScene(currentScene, world, resources)
+		},
+		true
+	)
+
+	document.addEventListener(
 		'characterRemove',
 		async function (event) {
 			const detail = (<CustomEvent>event).detail
@@ -177,6 +189,7 @@ const main = async () => {
 			currentScene.characters.splice(characterIndex, 1)
 			characterList.display(currentScene.characters)
 			jsonPreview.display(currentScene)
+			selectedCharacter.clear()
 			await previewScene(currentScene, world, resources)
 		},
 		true
@@ -187,7 +200,7 @@ const main = async () => {
 		function (event) {
 			const detail = (<CustomEvent>event).detail
 			const character = currentScene.characters[detail.index]
-			selectedCharacter.display(character)
+			selectedCharacter.display(parseInt(detail.index), character)
 			const lightGreen = '00FF00'
 			if (world && world.characters) {
 				world.characters.forEach((c, index) => {

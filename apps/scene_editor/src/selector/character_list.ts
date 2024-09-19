@@ -20,17 +20,6 @@ class CharacterList {
 				selected.setAttribute('value', characters.indexOf(character).toString())
 				const model = document.createElement('span')
 				model.textContent = character.model
-				const removeButton = document.createElement('button')
-				removeButton.textContent = 'Remove'
-				removeButton.addEventListener('click', (event) => {
-					event.preventDefault()
-					const customEvent = new CustomEvent('characterRemove', {
-						detail: {
-							index: characters.indexOf(character),
-						},
-					})
-					removeButton.dispatchEvent(customEvent)
-				})
                 selected.addEventListener('change', (event) => {
                     event.preventDefault()
                     const eventTarget = event.target as HTMLInputElement
@@ -43,7 +32,6 @@ class CharacterList {
                 })
 				div.appendChild(selected)
 				div.appendChild(model)
-				div.appendChild(removeButton)
 				container.appendChild(div)
 			})
 			controls.appendChild(container)

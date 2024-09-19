@@ -132,6 +132,13 @@ class LoadedCharacter extends Character {
     });
   }
 
+  applyColorOverlay(color: string) {
+      this.getVisibleParts().forEach((part) => {
+        this.changePartColor(part.part, color);
+      })
+  }
+
+
   togglePartVisibility = (part: string): void => {
     const partObject = this.gltf.getObjectByName(part);
     if (partObject) {

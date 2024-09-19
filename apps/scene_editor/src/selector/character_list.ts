@@ -17,7 +17,7 @@ class CharacterList {
 				const selected = document.createElement('input')
 				selected.setAttribute('type', 'radio')
 				selected.setAttribute('name', 'selected')
-				selected.setAttribute('value', character.model)
+				selected.setAttribute('value', characters.indexOf(character).toString())
 				const model = document.createElement('span')
 				model.textContent = character.model
 				const removeButton = document.createElement('button')
@@ -31,6 +31,16 @@ class CharacterList {
 					})
 					removeButton.dispatchEvent(customEvent)
 				})
+                selected.addEventListener('change', (event) => {
+                    event.preventDefault()
+                    const eventTarget = event.target as HTMLInputElement
+                    const customEvent = new CustomEvent('characterSelected', {
+                        detail: {
+                            index: eventTarget.value,
+                        },
+                    })
+                    selected.dispatchEvent(customEvent)
+                })
 				div.appendChild(selected)
 				div.appendChild(model)
 				div.appendChild(removeButton)

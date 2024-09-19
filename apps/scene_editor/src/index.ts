@@ -2,6 +2,7 @@ import SceneSelector from './selector/scene_selector'
 import MusicSelector from './selector/music_selector'
 import CharacterSelector from './selector/character_selector'
 import CharacterList from './selector/character_list'
+import SelectedCharacter from './selector/selected_character'
 import JsonPreview from './json_preview/json_preview'
 import ResourceList, { ResourceCatalog } from './resource_list/resource_list'
 import Actions from './actions/actions'
@@ -77,6 +78,7 @@ const main = async () => {
 	sceneSelector.display(allResources.models)
 	characterSelector.display(allResources.characters)
 	const characterList = new CharacterList()
+	const selectedCharacter = new SelectedCharacter()
 
 	/*
 	const transition = new Transition()
@@ -173,6 +175,23 @@ const main = async () => {
 			currentScene.characters.splice(characterIndex, 1)
 			jsonPreview.display(currentScene)
 			characterList.display(currentScene.characters)
+		},
+		true
+	)
+
+	document.addEventListener(
+		'characterSelected',
+		function (event) {
+			const detail = (<CustomEvent>event).detail
+            const character = currentScene.characters[detail.index]
+            selectedCharacter.display(character)
+            const lightGreen = '00FF00'
+            if (world && world.characters) {
+                const worldCharacter = world.characters[detail.index]
+                if (worldCharacter) {
+                    worldCharacter.applyColorOverlay(lightGreen)
+                }
+            }
 		},
 		true
 	)

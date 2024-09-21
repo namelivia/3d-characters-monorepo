@@ -3,6 +3,7 @@ import MusicSelector from './selector/music_selector'
 import CharacterSelector from './selector/character_selector'
 import CharacterList from './selector/character_list'
 import SelectedCharacter from './selector/selected_character'
+import TimeDisplay from './selector/time_display'
 import JsonPreview from './json_preview/json_preview'
 import ResourceList, { ResourceCatalog } from './resource_list/resource_list'
 import Actions from './actions/actions'
@@ -71,6 +72,7 @@ const main = async () => {
 	// Initialize the UI
 	const name = new Name()
 	name.initialize()
+	const timeDisplay = new TimeDisplay()
 	const sceneSelector = new SceneSelector()
 	const musicSelector = new MusicSelector()
 	musicSelector.display(allResources.music)
@@ -100,6 +102,7 @@ const main = async () => {
 
 	requestAnimationFrame(function animate() {
 		world.step()
+		timeDisplay.display(world.time)
 		requestAnimationFrame(animate)
 	})
 

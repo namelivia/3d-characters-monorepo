@@ -107,7 +107,7 @@ const initializeCharacterControls = (allResources: any) => {
     }
 }
 
-const initiaizeResults = (currentScene: any) => {
+const initializeResults = (currentScene: any) => {
     const jsonPreview = new JsonPreview()
     jsonPreview.display(currentScene)
     const actions = new Actions()
@@ -130,7 +130,7 @@ const main = async () => {
     initializeSceneProperties(allResources)
     const { timeDisplay, playPause, timeline } = initializeSceneControls(playing)
     const { characterSelector, characterList, selectedCharacter } = initializeCharacterControls(allResources)
-    const { jsonPreview, actions } = initiaizeResults(currentScene)
+    const { jsonPreview, actions } = initializeResults(currentScene)
 
 	/*
 	const transition = new Transition()

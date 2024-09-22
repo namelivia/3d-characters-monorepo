@@ -16,7 +16,8 @@ class PlayPause {
 
 			const playPauseButton = document.createElement('button')
 			playPauseButton.setAttribute('id', 'play-pause-button')
-			playPauseButton.textContent = playing ? 'Pause' : 'Play'
+			playPauseButton.textContent = playing ? '⏸️' : '▶️'
+			playPauseButton.style.fontSize = '2em'
 
 			playPauseButton.addEventListener('click', (event) => {
 				event.preventDefault()
@@ -26,7 +27,9 @@ class PlayPause {
 
 			const restartButton = document.createElement('button')
 			restartButton.setAttribute('id', 'restart-button')
-			restartButton.textContent = 'Restart'
+			restartButton.textContent = '🔄'
+			restartButton.style.fontSize = '2em'
+			restartButton.style.marginLeft = '10px'
 
 			restartButton.addEventListener('click', (event) => {
 				console.log('Restarting scene')

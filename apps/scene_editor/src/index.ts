@@ -66,7 +66,7 @@ const previewScene = async (
 const main = async () => {
 	const currentScene = emptyScene
 	let sceneName = ''
-	const playing = false
+	let playing = false
 
 	const resourceList = new ResourceList()
 	const allResources = (await resourceList.initialize()) as ResourceCatalog
@@ -105,8 +105,10 @@ const main = async () => {
 	const world = new AdvancedWorld('3d-view')
 
 	requestAnimationFrame(function animate() {
-		world.step()
 		timeDisplay.display(world.time)
+		if (playing) {
+			world.step()
+		}
 		requestAnimationFrame(animate)
 	})
 
@@ -233,6 +235,15 @@ const main = async () => {
 				time: Number(detail.time),
 			})
 			jsonPreview.display(currentScene)
+		},
+		true
+	)
+
+	document.addEventListener(
+		'togglePlay',
+		function () {
+			playing = !playing
+			playPause.display(playing)
 		},
 		true
 	)

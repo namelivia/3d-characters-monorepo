@@ -4,6 +4,7 @@ import CharacterSelector from './selector/character_selector'
 import CharacterList from './selector/character_list'
 import SelectedCharacter from './selector/selected_character'
 import TimeDisplay from './selector/time_display'
+import PlayPause from './selector/play_pause'
 import JsonPreview from './json_preview/json_preview'
 import ResourceList, { ResourceCatalog } from './resource_list/resource_list'
 import Actions from './actions/actions'
@@ -65,6 +66,7 @@ const previewScene = async (
 const main = async () => {
 	const currentScene = emptyScene
 	let sceneName = ''
+	const playing = false
 
 	const resourceList = new ResourceList()
 	const allResources = (await resourceList.initialize()) as ResourceCatalog
@@ -73,12 +75,14 @@ const main = async () => {
 	const name = new Name()
 	name.initialize()
 	const timeDisplay = new TimeDisplay()
+	const playPause = new PlayPause()
 	const sceneSelector = new SceneSelector()
 	const musicSelector = new MusicSelector()
 	musicSelector.display(allResources.music)
 	const characterSelector = new CharacterSelector()
 	sceneSelector.display(allResources.models)
 	characterSelector.display(allResources.characters)
+	playPause.display(playing)
 	const characterList = new CharacterList()
 	const selectedCharacter = new SelectedCharacter()
 

@@ -1,27 +1,26 @@
 import ResourceList, { ResourceCatalog } from './resource_list/resource_list'
 
-// Scene properties
-import Name from './ui/scene_properties/name'
-import MusicSelector from './ui/scene_properties/music_selector'
-import SceneSelector from './ui/scene_properties/scene_selector'
-
-// Scene controls
-import TimeDisplay from './ui/scene_controls/time_display'
-import PlayPause from './ui/scene_controls/play_pause'
-import Timeline from './ui/scene_controls/timeline'
-
-// Character controls
-import CharacterSelector from './ui/characters/character_selector'
-import CharacterList from './ui/characters/character_list'
-import SelectedCharacter from './ui/characters/selected_character'
-
-
-// Results
-import JsonPreview from './ui/result/json_preview'
-import Actions from './ui/result/actions'
+import {
+    // Scene properties
+    Name,
+    MusicSelector,
+    SceneSelector,
+    // Scene controls
+    TimeDisplay,
+    PlayPause,
+    Timeline,
+    // Character controls
+    CharacterList,
+    CharacterSelector,
+    SelectedCharacter,
+    // Results
+    JsonPreview,
+    Actions,
+} from './ui'
 
 //import Transition from './keyframes/transition'
 //import Dialog from './keyframes/dialog'
+
 import {
 	AdvancedWorld,
 	loadAdvancedSceneJSON,

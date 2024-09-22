@@ -1,24 +1,24 @@
-class MusicSelector {
-	display(musics: string[]) {
+class Scene {
+	display(scenes: string[]) {
 		const properties = document.getElementById('scene-properties')
 		if (properties) {
 			const selector = document.createElement('select')
-			selector.setAttribute('id', 'music-select')
+			selector.setAttribute('id', 'scene-select')
 
 			const defaultOption = document.createElement('option')
 			defaultOption.setAttribute('disabled', 'true')
 			defaultOption.setAttribute('selected', 'true')
 			defaultOption.setAttribute('value', '')
-			defaultOption.textContent = '-- choose a music --'
+			defaultOption.textContent = '-- choose a scene --'
 
 			selector.appendChild(defaultOption)
-			musics.forEach((music) => {
+			scenes.forEach((scene) => {
 				const option = document.createElement('option')
-				option.text = music
+				option.text = scene
 				selector.add(option)
 			})
 			selector.addEventListener('change', function () {
-				const customEvent = new CustomEvent('musicSelectorChange', {
+				const customEvent = new CustomEvent('sceneSelectorChange', {
 					detail: selector.value,
 				})
 				selector.dispatchEvent(customEvent)
@@ -28,4 +28,4 @@ class MusicSelector {
 	}
 }
 
-export default MusicSelector
+export default Scene

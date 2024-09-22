@@ -1,6 +1,6 @@
 import { CharactersJSON } from 'common'
 
-class CharacterList {
+class List {
 	display(characters: CharactersJSON) {
 		const controls = document.getElementById('character-controls')
 
@@ -39,4 +39,4 @@ class CharacterList {
 	}
 }
 
-export default CharacterList
+export default List

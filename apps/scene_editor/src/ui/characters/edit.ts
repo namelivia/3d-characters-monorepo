@@ -1,4 +1,4 @@
-class SelectedCharacter {
+class Edit {
     clear() {
 		const previous = document.getElementById('selected-character')
 		if (previous) {
@@ -83,4 +83,4 @@ class SelectedCharacter {
 	}
 }
 
-export default SelectedCharacter
+export default Edit

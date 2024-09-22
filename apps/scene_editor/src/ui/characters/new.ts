@@ -1,4 +1,4 @@
-class CharacterSelector {
+class New {
 	display(characters: string[]) {
 		const controls = document.getElementById('character-controls')
 		if (controls) {
@@ -79,4 +79,4 @@ class CharacterSelector {
 	}
 }
 
-export default CharacterSelector
+export default New

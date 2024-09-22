@@ -24,7 +24,19 @@ class PlayPause {
 				playPauseButton.dispatchEvent(customEvent)
 			})
 
+			const restartButton = document.createElement('button')
+			restartButton.setAttribute('id', 'restart-button')
+			restartButton.textContent = 'Restart'
+
+			restartButton.addEventListener('click', (event) => {
+				console.log('Restarting scene')
+				event.preventDefault()
+				const customEvent = new CustomEvent('restartScene')
+				restartButton.dispatchEvent(customEvent)
+			})
+
 			div.appendChild(playPauseButton)
+			div.appendChild(restartButton)
 			controls.appendChild(div)
 		}
 	}

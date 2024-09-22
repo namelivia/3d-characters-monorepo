@@ -13,7 +13,7 @@ class TimeDisplay {
 		if (controls) {
 			const div = document.createElement('div')
 			div.setAttribute('id', 'time-display')
-			const timeLabel = document.createTextNode('Time: ')
+			const timeLabel = document.createTextNode('Frame: ')
 			const timeValue = document.createTextNode(time.toString())
 			div.appendChild(timeLabel)
 			div.appendChild(timeValue)

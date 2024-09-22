@@ -1,0 +1,12 @@
+#timeline {
+  height: 60px;
+  width: 500px;
+  background-color: gray;
+  border-radius: 5px;
+}
+#cursor {
+  width: 2px;
+  height: 60px;
+  background-color: red;
+  position: relative;
+}

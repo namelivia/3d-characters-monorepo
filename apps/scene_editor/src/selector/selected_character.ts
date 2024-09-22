@@ -19,7 +19,6 @@ class SelectedCharacter {
 			posX.setAttribute('id', 'posX')
 			posX.setAttribute('name', 'posX')
 			posX.setAttribute('placeholder', 'X')
-			posX.setAttribute('min', '0')
 			posX.setAttribute('step', '1')
             posX.value = character.position[0]
 
@@ -29,7 +28,6 @@ class SelectedCharacter {
 			posZ.setAttribute('id', 'posZ')
 			posZ.setAttribute('name', 'posZ')
 			posZ.setAttribute('placeholder', 'Z')
-			posZ.setAttribute('min', '0')
 			posZ.setAttribute('step', '1')
             posZ.value = character.position[2]
 

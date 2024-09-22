@@ -5,6 +5,7 @@ import CharacterList from './selector/character_list'
 import SelectedCharacter from './selector/selected_character'
 import TimeDisplay from './selector/time_display'
 import PlayPause from './selector/play_pause'
+import Timeline from './selector/timeline'
 import JsonPreview from './json_preview/json_preview'
 import ResourceList, { ResourceCatalog } from './resource_list/resource_list'
 import Actions from './actions/actions'
@@ -75,6 +76,7 @@ const main = async () => {
 	const name = new Name()
 	name.initialize()
 	const timeDisplay = new TimeDisplay()
+	const timeline = new Timeline()
 	const playPause = new PlayPause()
 	const sceneSelector = new SceneSelector()
 	const musicSelector = new MusicSelector()
@@ -106,6 +108,7 @@ const main = async () => {
 
 	requestAnimationFrame(function animate() {
 		timeDisplay.display(world.time)
+		timeline.display(world.time)
 		if (playing) {
 			world.step()
 		}

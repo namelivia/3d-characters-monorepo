@@ -7,6 +7,8 @@ class JsonPreview {
 		if (pre) {
 			pre.innerHTML = json
 		}
+        const details = document.createElement('details')
+        details.innerHTML = `<summary>JSON</summary><pre>${json}</pre>`
 	}
 }
 

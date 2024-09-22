@@ -1,5 +1,8 @@
-import SceneSelector from './selector/scene_selector'
-import MusicSelector from './selector/music_selector'
+// Scene properties
+import Name from './ui/scene_properties/name'
+import MusicSelector from './ui/scene_properties/music_selector'
+import SceneSelector from './ui/scene_properties/scene_selector'
+
 import CharacterSelector from './selector/character_selector'
 import CharacterList from './selector/character_list'
 import SelectedCharacter from './selector/selected_character'
@@ -9,7 +12,6 @@ import Timeline from './selector/timeline'
 import JsonPreview from './json_preview/json_preview'
 import ResourceList, { ResourceCatalog } from './resource_list/resource_list'
 import Actions from './actions/actions'
-import Name from './name/name'
 //import Transition from './keyframes/transition'
 //import Dialog from './keyframes/dialog'
 import {
@@ -64,6 +66,15 @@ const previewScene = async (
 	await setScene(resources, world, scene)
 }
 
+const initializeSceneProperties = (allResources: any) => {
+	const name = new Name()
+	name.initialize()
+	const musicSelector = new MusicSelector()
+	musicSelector.display(allResources.music)
+	const sceneSelector = new SceneSelector()
+	sceneSelector.display(allResources.models)
+}
+
 const main = async () => {
 	const currentScene = emptyScene
 	let sceneName = ''
@@ -72,17 +83,13 @@ const main = async () => {
 	const resourceList = new ResourceList()
 	const allResources = (await resourceList.initialize()) as ResourceCatalog
 
+    initializeSceneProperties(allResources)
+
 	// Initialize the UI
-	const name = new Name()
-	name.initialize()
 	const timeDisplay = new TimeDisplay()
 	const timeline = new Timeline()
 	const playPause = new PlayPause()
-	const sceneSelector = new SceneSelector()
-	const musicSelector = new MusicSelector()
-	musicSelector.display(allResources.music)
 	const characterSelector = new CharacterSelector()
-	sceneSelector.display(allResources.models)
 	characterSelector.display(allResources.characters)
 	playPause.display(playing)
 	const characterList = new CharacterList()
@@ -104,7 +111,7 @@ const main = async () => {
 
 	// Initialize world
 	const resources = new ResourceManager()
-	const world = new AdvancedWorld('3d-view')
+	const world = new AdvancedWorld('viewport')
 
 	requestAnimationFrame(function animate() {
 		timeDisplay.display(world.time)

@@ -1,7 +1,7 @@
 class Name {
 	initialize = () => {
-		const controls = document.getElementById('controls')
-		if (controls) {
+		const properties = document.getElementById('scene-properties')
+		if (properties) {
 			const label = document.createElement('label')
 			label.textContent = 'Name'
 
@@ -10,8 +10,8 @@ class Name {
 			input.setAttribute('type', 'text')
 
 			// Append the label and input elements to the body
-			controls.appendChild(label)
-			controls.appendChild(input)
+			properties.appendChild(label)
+			properties.appendChild(input)
 
 			input.addEventListener('change', function () {
 				const customEvent = new CustomEvent('nameChange', {

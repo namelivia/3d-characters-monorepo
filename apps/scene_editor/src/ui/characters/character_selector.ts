@@ -1,11 +1,8 @@
 class CharacterSelector {
 	display(characters: string[]) {
-		const controls = document.getElementById('controls')
+		const controls = document.getElementById('character-controls')
 		if (controls) {
 			const form = document.createElement('form')
-			// Create an h4 element
-			const h4 = document.createElement('h4')
-			h4.textContent = 'Character'
 
 			const selector = document.createElement('select')
 			selector.setAttribute('id', 'character-select')
@@ -55,7 +52,6 @@ class CharacterSelector {
 			addButton.textContent = 'Add'
 
 			// Append all elements to the form
-			form.appendChild(h4)
 			form.appendChild(selector)
 			form.appendChild(posX)
 			form.appendChild(posZ)

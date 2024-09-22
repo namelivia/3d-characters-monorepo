@@ -6,7 +6,7 @@ class SelectedCharacter {
 		}
     }
 	display(index: number, character: any) {
-		const controls = document.getElementById('controls')
+		const controls = document.getElementById('character-controls')
 
         this.clear()
 

@@ -1,17 +1,25 @@
+import ResourceList, { ResourceCatalog } from './resource_list/resource_list'
+
 // Scene properties
 import Name from './ui/scene_properties/name'
 import MusicSelector from './ui/scene_properties/music_selector'
 import SceneSelector from './ui/scene_properties/scene_selector'
 
-import CharacterSelector from './selector/character_selector'
-import CharacterList from './selector/character_list'
-import SelectedCharacter from './selector/selected_character'
-import TimeDisplay from './selector/time_display'
-import PlayPause from './selector/play_pause'
-import Timeline from './selector/timeline'
-import JsonPreview from './json_preview/json_preview'
-import ResourceList, { ResourceCatalog } from './resource_list/resource_list'
-import Actions from './actions/actions'
+// Scene controls
+import TimeDisplay from './ui/scene_controls/time_display'
+import PlayPause from './ui/scene_controls/play_pause'
+import Timeline from './ui/scene_controls/timeline'
+
+// Character controls
+import CharacterSelector from './ui/characters/character_selector'
+import CharacterList from './ui/characters/character_list'
+import SelectedCharacter from './ui/characters/selected_character'
+
+
+// Results
+import JsonPreview from './ui/result/json_preview'
+import Actions from './ui/result/actions'
+
 //import Transition from './keyframes/transition'
 //import Dialog from './keyframes/dialog'
 import {
@@ -66,6 +74,8 @@ const previewScene = async (
 	await setScene(resources, world, scene)
 }
 
+// Functions to initialize the UI
+
 const initializeSceneProperties = (allResources: any) => {
 	const name = new Name()
 	name.initialize()
@@ -73,6 +83,39 @@ const initializeSceneProperties = (allResources: any) => {
 	musicSelector.display(allResources.music)
 	const sceneSelector = new SceneSelector()
 	sceneSelector.display(allResources.models)
+}
+
+const initializeSceneControls = (playing: boolean) => {
+    const playPause = new PlayPause()
+	playPause.display(playing)
+    return {
+        timeDisplay: new TimeDisplay(),
+        playPause: playPause,
+        timeline: new Timeline(),
+    }
+}
+
+const initializeCharacterControls = (allResources: any) => {
+	const characterSelector = new CharacterSelector()
+	characterSelector.display(allResources.characters)
+	const characterList = new CharacterList()
+	const selectedCharacter = new SelectedCharacter()
+    return {
+        characterSelector: characterSelector,
+        characterList: characterList,
+        selectedCharacter: selectedCharacter,
+    }
+}
+
+const initiaizeResults = (currentScene: any) => {
+    const jsonPreview = new JsonPreview()
+    jsonPreview.display(currentScene)
+    const actions = new Actions()
+    actions.display()
+    return {
+        jsonPreview: jsonPreview,
+        actions: actions,
+    }
 }
 
 const main = async () => {
@@ -83,17 +126,11 @@ const main = async () => {
 	const resourceList = new ResourceList()
 	const allResources = (await resourceList.initialize()) as ResourceCatalog
 
-    initializeSceneProperties(allResources)
-
 	// Initialize the UI
-	const timeDisplay = new TimeDisplay()
-	const timeline = new Timeline()
-	const playPause = new PlayPause()
-	const characterSelector = new CharacterSelector()
-	characterSelector.display(allResources.characters)
-	playPause.display(playing)
-	const characterList = new CharacterList()
-	const selectedCharacter = new SelectedCharacter()
+    initializeSceneProperties(allResources)
+    const { timeDisplay, playPause, timeline } = initializeSceneControls(playing)
+    const { characterSelector, characterList, selectedCharacter } = initializeCharacterControls(allResources)
+    const { jsonPreview, actions } = initiaizeResults(currentScene)
 
 	/*
 	const transition = new Transition()
@@ -103,13 +140,7 @@ const main = async () => {
 	dialog.initialize()
     */
 
-	const jsonPreview = new JsonPreview()
-	jsonPreview.display(currentScene)
-
-	const actions = new Actions()
-	actions.display()
-
-	// Initialize world
+	// Initialize 3d world
 	const resources = new ResourceManager()
 	const world = new AdvancedWorld('viewport')
 

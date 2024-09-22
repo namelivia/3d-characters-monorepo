@@ -12,10 +12,10 @@ class Actions {
 	}
 
 	display() {
-		const actionsDiv = document.getElementById('actions')
-		if (actionsDiv) {
+		const result = document.getElementById('result')
+		if (result) {
 			const saveButton = this.createButton('Save')
-			actionsDiv.appendChild(saveButton)
+			result.appendChild(saveButton)
 		}
 	}
 }

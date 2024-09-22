@@ -2,7 +2,7 @@ import { CharactersJSON } from 'common'
 
 class CharacterList {
 	display(characters: CharactersJSON) {
-		const controls = document.getElementById('controls')
+		const controls = document.getElementById('character-controls')
 
 		const previousList = document.getElementById('character-list')
 		if (previousList) {

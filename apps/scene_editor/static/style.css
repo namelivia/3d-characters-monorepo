@@ -1,3 +1,11 @@
+body {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+pre {
+    margin: 0;
+}
 #viewport {
   width: 800px;
   height: 600px;
@@ -15,4 +23,16 @@
   height: 60px;
   background-color: red;
   position: relative;
+}
+#scene-properties {
+  background-color: aliceblue;
+}
+#scene-controls {
+  background-color: antiquewhite;
+}
+#character-controls {
+  background-color: aquamarine;
+}
+#result {
+  background-color: beige;
 }

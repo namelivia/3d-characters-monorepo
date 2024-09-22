@@ -6,7 +6,7 @@ class TimeDisplay {
 		}
 	}
 	display(time: number) {
-		const controls = document.getElementById('controls')
+		const controls = document.getElementById('scene-controls')
 
 		this.clear()
 

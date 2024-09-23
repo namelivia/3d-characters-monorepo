@@ -34,7 +34,7 @@ import * as SkeletonUtils from "three/examples/jsm/utils/SkeletonUtils.js";
 }*/
 
 export const loadSceneJSON = async (
-  sceneJson: AdvancedSceneJSON
+  sceneJson: AdvancedSceneJSON,
 ): Promise<AdvancedScene> => {
   const scene = new AdvancedScene();
   // From json resources, to resources
@@ -69,7 +69,7 @@ export const loadRemoteScene = async (url: string): Promise<AdvancedScene> => {
 
 export const loadResources = async (
   manager: ResourceManager,
-  scene: AdvancedScene
+  scene: AdvancedScene,
 ) => {
   const resources = scene.resources;
   await manager.loadSongs(resources.audio);
@@ -80,7 +80,7 @@ export const loadResources = async (
 
 const loadAnimatedCharacter = async (
   character: Character,
-  manager: ResourceManager
+  manager: ResourceManager,
 ): Promise<AnimatedCharacter> => {
   const gltf = manager.getModel3d(character.model3d);
   const gltfSceneClone = SkeletonUtils.clone(gltf.scene);
@@ -94,7 +94,7 @@ const loadAnimatedCharacter = async (
 
 export const assignResources = async (
   manager: ResourceManager,
-  scene: AdvancedScene
+  scene: AdvancedScene,
 ): Promise<LoadedAdvancedScene | undefined> => {
   // Resources have been loaded and are available in the resource manager
   // Now objects in the scene need to be assigned with the resources.
@@ -105,14 +105,15 @@ export const assignResources = async (
       const scenarioCharacters = [] as AnimatedCharacter[];
       for (const character of scene.characters) {
         scenarioCharacters.push(
-          await loadAnimatedCharacter(character, manager)
+          await loadAnimatedCharacter(character, manager),
         );
       }
 
       const loadedScene = new LoadedAdvancedScene(
         scene.scenario.setModel(manager.getModel3d(scene.scenario.key)),
         scene.music.setAudio(manager.getSong(scene.music.key)),
-        scenarioCharacters
+        scenarioCharacters,
+        scene.dialogs,
       );
 
       return loadedScene;

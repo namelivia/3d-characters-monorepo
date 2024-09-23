@@ -100,16 +100,19 @@ class LoadedAdvancedScene extends AdvancedScene {
   scenario: LoadedScenario;
   music: LoadedMusic;
   characters: AnimatedCharacter[];
+  dialogs: Dialog[];
 
   constructor(
     scenario: LoadedScenario,
     music: LoadedMusic,
-    characters: AnimatedCharacter[]
+    characters: AnimatedCharacter[],
+    dialogs: Dialog[],
   ) {
     super();
     this.scenario = scenario;
     this.music = music;
     this.characters = characters;
+    this.dialogs = dialogs;
   }
 }
 

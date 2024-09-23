@@ -17,6 +17,7 @@ import {
     // Dialog controls
     Dialog,
     DialogList,
+    DialogEdit,
     // Results
     JsonPreview,
     Actions,
@@ -124,9 +125,11 @@ const initializeDialogControls = () => {
     const dialog = new Dialog()
     dialog.initialize()
 	const dialogList = new DialogList()
+	const dialogEdit = new DialogEdit()
     return {
         dialog: dialog,
         dialogList: dialogList,
+        dialogEdit: dialogEdit,
     }
 }
 
@@ -142,7 +145,7 @@ const main = async () => {
     initializeSceneProperties(allResources)
     const { timeDisplay, playPause, timeline } = initializeSceneControls(playing)
     const { characterSelector, characterList, selectedCharacter } = initializeCharacterControls(allResources)
-    const { dialog, dialogList } = initializeDialogControls()
+    const { dialog, dialogList, dialogEdit } = initializeDialogControls()
     const { jsonPreview, actions } = initializeResults(currentScene)
 
 	/*
@@ -202,11 +205,48 @@ const main = async () => {
 			currentScene.dialogs.push({
 				id: Math.random().toString(36).substring(7), //random id
 				text: detail.text,
-				start: Number(detail.keyframe),
-				duration: Number(detail.duration),
+				start: parseInt(detail.keyframe),
+				duration: parseInt(detail.duration),
 			})
 			jsonPreview.display(currentScene)
             dialogList.display(currentScene.dialogs)
+		},
+		true
+	)
+
+	document.addEventListener(
+		'dialogUpdate',
+		async function (event) {
+			const detail = (<CustomEvent>event).detail
+			currentScene.dialogs[detail.index].text = detail.text
+			currentScene.dialogs[detail.index].start = parseInt(detail.start)
+			currentScene.dialogs[detail.index].duration = parseInt(detail.duration)
+			jsonPreview.display(currentScene)
+			await previewScene(currentScene, world, resources)
+		},
+		true
+	)
+
+	document.addEventListener(
+		'dialogRemove',
+		async function (event) {
+			const detail = (<CustomEvent>event).detail
+			const dialogIndex = detail.index
+			currentScene.dialogs.splice(dialogIndex, 1)
+			dialogList.display(currentScene.dialogs)
+			jsonPreview.display(currentScene)
+			dialogEdit.clear()
+			await previewScene(currentScene, world, resources)
+		},
+		true
+	)
+
+	document.addEventListener(
+		'dialogSelected',
+		function (event) {
+			const detail = (<CustomEvent>event).detail
+			const dialog = currentScene.dialogs[detail.index]
+			dialogEdit.display(parseInt(detail.index), dialog)
 		},
 		true
 	)

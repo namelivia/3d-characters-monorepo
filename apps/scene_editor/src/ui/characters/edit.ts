@@ -55,7 +55,7 @@ class Edit {
                         rotation: rotation.value,
                     },
                 })
-                removeButton.dispatchEvent(customEvent)
+                updateButton.dispatchEvent(customEvent)
 			})
 
 			const removeButton = document.createElement('button')

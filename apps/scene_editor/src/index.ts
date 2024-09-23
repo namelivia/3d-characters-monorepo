@@ -292,7 +292,6 @@ const main = async () => {
 	document.addEventListener(
 		'restartScene',
 		async function () {
-			console.log('Restarting scene')
 			await previewScene(currentScene, world, resources)
 			playing = true
 			playPause.display(playing)

@@ -32,7 +32,6 @@ class PlayPause {
 			restartButton.style.marginLeft = '10px'
 
 			restartButton.addEventListener('click', (event) => {
-				console.log('Restarting scene')
 				event.preventDefault()
 				const customEvent = new CustomEvent('restartScene')
 				restartButton.dispatchEvent(customEvent)

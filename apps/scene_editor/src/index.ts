@@ -1,3 +1,4 @@
+import './style.css'
 import ResourceList, { ResourceCatalog } from './resource_list/resource_list'
 
 import {

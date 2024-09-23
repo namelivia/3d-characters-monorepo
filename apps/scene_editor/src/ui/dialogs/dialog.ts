@@ -1,12 +1,8 @@
 class Dialog {
 	initialize = () => {
-		const controls = document.getElementById('controls')
+		const controls = document.getElementById('dialog-controls')
 		if (controls) {
 			const form = document.createElement('form')
-			// Create an h4 element
-			const h4 = document.createElement('h4')
-			h4.textContent = 'Dialog'
-
 			// Create a label for Keyframe
 			const keyframeLabel = document.createElement('label')
 			keyframeLabel.textContent = 'Keyframe'
@@ -42,7 +38,6 @@ class Dialog {
 			addButton.textContent = 'Add'
 
 			// Append all elements to the form
-			form.appendChild(h4)
 			form.appendChild(keyframeLabel)
 			form.appendChild(keyframeInput)
 			form.appendChild(durationLabel)

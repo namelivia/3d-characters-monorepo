@@ -14,13 +14,14 @@ import {
     CharacterList,
     CharacterSelector,
     SelectedCharacter,
+    // Dialog controls
+    Dialog,
     // Results
     JsonPreview,
     Actions,
 } from './ui'
 
 //import Transition from './keyframes/transition'
-//import Dialog from './keyframes/dialog'
 
 import {
 	AdvancedWorld,
@@ -118,6 +119,11 @@ const initializeResults = (currentScene: any) => {
     }
 }
 
+const initializeDialogControls = () => {
+    const dialog = new Dialog()
+    dialog.initialize()
+}
+
 const main = async () => {
 	const currentScene = emptyScene
 	let sceneName = ''
@@ -130,14 +136,12 @@ const main = async () => {
     initializeSceneProperties(allResources)
     const { timeDisplay, playPause, timeline } = initializeSceneControls(playing)
     const { characterSelector, characterList, selectedCharacter } = initializeCharacterControls(allResources)
+    initializeDialogControls()
     const { jsonPreview, actions } = initializeResults(currentScene)
 
 	/*
 	const transition = new Transition()
 	transition.initialize()
-
-	const dialog = new Dialog()
-	dialog.initialize()
     */
 
 	// Initialize 3d world

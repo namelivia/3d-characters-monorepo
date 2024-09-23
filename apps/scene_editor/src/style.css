@@ -33,6 +33,9 @@ pre {
 #character-controls {
   background-color: aquamarine;
 }
+#dialog-controls {
+  background-color: azure;
+}
 #result {
   background-color: beige;
 }

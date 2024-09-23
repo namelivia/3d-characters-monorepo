@@ -11,7 +11,7 @@ import {
 const setFullscreen = () => {
 	const windowWidth = window.innerWidth
 	const windowHeight = window.innerHeight
-	const mainDiv = document.getElementById('3d-view')
+	const mainDiv = document.getElementById('viewport')
 	if (mainDiv) {
 		mainDiv.style.width = `${windowWidth}px`
 		mainDiv.style.height = `${windowHeight}px`
@@ -39,7 +39,7 @@ const main = async () => {
 
 	const overlay = new Overlay()
 	const audio = new Audio()
-	const world = new AdvancedWorld("3d-view")
+	const world = new AdvancedWorld('viewport')
 	const resources = new ResourceManager()
 
 	world.setOnSceneTransition(onSceneTransition)

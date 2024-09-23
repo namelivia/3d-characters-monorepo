@@ -7,8 +7,16 @@ export default class View2D {
     this.uiContainer = document.createElement("div");
   }
 
+  clear = () => {
+    const uiContainer = document.getElementById("2d-view");
+    if (uiContainer) {
+      uiContainer.remove();
+    }
+  };
+
   addToDOM() {
-    const threeDView = document.getElementById("3d-view");
+    this.clear();
+    const threeDView = document.getElementById("viewport");
     this.uiContainer = document.createElement("div");
     this.uiContainer.id = "2d-view";
     this.uiContainer.style.width = "100%";

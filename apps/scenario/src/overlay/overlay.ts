@@ -1,6 +1,6 @@
 export default class Overlay {
 	addToDOM() {
-		const threeDView = document.getElementById('3d-view')
+		const threeDView = document.getElementById('viewport')
 		const overlayContainer = document.createElement('div')
 		overlayContainer.id = '2d-overlay'
 		overlayContainer.style.width = '100%'

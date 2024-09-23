@@ -11,7 +11,7 @@ pre {
   height: 600px;
   background-color: black;
   border-radius: 5px;
-  position: relative;
+  position: relative; /* needed to position 2d-ui elements */ 
 }
 #timeline {
   height: 60px;

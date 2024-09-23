@@ -1,4 +1,4 @@
-class Dialog {
+class New {
 	initialize = () => {
 		const controls = document.getElementById('dialog-controls')
 		if (controls) {
@@ -64,4 +64,4 @@ class Dialog {
 		}
 	}
 }
-export default Dialog
+export default New

@@ -16,6 +16,7 @@ import {
     SelectedCharacter,
     // Dialog controls
     Dialog,
+    DialogList,
     // Results
     JsonPreview,
     Actions,
@@ -122,6 +123,11 @@ const initializeResults = (currentScene: any) => {
 const initializeDialogControls = () => {
     const dialog = new Dialog()
     dialog.initialize()
+	const dialogList = new DialogList()
+    return {
+        dialog: dialog,
+        dialogList: dialogList,
+    }
 }
 
 const main = async () => {
@@ -136,7 +142,7 @@ const main = async () => {
     initializeSceneProperties(allResources)
     const { timeDisplay, playPause, timeline } = initializeSceneControls(playing)
     const { characterSelector, characterList, selectedCharacter } = initializeCharacterControls(allResources)
-    initializeDialogControls()
+    const { dialog, dialogList } = initializeDialogControls()
     const { jsonPreview, actions } = initializeResults(currentScene)
 
 	/*
@@ -200,6 +206,7 @@ const main = async () => {
 				duration: Number(detail.duration),
 			})
 			jsonPreview.display(currentScene)
+            dialogList.display(currentScene.dialogs)
 		},
 		true
 	)

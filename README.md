@@ -1,7 +1,3 @@
-# Monorepo
+# [Moved]
 
-This monorepo contains:
-
- - [3D Character editor](https://github.com/namelivia/3d-characters-monorepo/tree/master/apps/editor)
- - [3D Scene editor](https://github.com/namelivia/3d-characters-monorepo/tree/master/apps/scene_editor)
- - [3D World visualizer](https://github.com/namelivia/3d-characters-monorepo/tree/master/apps/scenario)
+Development has moved to Codeberg: [https://codeberg.org/namelivia/3d-characters-monorepo](https://codeberg.org/namelivia/3d-characters-monorepo)
